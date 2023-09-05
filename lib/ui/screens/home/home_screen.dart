@@ -12,9 +12,11 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int _currentIndex = 0;
   final List<Widget> _children = [
-    HomeScreen(),
-    SearchScreen(),
-    MyPageScreen(),
+    const HomeScreen(),
+    const SearchScreen(),
+    const FavoriteScreen(),
+    const RecordScreen(),
+    const MyPageScreen(),
   ];
 
   @override
@@ -23,7 +25,7 @@ class _MyHomePageState extends State<MyHomePage> {
       body: _children[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
-        items: [
+        items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
             label: 'ホーム',
@@ -31,6 +33,14 @@ class _MyHomePageState extends State<MyHomePage> {
           BottomNavigationBarItem(
             icon: Icon(Icons.search),
             label: '検索',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'お気に入り',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: '履歴',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person),
@@ -48,22 +58,46 @@ class _MyHomePageState extends State<MyHomePage> {
 }
 
 class HomeScreen extends StatelessWidget {
+  const HomeScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return Center(child: Text('ホーム'));
+    return const Center(child: Text('ホーム'));
   }
 }
 
 class SearchScreen extends StatelessWidget {
+  const SearchScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return Center(child: Text('検索'));
+    return const Center(child: Text('検索'));
+  }
+}
+
+class FavoriteScreen extends StatelessWidget {
+  const FavoriteScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Center(child: Text('ホーム'));
+  }
+}
+
+class RecordScreen extends StatelessWidget {
+  const RecordScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Center(child: Text('ホーム'));
   }
 }
 
 class MyPageScreen extends StatelessWidget {
+  const MyPageScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return Center(child: Text('マイページ'));
+    return const Center(child: Text('マイページ'));
   }
 }
