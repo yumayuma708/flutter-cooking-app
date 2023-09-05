@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
@@ -28,7 +29,7 @@ class _MyHomePageState extends State<MyHomePage> {
         unselectedItemColor: Colors.black, // 選択されていないアイテムの色も黒に設定
         items: const [
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
+            icon: Icon(FontAwesomeIcons.utensils),
             label: '料理',
           ),
           BottomNavigationBarItem(
@@ -36,7 +37,7 @@ class _MyHomePageState extends State<MyHomePage> {
             label: '検索',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
+            icon: FaIcon(FontAwesomeIcons.star), // FontAwesomeのアイコンを使用
             label: 'お気に入り',
           ),
           BottomNavigationBarItem(
