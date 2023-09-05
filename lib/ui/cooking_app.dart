@@ -1,4 +1,4 @@
-import 'package:caul/ui/screens/home/home_screen.dart';
+import 'package:caul/ui/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 
 class CookingApp extends StatelessWidget {

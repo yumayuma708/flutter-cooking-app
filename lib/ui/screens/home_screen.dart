@@ -1,3 +1,7 @@
+import 'package:caul/ui/screens/cooking_screen.dart';
+import 'package:caul/ui/screens/favorite_screen.dart';
+import 'package:caul/ui/screens/my_page_screen.dart';
+import 'package:caul/ui/screens/search_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -52,41 +56,5 @@ class _MyHomePageState extends State<MyHomePage> {
         },
       ),
     );
-  }
-}
-
-class CookingScreen extends StatelessWidget {
-  const CookingScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Center(child: Text('料理'));
-  }
-}
-
-class SearchScreen extends StatelessWidget {
-  const SearchScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Center(child: Text('検索'));
-  }
-}
-
-class FavoriteScreen extends StatelessWidget {
-  const FavoriteScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Center(child: Text('お気に入り'));
-  }
-}
-
-class MyPageScreen extends StatelessWidget {
-  const MyPageScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Center(child: Text('マイページ'));
   }
 }
