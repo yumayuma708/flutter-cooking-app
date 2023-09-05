@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
@@ -12,10 +13,9 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int _currentIndex = 0;
   final List<Widget> _children = [
-    const HomeScreen(),
+    const CookingScreen(),
     const SearchScreen(),
     const FavoriteScreen(),
-    const RecordScreen(),
     const MyPageScreen(),
   ];
 
@@ -25,22 +25,20 @@ class _MyHomePageState extends State<MyHomePage> {
       body: _children[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
+        selectedItemColor: Colors.black, // 選択されているアイテムの色を黒に設定
+        unselectedItemColor: Colors.black, // 選択されていないアイテムの色も黒に設定
         items: const [
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'ホーム',
+            icon: Icon(FontAwesomeIcons.utensils),
+            label: '料理',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.search),
             label: '検索',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
+            icon: FaIcon(FontAwesomeIcons.star), // FontAwesomeのアイコンを使用
             label: 'お気に入り',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: '履歴',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person),
@@ -57,12 +55,12 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 }
 
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+class CookingScreen extends StatelessWidget {
+  const CookingScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const Center(child: Text('ホーム'));
+    return const Center(child: Text('料理'));
   }
 }
 
@@ -80,16 +78,7 @@ class FavoriteScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(child: Text('ホーム'));
-  }
-}
-
-class RecordScreen extends StatelessWidget {
-  const RecordScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Center(child: Text('ホーム'));
+    return const Center(child: Text('お気に入り'));
   }
 }
 
