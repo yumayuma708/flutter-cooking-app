@@ -17,6 +17,7 @@ class _MyPageScreenState extends State<MyPageScreen> {
     });
   }
 
+  static const clientId = 'YOUR_CLIENT_ID.apps.googleusercontent.com';
   final GoogleSignIn _googleSignIn = GoogleSignIn();
 
   Future<void> _handleGoogleSignIn() async {
