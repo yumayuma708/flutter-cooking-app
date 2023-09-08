@@ -19,27 +19,86 @@ class _MyPageScreenState extends State<MyPageScreen> {
   _showLoginPopup() {
     showDialog(
       context: context,
-      barrierDismissible: false, // ユーザーがダイアログの外部をタップしたときにダイアログが閉じないようにする
+      barrierDismissible: false,
       builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('Googleにログイン'),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              TextField(
-                decoration: InputDecoration(
-                  labelText: 'メールアドレス',
-                  border: OutlineInputBorder(),
+        return Dialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(24.0),
+          ),
+          child: Container(
+            padding: const EdgeInsets.all(20.0),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(24.0),
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                const Text('Googleにログイン', style: TextStyle(fontSize: 24.0)),
+                const SizedBox(height: 20),
+                TextField(
+                  keyboardType: TextInputType.emailAddress,
+                  decoration: InputDecoration(
+                    labelText: 'メールアドレス',
+                    border: const OutlineInputBorder(),
+                    fillColor: Colors.grey[100],
+                    filled: true,
+                  ),
                 ),
-              ),
-              SizedBox(height: 20), // 余白を追加
-              ElevatedButton(
-                child: Text('次へ'),
-                onPressed: () {
-                  Navigator.of(context).pop(); // ポップアップを閉じる
-                },
-              )
-            ],
+                const SizedBox(height: 20),
+                ElevatedButton(
+                  child: const Text('次へ'),
+                  onPressed: () {
+                    Navigator.of(context).pop(); // Close the login popup
+                    _showPasswordPopup(); // Open the password popup
+                  },
+                )
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  _showPasswordPopup() {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return Dialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(24.0),
+          ),
+          child: Container(
+            padding: const EdgeInsets.all(20.0),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(24.0),
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                const Text('パスワード入力', style: TextStyle(fontSize: 24.0)),
+                const SizedBox(height: 20),
+                TextField(
+                  obscureText: true,
+                  decoration: InputDecoration(
+                    labelText: 'パスワード',
+                    border: const OutlineInputBorder(),
+                    fillColor: Colors.grey[100],
+                    filled: true,
+                  ),
+                ),
+                const SizedBox(height: 20),
+                ElevatedButton(
+                  child: const Text('完了'),
+                  onPressed: () {
+                    Navigator.of(context).pop(); // Close the password popup
+                  },
+                )
+              ],
+            ),
           ),
         );
       },
