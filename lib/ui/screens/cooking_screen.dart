@@ -5,6 +5,11 @@ class CookingScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(child: Text('料理'));
+    return Scaffold(
+      body: Container(
+        color: Colors.orange[400], // 背景色をオレンジに設定
+        child: const Center(child: Text('料理')),
+      ),
+    );
   }
 }
