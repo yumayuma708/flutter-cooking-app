@@ -1,7 +1,7 @@
 import 'package:caul/ui/screens/cooking_screen.dart';
 import 'package:caul/ui/screens/favorite_screen.dart';
 import 'package:caul/ui/screens/my_page_screen.dart';
-import 'package:caul/ui/screens/search_screen.dart';
+import 'package:caul/ui/screens/rankings_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -37,8 +37,8 @@ class _MyHomePageState extends State<MyHomePage> {
             label: '料理',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.search),
-            label: '検索',
+            icon: Icon(FontAwesomeIcons.crown),
+            label: 'ランキング',
           ),
           BottomNavigationBarItem(
             icon: FaIcon(FontAwesomeIcons.star), // FontAwesomeのアイコンを使用
