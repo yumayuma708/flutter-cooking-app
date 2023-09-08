@@ -17,6 +17,7 @@ dependencies:
   flutter_launcher_icons: ^0.13.1
   font_awesome_flutter: ^10.5.0
   google_sign_in: ^6.1.5
+  flutter_riverpod: ^2.4.0
 
 dev_dependencies:
   flutter_test:

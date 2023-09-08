@@ -1,90 +1,114 @@
-import 'package:flutter/material.dart';
+// cooking_screen.dart
 
-class CookingScreen extends StatefulWidget {
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:caul/status/popup.state.dart';
+import 'package:caul/providers/popup_provider.dart';
+
+final pageControllerProvider = Provider((ref) => PageController());
+
+class CookingScreen extends ConsumerWidget {
   const CookingScreen({Key? key}) : super(key: key);
 
   @override
-  _CookingScreenState createState() => _CookingScreenState();
-}
+  Widget build(BuildContext context, WidgetRef ref) {
+    final state = ref.watch(popupProvider);
+    final pageController = ref.watch(pageControllerProvider);
 
-class _CookingScreenState extends State<CookingScreen> {
-  late PageController _pageController;
-  int _currentPage = 0;
+    Future<void> _showPopup() async {
+      await showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return PageView.builder(
+            controller: pageController, // ここでPageControllerをセット
+            itemCount: 3,
+            onPageChanged: (index) {
+              ref.read(popupProvider.notifier).updateCurrentPage(index + 1);
+            },
+            itemBuilder: (context, index) {
+              String description;
+              String buttonLabel;
+              VoidCallback onPressed;
 
-  @override
-  void initState() {
-    super.initState();
-    _pageController = PageController();
-    WidgetsBinding.instance?.addPostFrameCallback((_) {
-      _showPopup(context);
-    });
-  }
+              switch (index) {
+                case 0:
+                  description = "これはページ1です。";
+                  buttonLabel = "次へ";
+                  onPressed = () => pageController.nextPage(
+                      duration: const Duration(milliseconds: 300),
+                      curve: Curves.easeInOut);
+                  break;
+                case 1:
+                  description = "これはページ2です。";
+                  buttonLabel = "次へ";
+                  onPressed = () => pageController.nextPage(
+                      duration: const Duration(milliseconds: 300),
+                      curve: Curves.easeInOut);
+                  break;
+                case 2:
+                  description = "これはページ3です。";
+                  buttonLabel = "料理を作る！";
+                  onPressed = () => Navigator.of(context).pop();
+                  break;
+                default:
+                  throw Exception("Invalid page index");
+              }
 
-  _showPopup(BuildContext context) {
-    showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (BuildContext context) {
-        return Dialog(
-          child: SizedBox(
-            height: 300,
-            child: Column(
-              children: [
-                Expanded(
-                  child: PageView(
-                    controller: _pageController,
-                    onPageChanged: (int page) {
-                      setState(() {
-                        _currentPage = page;
-                      });
-                    },
-                    children: const [
-                      Center(child: Text('ページ 1')),
-                      Center(child: Text('ページ 2')),
-                      Center(child: Text('ページ 3')),
-                    ],
-                  ),
-                ),
-                DotsIndicator(currentPage: _currentPage),
-              ],
-            ),
-          ),
-        );
-      },
-    );
-  }
+              return _PopupPage(
+                description: description,
+                buttonLabel: buttonLabel,
+                onPressed: onPressed,
+              );
+            },
+          );
+        },
+      );
+    }
 
-  @override
-  Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
         color: Colors.orange[400],
-        child: const Center(child: Text('料理')),
+        child: Center(
+          child: ElevatedButton(
+            onPressed: _showPopup,
+            child: const Text('料理ページを開く'),
+          ),
+        ),
       ),
     );
   }
 }
 
-class DotsIndicator extends StatelessWidget {
-  final int currentPage;
+class PopupNotifier extends StateNotifier<PopupState> {
+  PopupNotifier() : super(PopupState(currentPage: 1));
 
-  const DotsIndicator({super.key, required this.currentPage});
+  void updateCurrentPage(int page) {
+    state = PopupState(currentPage: page);
+  }
+}
+
+class _PopupPage extends StatelessWidget {
+  final String description;
+  final String buttonLabel;
+  final VoidCallback onPressed;
+
+  const _PopupPage({
+    Key? key,
+    required this.description,
+    required this.buttonLabel,
+    required this.onPressed,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: List.generate(3, (index) {
-        return Container(
-          margin: const EdgeInsets.symmetric(horizontal: 4.0),
-          width: 8.0,
-          height: 8.0,
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            color: index == currentPage ? Colors.blue : Colors.grey,
-          ),
-        );
-      }),
+    return AlertDialog(
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(description),
+          ElevatedButton(onPressed: onPressed, child: Text(buttonLabel)),
+        ],
+      ),
     );
   }
 }
