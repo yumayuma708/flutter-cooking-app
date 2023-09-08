@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
@@ -25,14 +26,16 @@ class _MyPageScreenState extends State<MyPageScreen> {
       await _googleSignIn.signIn();
       Navigator.of(context).pop(); // Close the popup after successful login
     } catch (error) {
-      print(error); // Handle login error if any
+      if (kDebugMode) {
+        print(error);
+      } // Handle login error if any
     }
   }
 
   _showLoginPopup() {
     showDialog(
       context: context,
-      barrierDismissible: false,
+      barrierDismissible: true,
       builder: (BuildContext context) {
         return Dialog(
           shape: RoundedRectangleBorder(
