@@ -38,6 +38,8 @@ class _MyPageScreenState extends State<MyPageScreen> {
                 const Text('Googleにログイン', style: TextStyle(fontSize: 24.0)),
                 const SizedBox(height: 20),
                 TextField(
+                  keyboardType:
+                      TextInputType.emailAddress, // 追加：メールアドレス入力用のキーボードタイプを指定
                   decoration: InputDecoration(
                     labelText: 'メールアドレス',
                     border: const OutlineInputBorder(),
