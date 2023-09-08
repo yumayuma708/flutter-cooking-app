@@ -27,33 +27,39 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: _children[_currentIndex],
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _currentIndex,
-        selectedItemColor: Colors.black, // 選択されているアイテムの色を黒に設定
-        unselectedItemColor: Colors.black, // 選択されていないアイテムの色も黒に設定
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(FontAwesomeIcons.utensils),
-            label: '料理',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(FontAwesomeIcons.crown),
-            label: 'ランキング',
-          ),
-          BottomNavigationBarItem(
-            icon: FaIcon(FontAwesomeIcons.star), // FontAwesomeのアイコンを使用
-            label: 'お気に入り',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'マイページ',
-          ),
-        ],
-        onTap: (index) {
-          setState(() {
-            _currentIndex = index;
-          });
-        },
+      bottomNavigationBar: Container(
+        // このContainerでラップします。
+        color: Colors.orange, // こちらでバナーの背景色をオレンジに設定します。
+        child: BottomNavigationBar(
+          backgroundColor:
+              Colors.orange, // この行でBottomNavigationBarの背景色をオレンジに設定します。
+          currentIndex: _currentIndex,
+          selectedItemColor: Colors.black,
+          unselectedItemColor: Colors.black,
+          items: const [
+            BottomNavigationBarItem(
+              icon: Icon(FontAwesomeIcons.utensils),
+              label: '料理',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(FontAwesomeIcons.crown),
+              label: 'ランキング',
+            ),
+            BottomNavigationBarItem(
+              icon: FaIcon(FontAwesomeIcons.star),
+              label: 'お気に入り',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.person),
+              label: 'マイページ',
+            ),
+          ],
+          onTap: (index) {
+            setState(() {
+              _currentIndex = index;
+            });
+          },
+        ),
       ),
     );
   }

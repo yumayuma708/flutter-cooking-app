@@ -5,6 +5,10 @@ class SearchScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(child: Text('検索'));
+    return Scaffold(
+        body: Container(
+      color: Colors.yellow[300],
+      child: const Center(child: Text('ランキング')),
+    ));
   }
 }
