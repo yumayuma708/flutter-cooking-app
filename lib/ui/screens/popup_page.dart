@@ -58,6 +58,7 @@ class PopupDialog {
                                   curve: Curves.easeInOut),
                               showBackButton: false,
                               showNextButton: true,
+                              pageController: pageController,
                             );
                           case 1:
                             return PopupPage(
@@ -68,6 +69,7 @@ class PopupDialog {
                                   curve: Curves.easeInOut),
                               showBackButton: true,
                               showNextButton: true,
+                              pageController: pageController,
                             );
                           case 2:
                             return PopupPage(
@@ -76,6 +78,7 @@ class PopupDialog {
                               onPressed: () => Navigator.of(context).pop(),
                               showBackButton: true,
                               showNextButton: false,
+                              pageController: pageController,
                             );
                           default:
                             throw Exception("Invalid page index");
@@ -99,34 +102,48 @@ class PopupPage extends StatelessWidget {
   final String description;
   final String buttonLabel;
   final VoidCallback onPressed;
-  final bool showBackButton; // 追加
-  final bool showNextButton; // 追加
+  final bool showBackButton;
+  final bool showNextButton;
+  final PageController pageController; // 追加: PageControllerの参照
 
   const PopupPage({
     super.key,
     required this.description,
     required this.buttonLabel,
     required this.onPressed,
-    this.showBackButton = true, // デフォルト値
-    this.showNextButton = true, // デフォルト値
+    required this.pageController, // コンストラクタに追加
+    this.showBackButton = true,
+    this.showNextButton = true,
   });
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Text(description),
-        if (showBackButton) // 条件を確認
-          ElevatedButton(
-            onPressed: () {}, // 戻るボタンのアクションをここで実装
-            child: const Text('戻る'),
-          ),
-        if (showNextButton) // 条件を確認
-          ElevatedButton(onPressed: onPressed, child: Text(buttonLabel)),
+        Expanded(child: Center(child: Text(description))),
+        Row(
+          children: [
+            if (showBackButton)
+              ElevatedButton(
+                onPressed: () {
+                  // 戻るボタンのアクションを更新
+                  pageController.previousPage(
+                      duration: const Duration(milliseconds: 300),
+                      curve: Curves.easeInOut);
+                },
+                child: const Text('戻る'),
+              ),
+            const Spacer(),
+            if (showNextButton)
+              ElevatedButton(onPressed: onPressed, child: Text(buttonLabel)),
+          ],
+        ),
       ],
     );
   }
 }
+
+
 
 // 使用方法: 
 // PopupDialog(context: context, ref: ref, pageController: pageController).show();
