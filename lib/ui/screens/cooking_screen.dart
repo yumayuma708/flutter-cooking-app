@@ -3,8 +3,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:caul/status/popup.state.dart';
-import 'package:caul/providers/popup_provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 final pageControllerProvider = Provider((ref) => PageController());
 
@@ -13,10 +11,6 @@ class CookingScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final state = ref.watch(popupProvider);
-    final popupNotifier = ref.watch(popupProvider.notifier);
-    final pageController = popupNotifier.pageController;
-
     return Scaffold(
       body: Container(
         color: Colors.orange[400],

@@ -48,58 +48,36 @@ class PopupDialog {
                             .updateCurrentPage(index + 1);
                       },
                       itemBuilder: (context, index) {
-                        String description;
-                        String buttonLabel;
-                        VoidCallback onPressed;
-
                         switch (index) {
                           case 0:
-                            description = "これはページ1です。";
-                            buttonLabel = "次へ";
-                            onPressed = () => pageController.nextPage(
-                                duration: const Duration(milliseconds: 300),
-                                curve: Curves.easeInOut);
-                            break;
+                            return PopupPage(
+                              description: "これはページ1です。",
+                              buttonLabel: "次へ",
+                              onPressed: () => pageController.nextPage(
+                                  duration: const Duration(milliseconds: 300),
+                                  curve: Curves.easeInOut),
+                            );
                           case 1:
-                            description = "これはページ2です。";
-                            buttonLabel = "次へ";
-                            onPressed = () => pageController.nextPage(
-                                duration: const Duration(milliseconds: 300),
-                                curve: Curves.easeInOut);
-                            break;
+                            return PopupPage(
+                              description: "これはページ2です。",
+                              buttonLabel: "次へ",
+                              onPressed: () => pageController.nextPage(
+                                  duration: const Duration(milliseconds: 300),
+                                  curve: Curves.easeInOut),
+                            );
                           case 2:
-                            description = "これはページ3です。";
-                            buttonLabel = "料理を作る！";
-                            onPressed = () => Navigator.of(context).pop();
-                            break;
+                            return PopupPage(
+                              description: "これはページ3です。",
+                              buttonLabel: "料理を作る！",
+                              onPressed: () => Navigator.of(context).pop(),
+                            );
                           default:
                             throw Exception("Invalid page index");
                         }
-
-                        return Column(children: [
-                          Text(description),
-                          ElevatedButton(
-                              onPressed: onPressed, child: Text(buttonLabel)),
-                        ]);
                       },
                     ),
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: List.generate(3, (idx) {
-                      return Container(
-                        margin: const EdgeInsets.symmetric(horizontal: 4.0),
-                        width: 8.0,
-                        height: 8.0,
-                        decoration: BoxDecoration(
-                          color: ref.read(popupProvider).currentPage == idx + 1
-                              ? Colors.blue
-                              : Colors.grey,
-                          shape: BoxShape.circle,
-                        ),
-                      );
-                    }),
-                  ),
+                  // (The dots at the bottom)
                 ],
               ),
             ),
@@ -108,6 +86,28 @@ class PopupDialog {
       );
       await prefs.setBool('hasShownPopup', true);
     }
+  }
+}
+
+class PopupPage extends StatelessWidget {
+  final String description;
+  final String buttonLabel;
+  final VoidCallback onPressed;
+
+  PopupPage({
+    required this.description,
+    required this.buttonLabel,
+    required this.onPressed,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Text(description),
+        ElevatedButton(onPressed: onPressed, child: Text(buttonLabel)),
+      ],
+    );
   }
 }
 
