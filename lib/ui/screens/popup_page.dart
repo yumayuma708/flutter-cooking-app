@@ -56,6 +56,8 @@ class PopupDialog {
                               onPressed: () => pageController.nextPage(
                                   duration: const Duration(milliseconds: 300),
                                   curve: Curves.easeInOut),
+                              showBackButton: false,
+                              showNextButton: true,
                             );
                           case 1:
                             return PopupPage(
@@ -64,12 +66,16 @@ class PopupDialog {
                               onPressed: () => pageController.nextPage(
                                   duration: const Duration(milliseconds: 300),
                                   curve: Curves.easeInOut),
+                              showBackButton: true,
+                              showNextButton: true,
                             );
                           case 2:
                             return PopupPage(
                               description: "これはページ3です。",
                               buttonLabel: "料理を作る！",
                               onPressed: () => Navigator.of(context).pop(),
+                              showBackButton: true,
+                              showNextButton: false,
                             );
                           default:
                             throw Exception("Invalid page index");
@@ -93,11 +99,16 @@ class PopupPage extends StatelessWidget {
   final String description;
   final String buttonLabel;
   final VoidCallback onPressed;
+  final bool showBackButton; // 追加
+  final bool showNextButton; // 追加
 
-  PopupPage({
+  const PopupPage({
+    super.key,
     required this.description,
     required this.buttonLabel,
     required this.onPressed,
+    this.showBackButton = true, // デフォルト値
+    this.showNextButton = true, // デフォルト値
   });
 
   @override
@@ -105,7 +116,13 @@ class PopupPage extends StatelessWidget {
     return Column(
       children: [
         Text(description),
-        ElevatedButton(onPressed: onPressed, child: Text(buttonLabel)),
+        if (showBackButton) // 条件を確認
+          ElevatedButton(
+            onPressed: () {}, // 戻るボタンのアクションをここで実装
+            child: const Text('戻る'),
+          ),
+        if (showNextButton) // 条件を確認
+          ElevatedButton(onPressed: onPressed, child: Text(buttonLabel)),
       ],
     );
   }
