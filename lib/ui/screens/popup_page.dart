@@ -123,6 +123,7 @@ class PopupPage extends StatelessWidget {
         Expanded(child: Center(child: Text(description))),
         Row(
           children: [
+            const Spacer(),
             if (showBackButton)
               ElevatedButton(
                 onPressed: () {
@@ -133,9 +134,12 @@ class PopupPage extends StatelessWidget {
                 },
                 child: const Text('戻る'),
               ),
-            const Spacer(),
+            const Spacer(
+              flex: 7,
+            ),
             if (showNextButton)
               ElevatedButton(onPressed: onPressed, child: Text(buttonLabel)),
+            const Spacer(),
           ],
         ),
       ],
