@@ -132,13 +132,26 @@ class PopupPage extends StatelessWidget {
                       duration: const Duration(milliseconds: 300),
                       curve: Curves.easeInOut);
                 },
-                child: const Text('戻る'),
+                child: const Text(
+                  '戻る',
+                  style: TextStyle(color: Colors.black), // 文字の色を黒に設定
+                ),
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.white, // ボタンの背景色を白に設定
+                ),
               ),
-            const Spacer(
-              flex: 7,
-            ),
+            const Spacer(flex: 7),
             if (showNextButton)
-              ElevatedButton(onPressed: onPressed, child: Text(buttonLabel)),
+              ElevatedButton(
+                onPressed: onPressed,
+                child: Text(
+                  buttonLabel,
+                  style: TextStyle(color: Colors.black), // 文字の色を黒に設定
+                ),
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.white, // ボタンの背景色を白に設定
+                ),
+              ),
             const Spacer(),
           ],
         ),
@@ -146,7 +159,6 @@ class PopupPage extends StatelessWidget {
     );
   }
 }
-
 
 
 // 使用方法: 
