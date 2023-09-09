@@ -13,14 +13,17 @@ class CookingScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(popupProvider);
-    final pageController = ref.watch(pageControllerProvider);
+    final popupNotifier = ref.watch(popupProvider.notifier);
+    final pageController = popupNotifier.pageController;
 
-    Future<void> _showPopup() async {
+    Future<void> _showPopup(BuildContext context, WidgetRef ref,
+        PageController pageController) async {
       await showDialog(
         context: context,
+        barrierDismissible: true,
         builder: (BuildContext context) {
           return PageView.builder(
-            controller: pageController, // ここでPageControllerをセット
+            controller: pageController,
             itemCount: 3,
             onPageChanged: (index) {
               ref.read(popupProvider.notifier).updateCurrentPage(index + 1);
@@ -63,6 +66,9 @@ class CookingScreen extends ConsumerWidget {
           );
         },
       );
+      WidgetsBinding.instance?.addPostFrameCallback((_) {
+        _showPopup(context, ref, pageController);
+      });
     }
 
     return Scaffold(
@@ -70,7 +76,7 @@ class CookingScreen extends ConsumerWidget {
         color: Colors.orange[400],
         child: Center(
           child: ElevatedButton(
-            onPressed: _showPopup,
+            onPressed: () => _showPopup(context, ref, pageController),
             child: const Text('料理ページを開く'),
           ),
         ),
@@ -80,10 +86,18 @@ class CookingScreen extends ConsumerWidget {
 }
 
 class PopupNotifier extends StateNotifier<PopupState> {
+  PageController pageController = PageController();
+
   PopupNotifier() : super(PopupState(currentPage: 1));
 
   void updateCurrentPage(int page) {
     state = PopupState(currentPage: page);
+  }
+
+  @override
+  void dispose() {
+    pageController.dispose();
+    super.dispose();
   }
 }
 
