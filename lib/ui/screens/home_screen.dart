@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously, library_private_types_in_public_api
+
 import 'package:caul/providers/popup_provider.dart';
 import 'package:caul/ui/screens/cooking_screen.dart';
 import 'package:caul/ui/screens/favorite_screen.dart';
@@ -19,48 +21,78 @@ Future<void> _showPopup(
       context: context,
       barrierDismissible: true,
       builder: (BuildContext context) {
-        return PageView.builder(
-          controller: pageController,
-          itemCount: 3,
-          onPageChanged: (index) {
-            ref.read(popupProvider.notifier).updateCurrentPage(index + 1);
-          },
-          itemBuilder: (context, index) {
-            String description;
-            String buttonLabel;
-            VoidCallback onPressed;
+        return Dialog(
+            backgroundColor: Colors.blueGrey[100],
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(24.0),
+            ),
+            // AlertDialogからDialogに変更
+            child: SizedBox(
+                width: 400, // この値を調整してポップアップの幅をカスタマイズ
+                height: 500,
+                child: Column(mainAxisSize: MainAxisSize.min, children: [
+                  Expanded(
+                      child: PageView.builder(
+                    controller: pageController,
+                    itemCount: 3,
+                    onPageChanged: (index) {
+                      ref
+                          .read(popupProvider.notifier)
+                          .updateCurrentPage(index + 1);
+                    },
+                    itemBuilder: (context, index) {
+                      String description;
+                      String buttonLabel;
+                      VoidCallback onPressed;
 
-            switch (index) {
-              case 0:
-                description = "これはページ1です。";
-                buttonLabel = "次へ";
-                onPressed = () => pageController.nextPage(
-                    duration: const Duration(milliseconds: 300),
-                    curve: Curves.easeInOut);
-                break;
-              case 1:
-                description = "これはページ2です。";
-                buttonLabel = "次へ";
-                onPressed = () => pageController.nextPage(
-                    duration: const Duration(milliseconds: 300),
-                    curve: Curves.easeInOut);
-                break;
-              case 2:
-                description = "これはページ3です。";
-                buttonLabel = "料理を作る！";
-                onPressed = () => Navigator.of(context).pop();
-                break;
-              default:
-                throw Exception("Invalid page index");
-            }
+                      switch (index) {
+                        case 0:
+                          description = "これはページ1です。";
+                          buttonLabel = "次へ";
+                          onPressed = () => pageController.nextPage(
+                              duration: const Duration(milliseconds: 300),
+                              curve: Curves.easeInOut);
+                          break;
+                        case 1:
+                          description = "これはページ2です。";
+                          buttonLabel = "次へ";
+                          onPressed = () => pageController.nextPage(
+                              duration: const Duration(milliseconds: 300),
+                              curve: Curves.easeInOut);
+                          break;
+                        case 2:
+                          description = "これはページ3です。";
+                          buttonLabel = "料理を作る！";
+                          onPressed = () => Navigator.of(context).pop();
+                          break;
+                        default:
+                          throw Exception("Invalid page index");
+                      }
 
-            return _PopupPage(
-              description: description,
-              buttonLabel: buttonLabel,
-              onPressed: onPressed,
-            );
-          },
-        );
+                      return Column(children: [
+                        Text(description),
+                        ElevatedButton(
+                            onPressed: onPressed, child: Text(buttonLabel)),
+                      ]);
+                    },
+                  )),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: List.generate(3, (idx) {
+                      return Container(
+                        margin: const EdgeInsets.symmetric(horizontal: 4.0),
+                        width: 8.0,
+                        height: 8.0,
+                        decoration: BoxDecoration(
+                          color: ref.read(popupProvider).currentPage == idx + 1
+                              ? Colors.blue
+                              : Colors.grey,
+                          shape: BoxShape.circle,
+                        ),
+                      );
+                    }),
+                  ),
+                ])));
       },
     );
     await prefs.setBool('hasShownPopup', true);
@@ -86,6 +118,7 @@ class _PopupPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
+      backgroundColor: Colors.pink,
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
