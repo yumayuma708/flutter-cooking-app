@@ -136,8 +136,31 @@ class PopupPage extends StatelessWidget {
                   '戻る',
                   style: TextStyle(color: Colors.black), // 文字の色を黒に設定
                 ),
-                style: ElevatedButton.styleFrom(
-                  primary: Colors.white, // ボタンの背景色を白に設定
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.resolveWith<Color>(
+                    (Set<MaterialState> states) {
+                      if (states.contains(MaterialState.pressed)) {
+                        return Colors.blueGrey.withOpacity(0.1); // 押されたときの背景色
+                      }
+                      return Colors.white; // 通常時の背景色
+                    },
+                  ),
+                  foregroundColor:
+                      MaterialStateProperty.all<Color>(Colors.black), // 文字色
+                  elevation: MaterialStateProperty.resolveWith<double>(
+                    (Set<MaterialState> states) {
+                      if (states.contains(MaterialState.pressed)) {
+                        return 2; // 押されたときの影の高さ
+                      }
+                      return 5; // 通常時の影の高さ
+                    },
+                  ),
+                  shadowColor: MaterialStateProperty.all(Colors.black45),
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                  ),
                 ),
               ),
             const Spacer(flex: 7),
@@ -148,8 +171,31 @@ class PopupPage extends StatelessWidget {
                   buttonLabel,
                   style: TextStyle(color: Colors.black), // 文字の色を黒に設定
                 ),
-                style: ElevatedButton.styleFrom(
-                  primary: Colors.white, // ボタンの背景色を白に設定
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.resolveWith<Color>(
+                    (Set<MaterialState> states) {
+                      if (states.contains(MaterialState.pressed)) {
+                        return Colors.blueGrey.withOpacity(0.1); // 押されたときの背景色
+                      }
+                      return Colors.white; // 通常時の背景色
+                    },
+                  ),
+                  foregroundColor:
+                      MaterialStateProperty.all<Color>(Colors.black), // 文字色
+                  elevation: MaterialStateProperty.resolveWith<double>(
+                    (Set<MaterialState> states) {
+                      if (states.contains(MaterialState.pressed)) {
+                        return 2; // 押されたときの影の高さ
+                      }
+                      return 5; // 通常時の影の高さ
+                    },
+                  ),
+                  shadowColor: MaterialStateProperty.all(Colors.black45),
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                  ),
                 ),
               ),
             const Spacer(),
@@ -159,6 +205,7 @@ class PopupPage extends StatelessWidget {
     );
   }
 }
+
 
 
 // 使用方法: 
