@@ -77,7 +77,7 @@ class PopupDialog {
                               buttonLabel: "料理を作る！",
                               onPressed: () => Navigator.of(context).pop(),
                               showBackButton: true,
-                              showNextButton: false,
+                              showNextButton: true,
                               pageController: pageController,
                             );
                           default:
