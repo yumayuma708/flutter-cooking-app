@@ -62,13 +62,29 @@ class _MyHomePageState extends State<MyHomePage> {
                 _currentIndex = index;
               });
 
-              if (index == 0) {
-                // 「料理」のタブをタップしたときの処理
-                PopupDialog(
-                  context: context,
-                  ref: ref,
-                ).show();
+              String tabType;
+              switch (index) {
+                case 0:
+                  tabType = 'cook';
+                  break;
+                case 1:
+                  tabType = 'save';
+                  break;
+                case 2:
+                  tabType = 'favorite';
+                  break;
+                case 3:
+                  tabType = 'mypage';
+                  break;
+                default:
+                  throw Exception("Invalid tab index");
               }
+
+              PopupDialog(
+                context: context,
+                ref: ref,
+                tabType: tabType,
+              ).show();
             },
           );
         }),
