@@ -2,7 +2,7 @@ import 'package:caul/ui/screens/cooking_screen.dart';
 import 'package:caul/ui/screens/favorite_screen.dart';
 import 'package:caul/ui/screens/my_page_screen.dart';
 import 'package:caul/ui/screens/popup_dialog.dart';
-import 'package:caul/ui/screens/rankings_screen.dart';
+import 'package:caul/ui/screens/save_screen.dart';
 import 'package:caul/ui/screens/popup_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart'; // 追加
@@ -45,8 +45,8 @@ class _MyHomePageState extends State<MyHomePage> {
                 label: '料理',
               ),
               BottomNavigationBarItem(
-                icon: Icon(FontAwesomeIcons.crown),
-                label: 'ランキング',
+                icon: Icon(FontAwesomeIcons.bookmark),
+                label: '保存',
               ),
               BottomNavigationBarItem(
                 icon: FaIcon(FontAwesomeIcons.star),
