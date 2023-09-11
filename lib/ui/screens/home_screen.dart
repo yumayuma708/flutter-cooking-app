@@ -1,6 +1,7 @@
 import 'package:caul/ui/screens/cooking_screen.dart';
 import 'package:caul/ui/screens/favorite_screen.dart';
 import 'package:caul/ui/screens/my_page_screen.dart';
+import 'package:caul/ui/screens/popup_dialog.dart';
 import 'package:caul/ui/screens/rankings_screen.dart';
 import 'package:caul/ui/screens/popup_page.dart';
 import 'package:flutter/material.dart';
