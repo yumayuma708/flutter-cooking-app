@@ -43,7 +43,6 @@ class PopupPage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: List.generate(3, (index) {
               return ValueListenableBuilder<int>(
-                // この部分をValueListenableBuilderでラップ
                 valueListenable: currentPageNotifier,
                 builder: (context, currentPage, _) {
                   return Container(
@@ -181,9 +180,7 @@ class PopupDialog {
                       controller: pageController,
                       itemCount: 3,
                       onPageChanged: (index) {
-                        ref
-                            .read(popupProvider.notifier)
-                            .updateCurrentPage(index + 1);
+                        currentPageNotifier.value = index; // この行を追加
                       },
                       itemBuilder: (context, index) {
                         switch (index) {
