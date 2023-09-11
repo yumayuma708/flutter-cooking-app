@@ -1,15 +1,36 @@
-import 'package:flutter/material.dart';
+// cooking_screen.dart
 
-class CookingScreen extends StatelessWidget {
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:caul/status/popup.state.dart';
+
+final pageControllerProvider = Provider((ref) => PageController());
+
+class CookingScreen extends ConsumerWidget {
   const CookingScreen({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       body: Container(
-        color: Colors.orange[400], // 背景色をオレンジに設定
-        child: const Center(child: Text('料理')),
+        color: Colors.orange[400],
       ),
     );
+  }
+}
+
+class PopupNotifier extends StateNotifier<PopupState> {
+  PageController pageController = PageController();
+
+  PopupNotifier() : super(PopupState(currentPage: 1));
+
+  void updateCurrentPage(int page) {
+    state = PopupState(currentPage: page);
+  }
+
+  @override
+  void dispose() {
+    pageController.dispose();
+    super.dispose();
   }
 }

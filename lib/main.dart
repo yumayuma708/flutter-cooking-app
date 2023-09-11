@@ -1,6 +1,11 @@
 import 'package:caul/ui/cooking_app.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 void main() {
-  runApp(const CookingApp());
+  runApp(
+    ProviderScope(
+      child: CookingApp(),
+    ),
+  );
 }
