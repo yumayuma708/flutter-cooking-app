@@ -1,6 +1,3 @@
-// ignore_for_file: use_build_context_synchronously, library_private_types_in_public_api
-
-import 'package:caul/providers/popup_provider.dart';
 import 'package:caul/ui/screens/cooking_screen.dart';
 import 'package:caul/ui/screens/favorite_screen.dart';
 import 'package:caul/ui/screens/my_page_screen.dart';
@@ -66,13 +63,10 @@ class _MyHomePageState extends State<MyHomePage> {
 
               if (index == 0) {
                 // 「料理」のタブをタップしたときの処理
-                final popupNotifier = ref.watch(popupProvider.notifier);
-                final pageController = popupNotifier.pageController;
                 PopupDialog(
-                        context: context,
-                        ref: ref,
-                        pageController: pageController)
-                    .show();
+                  context: context,
+                  ref: ref,
+                ).show();
               }
             },
           );

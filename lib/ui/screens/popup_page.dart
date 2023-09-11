@@ -5,16 +5,144 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+class PopupPage extends StatelessWidget {
+  final String description;
+  final String buttonLabel;
+  final VoidCallback onPressed;
+  final bool showBackButton;
+  final bool showNextButton;
+  final PageController pageController;
+  final ValueNotifier<int> currentPageNotifier;
+
+  PopupPage({
+    super.key,
+    required this.description,
+    required this.buttonLabel,
+    required this.onPressed,
+    required this.pageController,
+    this.showBackButton = true,
+    this.showNextButton = true,
+    required this.currentPageNotifier, // ← コンストラクタにこれも追加します
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: List.generate(3, (index) {
+              return ValueListenableBuilder<int>(
+                // この部分をValueListenableBuilderでラップ
+                valueListenable: currentPageNotifier,
+                builder: (context, currentPage, _) {
+                  return Container(
+                    margin: const EdgeInsets.all(4.0),
+                    width: 10,
+                    height: 10,
+                    decoration: BoxDecoration(
+                      color: currentPage == index ? Colors.blue : Colors.grey,
+                      shape: BoxShape.circle,
+                    ),
+                  );
+                },
+              );
+            })),
+        const SizedBox(height: 20),
+        Row(
+          children: [
+            const Spacer(),
+            if (showBackButton)
+              ElevatedButton(
+                onPressed: () {
+                  pageController.previousPage(
+                      duration: const Duration(milliseconds: 300),
+                      curve: Curves.easeInOut);
+                },
+                child: const Text(
+                  '戻る',
+                  style: TextStyle(color: Colors.black),
+                ),
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.resolveWith<Color>(
+                    (Set<MaterialState> states) {
+                      if (states.contains(MaterialState.pressed)) {
+                        return Colors.blueGrey.withOpacity(0.1);
+                      }
+                      return Colors.white;
+                    },
+                  ),
+                  foregroundColor:
+                      MaterialStateProperty.all<Color>(Colors.black),
+                  elevation: MaterialStateProperty.resolveWith<double>(
+                    (Set<MaterialState> states) {
+                      if (states.contains(MaterialState.pressed)) {
+                        return 2;
+                      }
+                      return 5;
+                    },
+                  ),
+                  shadowColor: MaterialStateProperty.all(Colors.black45),
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                  ),
+                ),
+              ),
+            const Spacer(flex: 7),
+            if (showNextButton)
+              ElevatedButton(
+                onPressed: onPressed,
+                child: Text(
+                  buttonLabel,
+                  style: const TextStyle(color: Colors.black),
+                ),
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.resolveWith<Color>(
+                    (Set<MaterialState> states) {
+                      if (states.contains(MaterialState.pressed)) {
+                        return Colors.blueGrey.withOpacity(0.1);
+                      }
+                      return Colors.white;
+                    },
+                  ),
+                  foregroundColor:
+                      MaterialStateProperty.all<Color>(Colors.black),
+                  elevation: MaterialStateProperty.resolveWith<double>(
+                    (Set<MaterialState> states) {
+                      if (states.contains(MaterialState.pressed)) {
+                        return 2;
+                      }
+                      return 5;
+                    },
+                  ),
+                  shadowColor: MaterialStateProperty.all(Colors.black45),
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                  ),
+                ),
+              ),
+            const Spacer(),
+          ],
+        ),
+      ],
+    );
+  }
+}
+
 // 新しいPopupDialogクラス
 class PopupDialog {
   final BuildContext context;
   final WidgetRef ref;
-  final PageController pageController;
+  final PageController pageController = PageController(initialPage: 0);
+  final ValueNotifier<int> currentPageNotifier = ValueNotifier<int>(0);
 
   PopupDialog({
     required this.context,
     required this.ref,
-    required this.pageController,
   });
 
   Future<void> show() async {
@@ -59,6 +187,7 @@ class PopupDialog {
                               showBackButton: false,
                               showNextButton: true,
                               pageController: pageController,
+                              currentPageNotifier: currentPageNotifier,
                             );
                           case 1:
                             return PopupPage(
@@ -70,6 +199,7 @@ class PopupDialog {
                               showBackButton: true,
                               showNextButton: true,
                               pageController: pageController,
+                              currentPageNotifier: currentPageNotifier,
                             );
                           case 2:
                             return PopupPage(
@@ -79,6 +209,7 @@ class PopupDialog {
                               showBackButton: true,
                               showNextButton: true,
                               pageController: pageController,
+                              currentPageNotifier: currentPageNotifier,
                             );
                           default:
                             throw Exception("Invalid page index");
@@ -97,116 +228,6 @@ class PopupDialog {
     }
   }
 }
-
-class PopupPage extends StatelessWidget {
-  final String description;
-  final String buttonLabel;
-  final VoidCallback onPressed;
-  final bool showBackButton;
-  final bool showNextButton;
-  final PageController pageController; // 追加: PageControllerの参照
-
-  const PopupPage({
-    super.key,
-    required this.description,
-    required this.buttonLabel,
-    required this.onPressed,
-    required this.pageController, // コンストラクタに追加
-    this.showBackButton = true,
-    this.showNextButton = true,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Expanded(child: Center(child: Text(description))),
-        Row(
-          children: [
-            const Spacer(),
-            if (showBackButton)
-              ElevatedButton(
-                onPressed: () {
-                  // 戻るボタンのアクションを更新
-                  pageController.previousPage(
-                      duration: const Duration(milliseconds: 300),
-                      curve: Curves.easeInOut);
-                },
-                child: const Text(
-                  '戻る',
-                  style: TextStyle(color: Colors.black), // 文字の色を黒に設定
-                ),
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.resolveWith<Color>(
-                    (Set<MaterialState> states) {
-                      if (states.contains(MaterialState.pressed)) {
-                        return Colors.blueGrey.withOpacity(0.1); // 押されたときの背景色
-                      }
-                      return Colors.white; // 通常時の背景色
-                    },
-                  ),
-                  foregroundColor:
-                      MaterialStateProperty.all<Color>(Colors.black), // 文字色
-                  elevation: MaterialStateProperty.resolveWith<double>(
-                    (Set<MaterialState> states) {
-                      if (states.contains(MaterialState.pressed)) {
-                        return 2; // 押されたときの影の高さ
-                      }
-                      return 5; // 通常時の影の高さ
-                    },
-                  ),
-                  shadowColor: MaterialStateProperty.all(Colors.black45),
-                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(5),
-                    ),
-                  ),
-                ),
-              ),
-            const Spacer(flex: 7),
-            if (showNextButton)
-              ElevatedButton(
-                onPressed: onPressed,
-                child: Text(
-                  buttonLabel,
-                  style: TextStyle(color: Colors.black), // 文字の色を黒に設定
-                ),
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.resolveWith<Color>(
-                    (Set<MaterialState> states) {
-                      if (states.contains(MaterialState.pressed)) {
-                        return Colors.blueGrey.withOpacity(0.1); // 押されたときの背景色
-                      }
-                      return Colors.white; // 通常時の背景色
-                    },
-                  ),
-                  foregroundColor:
-                      MaterialStateProperty.all<Color>(Colors.black), // 文字色
-                  elevation: MaterialStateProperty.resolveWith<double>(
-                    (Set<MaterialState> states) {
-                      if (states.contains(MaterialState.pressed)) {
-                        return 2; // 押されたときの影の高さ
-                      }
-                      return 5; // 通常時の影の高さ
-                    },
-                  ),
-                  shadowColor: MaterialStateProperty.all(Colors.black45),
-                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(5),
-                    ),
-                  ),
-                ),
-              ),
-            const Spacer(),
-          ],
-        ),
-      ],
-    );
-  }
-}
-
-
 
 // 使用方法: 
 // PopupDialog(context: context, ref: ref, pageController: pageController).show();
