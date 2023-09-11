@@ -29,6 +29,16 @@ class PopupPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
+        const Spacer(
+          flex: 2,
+        ),
+        Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Text(description, style: TextStyle(fontSize: 16.0)),
+        ),
+        const Spacer(
+          flex: 5,
+        ),
         Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: List.generate(3, (index) {
