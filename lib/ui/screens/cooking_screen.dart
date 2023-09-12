@@ -1,5 +1,3 @@
-// cooking_screen.dart
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:caul/status/popup.state.dart';
@@ -13,14 +11,13 @@ class CookingScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.orange[400], // <-- 背景色をオレンジに
-        title: Text(
+        backgroundColor: Colors.orange,
+        title: const Text(
           '食材を選ぶ',
-          style: TextStyle(color: Colors.black), // <-- テキストカラーを黒に
+          style: TextStyle(color: Colors.black, fontSize: 35),
         ),
       ),
-      body: VegetablesGridView(), // <-- GridViewに変更
-      backgroundColor: Colors.orange[400], // <-- 背景色をオレンジに
+      body: VegetablesGridView(), // ボディ部分を変更
     );
   }
 }
@@ -32,7 +29,7 @@ class VegetablesGridView extends StatefulWidget {
 
 class _VegetablesGridViewState extends State<VegetablesGridView> {
   // 人気の野菜のリスト
-  List<String> vegetables = [
+  final List<String> vegetables = [
     'トマト',
     'にんにく',
     '玉ねぎ',
@@ -139,8 +136,12 @@ class _VegetablesGridViewState extends State<VegetablesGridView> {
   @override
   Widget build(BuildContext context) {
     return GridView.builder(
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 3, // <-- 一列に3つ並べる
+      padding: const EdgeInsets.all(8.0),
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 3,
+        mainAxisSpacing: 8.0,
+        crossAxisSpacing: 8.0,
+        childAspectRatio: 3.0,
       ),
       itemCount: vegetables.length,
       itemBuilder: (context, index) {
@@ -157,12 +158,15 @@ class _VegetablesGridViewState extends State<VegetablesGridView> {
           child: Card(
             color: selectedVegetables.contains(vegetables[index])
                 ? Colors.orange[800]
-                : null,
+                : Colors.orange[200],
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(30), // <-- 楕円の形状
+              borderRadius: BorderRadius.circular(30.0),
             ),
             child: Center(
-              child: Text(vegetables[index]),
+              child: Text(
+                vegetables[index],
+                style: const TextStyle(color: Colors.black),
+              ),
             ),
           ),
         );
