@@ -1,5 +1,7 @@
+import 'package:caul/providers/chat_gpt_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:caul/ui/screens/cooking_screen/cooking_result.dart';
 
 class CookingSituation extends ConsumerWidget {
   CookingSituation({Key? key}) : super(key: key);
@@ -35,6 +37,7 @@ class _CookingSituationInternal extends StatefulWidget {
 
 class _CookingSituationInternalState extends State<_CookingSituationInternal> {
   Set<String> selectedButtons = {}; // 選択されたボタンの名前を保存するSet
+  List<String> selectedVegetables = []; // ここでselectedVegetablesを追加します
 
   @override
   Widget build(BuildContext context) {
@@ -91,20 +94,17 @@ class _CookingSituationInternalState extends State<_CookingSituationInternal> {
           Padding(
               padding: const EdgeInsets.only(top: 5.0),
               child: SizedBox(
-                width: MediaQuery.of(context).size.width * 0.9, // サイズを90%に調整
+                width: MediaQuery.of(context).size.width * 0.9,
                 height: (MediaQuery.of(context).size.height / 10) * 0.7,
                 child: Row(
-                  mainAxisAlignment:
-                      MainAxisAlignment.spaceEvenly, // 子ウィジェット間のスペースを均等に
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    // 戻るボタン
                     ElevatedButton(
                       onPressed: () {
-                        // 「choose_ingredients」画面に戻る
                         Navigator.pop(context, 'choose_ingredients');
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.blueGrey[200], // ボタンの背景色
+                        backgroundColor: Colors.blueGrey[200],
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30.0),
                         ),
@@ -118,15 +118,43 @@ class _CookingSituationInternalState extends State<_CookingSituationInternal> {
                       ),
                     ),
 
-                    const SizedBox(width: 20.0), // 20ピクセルのスペースを追加
+                    const SizedBox(width: 20.0),
 
                     // 料理を作る！ボタン
                     ElevatedButton(
-                      onPressed: () {
-                        // Logic when button is pressed
+                      onPressed: () async {
+                        CookingData data = CookingData(
+                          selectedIngredients: selectedVegetables,
+                          selectedSituations: selectedButtons.toList(),
+                        );
+
+                        final provider = ChatGPTProvider();
+                        try {
+                          final instruction =
+                              await provider.getCookingInstruction(data);
+
+                          // Navigatorを使ってCookingResultPageに遷移
+                          Navigator.of(context).push(PageRouteBuilder(
+                              pageBuilder:
+                                  (context, animation, secondaryAnimation) =>
+                                      CookingResultPage(data: data),
+                              transitionsBuilder: (context, animation,
+                                  secondaryAnimation, child) {
+                                const begin = Offset(1.0, 0.0);
+                                const end = Offset.zero;
+                                const curve = Curves.easeInOut;
+                                var tween = Tween(begin: begin, end: end)
+                                    .chain(CurveTween(curve: curve));
+                                var offsetAnimation = animation.drive(tween);
+                                return SlideTransition(
+                                    position: offsetAnimation, child: child);
+                              }));
+                        } catch (e) {
+                          print('Error: $e');
+                        }
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.blueGrey[200], // ボタンの背景色
+                        backgroundColor: Colors.blueGrey[200],
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30.0),
                         ),
