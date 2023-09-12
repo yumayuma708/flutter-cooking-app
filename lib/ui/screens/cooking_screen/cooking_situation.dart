@@ -89,30 +89,59 @@ class _CookingSituationInternalState extends State<_CookingSituationInternal> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(top: 5.0),
-            child: SizedBox(
-              width: MediaQuery.of(context).size.width / 2,
-              height: (MediaQuery.of(context).size.height / 10) * 0.7,
-              child: ElevatedButton(
-                onPressed: () {
-                  // Logic when button is pressed
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.blueGrey[200],
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30.0),
-                  ),
+              padding: const EdgeInsets.only(top: 5.0),
+              child: SizedBox(
+                width: MediaQuery.of(context).size.width * 0.9, // サイズを90%に調整
+                height: (MediaQuery.of(context).size.height / 10) * 0.7,
+                child: Row(
+                  mainAxisAlignment:
+                      MainAxisAlignment.spaceEvenly, // 子ウィジェット間のスペースを均等に
+                  children: [
+                    // 戻るボタン
+                    ElevatedButton(
+                      onPressed: () {
+                        // 「choose_ingredients」画面に戻る
+                        Navigator.pop(context, 'choose_ingredients');
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.blueGrey[200], // ボタンの背景色
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30.0),
+                        ),
+                      ),
+                      child: const Text(
+                        "戻る",
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 20,
+                        ),
+                      ),
+                    ),
+
+                    const SizedBox(width: 20.0), // 20ピクセルのスペースを追加
+
+                    // 料理を作る！ボタン
+                    ElevatedButton(
+                      onPressed: () {
+                        // Logic when button is pressed
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.blueGrey[200], // ボタンの背景色
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30.0),
+                        ),
+                      ),
+                      child: const Text(
+                        "料理を作る！",
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 20,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-                child: const Text(
-                  "料理を作る！",
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 20,
-                  ),
-                ),
-              ),
-            ),
-          ),
+              )),
         ],
       ),
     );
