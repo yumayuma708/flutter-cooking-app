@@ -67,8 +67,8 @@ class ChatGPTProvider {
 
     if (responseData['choices'] != null &&
         responseData['choices'].isNotEmpty &&
-        responseData['choices'][0]['text'] != null) {
-      return responseData['choices'][0]['text'].trim();
+        responseData['choices'][0]['message']['content'] != null) {
+      return responseData['choices'][0]['message']['content'].trim();
     } else {
       throw Exception('Unexpected data format from ChatGPT API: $responseData');
     }
