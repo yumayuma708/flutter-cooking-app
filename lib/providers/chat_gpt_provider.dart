@@ -2,18 +2,33 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
+class CookingData {
+  final List<String> selectedIngredients;
+  final List<String> selectedSituations;
+
+  CookingData({
+    required this.selectedIngredients,
+    required this.selectedSituations,
+  });
+
+  Map<String, dynamic> toJson() => {
+        'ingredients': selectedIngredients,
+        'situations': selectedSituations,
+      };
+}
+
 class ChatGPTProvider {
   Future<String> getCookingInstruction(CookingData data) async {
     final apiKey = dotenv.env['API_KEY']!;
-    final url = 'https://api.openai.com/v2/engines/davinci/completions';
+    const url = 'https://api.openai.com/v1/chat/completions';
     final headers = {
       'Authorization': 'Bearer $apiKey',
       'Content-Type': 'application/json',
     };
 
-    final prompt = '次に挙げる食材や各条件に従って、料理を作ってください。\n\n'
-        '食材：${data.ingredients.join('、')}\n'
-        '条件：${data.situations.join('、')}\n\n'
+    final prompts = '次に挙げる食材や各条件に従って、料理を作ってください。\n\n'
+        '食材：${data.selectedIngredients.join('、')}\n'
+        '条件：${data.selectedSituations.join('、')}\n\n'
         '答える際は、以下のテンプレートに従ってお答えください。\n\n'
         '表示テンプレートは以下：\n'
         '料理名：〇〇\n'
@@ -30,8 +45,10 @@ class ChatGPTProvider {
         'その他料理を作る際に押さえておきたいポイント、料理のアピールポイントなど';
 
     final body = json.encode({
-      'prompt': prompt,
-      'max_tokens': 300,
+      'messages': [
+        {"role": "user", "content": prompts}
+      ],
+      'model': "gpt-3.5-turbo",
     });
 
     final response = await http.post(
@@ -40,7 +57,20 @@ class ChatGPTProvider {
       body: body,
     );
 
-    final responseData = json.decode(response.body);
-    return responseData['choices'][0]['text'].trim();
+    if (response.statusCode != 200) {
+      throw Exception(
+          'Failed to get cooking instruction from ChatGPT: ${response.body}');
+    }
+
+    final responseBody = utf8.decode(response.bodyBytes);
+    final responseData = json.decode(responseBody);
+
+    if (responseData['choices'] != null &&
+        responseData['choices'].isNotEmpty &&
+        responseData['choices'][0]['text'] != null) {
+      return responseData['choices'][0]['text'].trim();
+    } else {
+      throw Exception('Unexpected data format from ChatGPT API: $responseData');
+    }
   }
 }
