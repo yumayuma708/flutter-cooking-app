@@ -179,30 +179,45 @@ class _VegetablesGridViewState extends State<VegetablesGridView> {
             },
           ),
         ),
-        Container(
-          padding: const EdgeInsets.all(16.0),
-          color: Colors.orange[100], // バーの色
-          child: ElevatedButton(
-            onPressed: () {
-              Navigator.of(context).push(
-                PageRouteBuilder(
-                  pageBuilder: (context, animation, secondaryAnimation) =>
-                      const CookingSituation(), // ここに移動するクラスを指定
-                  transitionsBuilder:
-                      (context, animation, secondaryAnimation, child) {
-                    const begin = Offset(1.0, 0.0);
-                    const end = Offset.zero;
-                    const curve = Curves.easeInOut;
-                    var tween = Tween(begin: begin, end: end)
-                        .chain(CurveTween(curve: curve));
-                    var offsetAnimation = animation.drive(tween);
-                    return SlideTransition(
-                        position: offsetAnimation, child: child);
-                  },
+        Padding(
+          padding: const EdgeInsets.only(top: 5.0), // タブとボタンの間に8.0ピクセルのスペースを追加
+          child: SizedBox(
+            width: MediaQuery.of(context).size.width / 2,
+            height: (MediaQuery.of(context).size.height / 10) * 0.7,
+            child: ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).push(
+                  PageRouteBuilder(
+                    pageBuilder: (context, animation, secondaryAnimation) =>
+                        const CookingSituation(),
+                    transitionsBuilder:
+                        (context, animation, secondaryAnimation, child) {
+                      const begin = Offset(1.0, 0.0);
+                      const end = Offset.zero;
+                      const curve = Curves.easeInOut;
+                      var tween = Tween(begin: begin, end: end)
+                          .chain(CurveTween(curve: curve));
+                      var offsetAnimation = animation.drive(tween);
+                      return SlideTransition(
+                          position: offsetAnimation, child: child);
+                    },
+                  ),
+                );
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.blueGrey[200],
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30.0),
                 ),
-              );
-            },
-            child: const Text("条件選択へ"),
+              ),
+              child: const Text(
+                "条件選択へ",
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 20,
+                ),
+              ),
+            ),
           ),
         ),
       ],
