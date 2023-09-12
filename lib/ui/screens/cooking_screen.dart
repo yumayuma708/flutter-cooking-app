@@ -13,26 +13,39 @@ class CookingScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('食材を選ぶ'), // <-- 追加: タイトル
+        backgroundColor: Colors.orange[400], // <-- 背景色をオレンジに
+        title: Text(
+          '食材を選ぶ',
+          style: TextStyle(color: Colors.black), // <-- テキストカラーを黒に
+        ),
       ),
-      body: VegetablesListView(), // <-- 追加: リストビュー
+      body: VegetablesGridView(), // <-- GridViewに変更
+      backgroundColor: Colors.orange[400], // <-- 背景色をオレンジに
     );
   }
 }
 
-class VegetablesListView extends StatefulWidget {
+class VegetablesGridView extends StatefulWidget {
   @override
-  _VegetablesListViewState createState() => _VegetablesListViewState();
+  _VegetablesGridViewState createState() => _VegetablesGridViewState();
 }
 
-class _VegetablesListViewState extends State<VegetablesListView> {
-  // 野菜のリストを作成
-  List<String> vegetables = List.generate(50, (index) => '野菜$index');
-  List<String> selectedVegetables = []; // <-- 追加: 選択された野菜を保存するリスト
+class _VegetablesGridViewState extends State<VegetablesGridView> {
+  // 人気の野菜のリスト
+  List<String> vegetables = [
+    'トマト', 'キャベツ', 'レタス', 'ほうれん草', 'にんじん',
+    'じゃがいも', 'なす', 'ピーマン', 'かぼちゃ', 'ブロッコリー',
+    // ... 他の野菜
+  ];
+
+  List<String> selectedVegetables = [];
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
+    return GridView.builder(
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 3, // <-- 一列に3つ並べる
+      ),
       itemCount: vegetables.length,
       itemBuilder: (context, index) {
         return InkWell(
@@ -49,8 +62,11 @@ class _VegetablesListViewState extends State<VegetablesListView> {
             color: selectedVegetables.contains(vegetables[index])
                 ? Colors.green[200]
                 : null,
-            child: ListTile(
-              title: Text(vegetables[index]),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(30), // <-- 楕円の形状
+            ),
+            child: Center(
+              child: Text(vegetables[index]),
             ),
           ),
         );
