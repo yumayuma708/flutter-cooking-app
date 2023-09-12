@@ -17,9 +17,9 @@ dependencies:
   flutter_launcher_icons: ^0.13.1
   font_awesome_flutter: ^10.5.0
   google_sign_in: ^6.1.5
+  google_fonts: ^5.1.0
   flutter_riverpod: ^2.4.0
   shared_preferences: ^2.2.1
-  openai: ^4.0.0
   dart_openai: ^4.0.0
 
 dev_dependencies:
