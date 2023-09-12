@@ -52,6 +52,48 @@ class CookingSituation extends ConsumerWidget {
               },
             ),
           ),
+          Padding(
+            padding:
+                const EdgeInsets.only(top: 5.0), // タブとボタンの間に8.0ピクセルのスペースを追加
+            child: SizedBox(
+              width: MediaQuery.of(context).size.width / 2,
+              height: (MediaQuery.of(context).size.height / 10) * 0.7,
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).push(
+                    PageRouteBuilder(
+                      pageBuilder: (context, animation, secondaryAnimation) =>
+                          CookingSituation(),
+                      transitionsBuilder:
+                          (context, animation, secondaryAnimation, child) {
+                        const begin = Offset(1.0, 0.0);
+                        const end = Offset.zero;
+                        const curve = Curves.easeInOut;
+                        var tween = Tween(begin: begin, end: end)
+                            .chain(CurveTween(curve: curve));
+                        var offsetAnimation = animation.drive(tween);
+                        return SlideTransition(
+                            position: offsetAnimation, child: child);
+                      },
+                    ),
+                  );
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.blueGrey[200],
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30.0),
+                  ),
+                ),
+                child: const Text(
+                  "料理を作る！",
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 20,
+                  ),
+                ),
+              ),
+            ),
+          ),
           // ここにタブを配置するスペース。具体的なタブの実装は示していません。
           Container(
             height: 50.0,
