@@ -11,8 +11,9 @@ class ChooseIngredients extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
+      backgroundColor: Colors.orange[300],
       appBar: AppBar(
-        backgroundColor: Colors.orange,
+        backgroundColor: Colors.orange[300],
         title: const Text(
           '食材を選ぶ',
           style: TextStyle(
@@ -163,8 +164,8 @@ class _VegetablesGridViewState extends State<VegetablesGridView> {
                 },
                 child: Card(
                   color: selectedVegetables.contains(vegetables[index])
-                      ? Colors.orange[800]
-                      : Colors.orange[200],
+                      ? Colors.blueGrey[300]
+                      : Colors.white,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30.0),
                   ),
