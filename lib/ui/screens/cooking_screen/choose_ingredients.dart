@@ -11,8 +11,9 @@ class ChooseIngredients extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
+      backgroundColor: Colors.orange[300],
       appBar: AppBar(
-        backgroundColor: Colors.orange,
+        backgroundColor: Colors.orange[300],
         title: const Text(
           '食材を選ぶ',
           style: TextStyle(
@@ -163,8 +164,8 @@ class _VegetablesGridViewState extends State<VegetablesGridView> {
                 },
                 child: Card(
                   color: selectedVegetables.contains(vegetables[index])
-                      ? Colors.orange[800]
-                      : Colors.orange[200],
+                      ? Colors.blueGrey[300]
+                      : Colors.white,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30.0),
                   ),
@@ -180,16 +181,16 @@ class _VegetablesGridViewState extends State<VegetablesGridView> {
           ),
         ),
         Padding(
-          padding: const EdgeInsets.only(top: 5.0), // タブとボタンの間に8.0ピクセルのスペースを追加
+          padding: const EdgeInsets.all(15.0), // タブとボタンの間に8.0ピクセルのスペースを追加
           child: SizedBox(
             width: MediaQuery.of(context).size.width / 2,
-            height: (MediaQuery.of(context).size.height / 10) * 0.7,
+            height: (MediaQuery.of(context).size.height / 10) * 0.4,
             child: ElevatedButton(
               onPressed: () {
                 Navigator.of(context).push(
                   PageRouteBuilder(
                     pageBuilder: (context, animation, secondaryAnimation) =>
-                        const CookingSituation(),
+                        CookingSituation(),
                     transitionsBuilder:
                         (context, animation, secondaryAnimation, child) {
                       const begin = Offset(1.0, 0.0);

@@ -3,7 +3,6 @@ import 'package:caul/ui/screens/favorite_screen.dart';
 import 'package:caul/ui/screens/my_page_screen.dart';
 import 'package:caul/ui/screens/popup_dialog.dart';
 import 'package:caul/ui/screens/save_screen.dart';
-import 'package:caul/ui/screens/popup_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart'; // 追加
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -20,17 +19,46 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _currentIndex = 0;
-  final List<Widget> _children = [
-    const ChooseIngredients(),
-    const SearchScreen(),
-    const FavoriteScreen(),
-    const MyPageScreen(),
+
+  // 各ページのルートのキーを格納するためのリスト
+  final List<GlobalKey<NavigatorState>> _navigatorKeys = [
+    GlobalKey<NavigatorState>(),
+    GlobalKey<NavigatorState>(),
+    GlobalKey<NavigatorState>(),
+    GlobalKey<NavigatorState>(),
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _children[_currentIndex],
+      body: Stack(
+        children: List.generate(_navigatorKeys.length, (index) {
+          return Offstage(
+            offstage: _currentIndex != index,
+            child: Navigator(
+              key: _navigatorKeys[index],
+              onGenerateRoute: (routeSettings) {
+                return MaterialPageRoute(
+                  builder: (context) {
+                    switch (index) {
+                      case 0:
+                        return ChooseIngredients();
+                      case 1:
+                        return SearchScreen();
+                      case 2:
+                        return FavoriteScreen();
+                      case 3:
+                        return MyPageScreen();
+                      default:
+                        throw Exception("Invalid index");
+                    }
+                  },
+                );
+              },
+            ),
+          );
+        }),
+      ),
       bottomNavigationBar: Container(
         color: Colors.orange,
         child: Consumer(builder: (context, ref, child) {
