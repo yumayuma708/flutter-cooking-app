@@ -189,7 +189,7 @@ class _VegetablesGridViewState extends State<VegetablesGridView> {
                 Navigator.of(context).push(
                   PageRouteBuilder(
                     pageBuilder: (context, animation, secondaryAnimation) =>
-                        const CookingSituation(),
+                        CookingSituation(),
                     transitionsBuilder:
                         (context, animation, secondaryAnimation, child) {
                       const begin = Offset(1.0, 0.0);
