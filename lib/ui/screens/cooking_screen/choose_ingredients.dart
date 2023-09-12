@@ -1,11 +1,12 @@
+import 'package:caul/ui/screens/cooking_screen/cooking_situation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:caul/status/popup.state.dart';
 
 final pageControllerProvider = Provider((ref) => PageController());
 
-class CookingScreen extends ConsumerWidget {
-  const CookingScreen({Key? key}) : super(key: key);
+class ChooseIngredients extends ConsumerWidget {
+  const ChooseIngredients({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -14,7 +15,8 @@ class CookingScreen extends ConsumerWidget {
         backgroundColor: Colors.orange,
         title: const Text(
           '食材を選ぶ',
-          style: TextStyle(color: Colors.black, fontSize: 35),
+          style: TextStyle(
+              color: Colors.black, fontSize: 35, fontWeight: FontWeight.w400),
         ),
       ),
       body: VegetablesGridView(), // ボディ部分を変更
@@ -33,7 +35,7 @@ class _VegetablesGridViewState extends State<VegetablesGridView> {
     'トマト',
     'にんにく',
     '玉ねぎ',
-    '人参',
+    'にんじん',
     'ピーマン',
     'じゃがいも',
     'しめじ',
@@ -60,7 +62,7 @@ class _VegetablesGridViewState extends State<VegetablesGridView> {
     '鶏もも肉',
     '牛肉',
     '魚',
-    '海老',
+    'エビ',
     'イカ',
     'タコ',
     'カニ',
@@ -81,7 +83,7 @@ class _VegetablesGridViewState extends State<VegetablesGridView> {
     'リンゴ',
     'オレンジ',
     '柿',
-    '柚子',
+    'ゆず',
     '梅',
     'バジル',
     'パセリ',
@@ -135,42 +137,74 @@ class _VegetablesGridViewState extends State<VegetablesGridView> {
 
   @override
   Widget build(BuildContext context) {
-    return GridView.builder(
-      padding: const EdgeInsets.all(8.0),
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 3,
-        mainAxisSpacing: 8.0,
-        crossAxisSpacing: 8.0,
-        childAspectRatio: 3.0,
-      ),
-      itemCount: vegetables.length,
-      itemBuilder: (context, index) {
-        return InkWell(
-          onTap: () {
-            setState(() {
-              if (selectedVegetables.contains(vegetables[index])) {
-                selectedVegetables.remove(vegetables[index]);
-              } else {
-                selectedVegetables.add(vegetables[index]);
-              }
-            });
-          },
-          child: Card(
-            color: selectedVegetables.contains(vegetables[index])
-                ? Colors.orange[800]
-                : Colors.orange[200],
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(30.0),
+    return Column(
+      children: [
+        Expanded(
+          child: GridView.builder(
+            padding: const EdgeInsets.all(8.0),
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 3,
+              mainAxisSpacing: 8.0,
+              crossAxisSpacing: 8.0,
+              childAspectRatio: 3.0,
             ),
-            child: Center(
-              child: Text(
-                vegetables[index],
-                style: const TextStyle(color: Colors.black),
-              ),
-            ),
+            itemCount: vegetables.length,
+            itemBuilder: (context, index) {
+              return InkWell(
+                onTap: () {
+                  setState(() {
+                    if (selectedVegetables.contains(vegetables[index])) {
+                      selectedVegetables.remove(vegetables[index]);
+                    } else {
+                      selectedVegetables.add(vegetables[index]);
+                    }
+                  });
+                },
+                child: Card(
+                  color: selectedVegetables.contains(vegetables[index])
+                      ? Colors.orange[800]
+                      : Colors.orange[200],
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30.0),
+                  ),
+                  child: Center(
+                    child: Text(
+                      vegetables[index],
+                      style: const TextStyle(color: Colors.black),
+                    ),
+                  ),
+                ),
+              );
+            },
           ),
-        );
-      },
+        ),
+        Container(
+          padding: const EdgeInsets.all(16.0),
+          color: Colors.orange[100], // バーの色
+          child: ElevatedButton(
+            onPressed: () {
+              Navigator.of(context).push(
+                PageRouteBuilder(
+                  pageBuilder: (context, animation, secondaryAnimation) =>
+                      const CookingSituation(), // ここに移動するクラスを指定
+                  transitionsBuilder:
+                      (context, animation, secondaryAnimation, child) {
+                    const begin = Offset(1.0, 0.0);
+                    const end = Offset.zero;
+                    const curve = Curves.easeInOut;
+                    var tween = Tween(begin: begin, end: end)
+                        .chain(CurveTween(curve: curve));
+                    var offsetAnimation = animation.drive(tween);
+                    return SlideTransition(
+                        position: offsetAnimation, child: child);
+                  },
+                ),
+              );
+            },
+            child: const Text("次へ進む"),
+          ),
+        ),
+      ],
     );
   }
 }

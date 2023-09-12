@@ -1,4 +1,4 @@
-import 'package:caul/ui/screens/cooking_screen.dart';
+import 'package:caul/ui/screens/cooking_screen/choose_ingredients.dart';
 import 'package:caul/ui/screens/favorite_screen.dart';
 import 'package:caul/ui/screens/my_page_screen.dart';
 import 'package:caul/ui/screens/popup_dialog.dart';
@@ -21,7 +21,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int _currentIndex = 0;
   final List<Widget> _children = [
-    const CookingScreen(),
+    const ChooseIngredients(),
     const SearchScreen(),
     const FavoriteScreen(),
     const MyPageScreen(),
