@@ -21,7 +21,7 @@ class PopupDialog {
   String getTabDescription(int pageIndex) {
     switch (tabType) {
       case 'cook':
-        return ["これは料理のページ$pageIndex+1です。", "次へ", "開始する"][pageIndex];
+        return ["これは料理のページ$pageIndexです。", "次へ", "開始する"][pageIndex];
       case 'save':
         return ["これは保存のページ$pageIndexです。", "次へ", "はじめる"][pageIndex];
       case 'favorite':
