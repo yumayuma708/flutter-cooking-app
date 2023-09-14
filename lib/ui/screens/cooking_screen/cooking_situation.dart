@@ -128,34 +128,37 @@ class _CookingSituationInternalState extends State<_CookingSituationInternal> {
                         ),
                       ),
                     ),
-                    Wrap(
-                      spacing: 8.0,
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start, // この行を追加
                       children: buttonGroups[index].map((button) {
                         bool isSelected = selectedButtons.contains(button);
-                        return GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              if (isSelected) {
-                                selectedButtons.remove(button);
-                              } else {
-                                selectedButtons.add(button);
-                              }
-                            });
-                          },
-                          child: Card(
-                            color: isSelected
-                                ? Colors.blueGrey[300]
-                                : Colors.white,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(30.0),
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 10.0, vertical: 5.0),
-                              child: Text(
-                                button,
-                                style: GoogleFonts.zenKakuGothicNew(
-                                    color: Colors.black),
+                        return Align(
+                          alignment: Alignment.centerLeft, // この行を追加
+                          child: GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                if (isSelected) {
+                                  selectedButtons.remove(button);
+                                } else {
+                                  selectedButtons.add(button);
+                                }
+                              });
+                            },
+                            child: Card(
+                              color: isSelected
+                                  ? Colors.blueGrey[300]
+                                  : Colors.white,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30.0),
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 10.0, vertical: 5.0),
+                                child: Text(
+                                  button,
+                                  style: GoogleFonts.zenKakuGothicNew(
+                                      color: Colors.black),
+                                ),
                               ),
                             ),
                           ),
