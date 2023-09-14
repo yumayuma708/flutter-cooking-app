@@ -1,7 +1,7 @@
 import 'package:caul/providers/chat_gpt_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:caul/ui/screens/cooking_screen/cooking_result.dart';
+import 'package:caul/ui/screens/loading_screen.dart';
 
 class CookingSituation extends ConsumerWidget {
   CookingSituation({Key? key}) : super(key: key);
@@ -122,36 +122,14 @@ class _CookingSituationInternalState extends State<_CookingSituationInternal> {
 
                     // 料理を作る！ボタン
                     ElevatedButton(
-                      onPressed: () async {
+                      onPressed: () {
                         CookingData data = CookingData(
                           selectedIngredients: selectedVegetables,
                           selectedSituations: selectedButtons.toList(),
                         );
-
-                        final provider = ChatGPTProvider();
-                        try {
-                          final instruction =
-                              await provider.getCookingInstruction(data);
-
-                          // Navigatorを使ってCookingResultPageに遷移
-                          Navigator.of(context).push(PageRouteBuilder(
-                              pageBuilder:
-                                  (context, animation, secondaryAnimation) =>
-                                      CookingResultPage(data: data),
-                              transitionsBuilder: (context, animation,
-                                  secondaryAnimation, child) {
-                                const begin = Offset(1.0, 0.0);
-                                const end = Offset.zero;
-                                const curve = Curves.easeInOut;
-                                var tween = Tween(begin: begin, end: end)
-                                    .chain(CurveTween(curve: curve));
-                                var offsetAnimation = animation.drive(tween);
-                                return SlideTransition(
-                                    position: offsetAnimation, child: child);
-                              }));
-                        } catch (e) {
-                          print('Error: $e');
-                        }
+                        Navigator.of(context).pushReplacement(MaterialPageRoute(
+                          builder: (context) => LoadingScreen(data: data),
+                        ));
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.blueGrey[200],
@@ -166,7 +144,7 @@ class _CookingSituationInternalState extends State<_CookingSituationInternal> {
                           fontSize: 20,
                         ),
                       ),
-                    ),
+                    )
                   ],
                 ),
               )),

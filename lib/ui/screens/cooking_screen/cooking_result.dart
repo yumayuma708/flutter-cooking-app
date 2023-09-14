@@ -4,7 +4,7 @@ import 'package:caul/providers/chat_gpt_provider.dart';
 class CookingResultPage extends StatelessWidget {
   final CookingData data;
 
-  const CookingResultPage({super.key, required this.data});
+  const CookingResultPage({Key? key, required this.data}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +23,7 @@ class CookingResultPage extends StatelessWidget {
               return Center(child: Text('Error: ${snapshot.error}'));
             } else {
               return SingleChildScrollView(
-                child: Text(snapshot.data!),
+                child: Text(snapshot.data ?? "No data found"),
               );
             }
           },
