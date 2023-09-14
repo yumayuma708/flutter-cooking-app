@@ -6,21 +6,24 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class CookingSituation extends ConsumerWidget {
-  CookingSituation({Key? key}) : super(key: key);
+  final List<String> selectedVegetables;
 
-// 配列１: 時間に関する要素
+  CookingSituation({Key? key, required this.selectedVegetables})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return _CookingSituationInternal(selectedVegetables: selectedVegetables);
+  }
+}
+
+class _CookingSituationInternal extends StatefulWidget {
+  final List<String> selectedVegetables;
+
   final List<String> timeOptions = ['30分以内', '1時間以内', '1.5時間以内', '指定しない'];
-
-// 配列２: 人数に関する要素
   final List<String> servingSize = ['1人分', '2人分', '3人分', '4人分'];
-
-// 配列３: 料理のジャンルに関する要素
   final List<String> cuisineType = ['和食', '洋食', '中華', 'イタリアン', '指定しない'];
-
-// 配列４: 量に関する要素
   final List<String> mealSize = ['軽め', 'がっつり', '指定しない'];
-
-// 配列５: その他の要素
   final List<String> preferences = [
     '短い時間で',
     '洗い物少なく',
@@ -30,40 +33,10 @@ class CookingSituation extends ConsumerWidget {
     '完全食',
     '指定しない'
   ];
-
-// 配列６: 確認に関する要素
   final List<String> confirmation = ['はい', 'いいえ'];
 
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    return ProviderScope(
-      child: _CookingSituationInternal(
-        timeOptions: timeOptions,
-        servingSize: servingSize,
-        cuisineType: cuisineType,
-        mealSize: mealSize,
-        preferences: preferences,
-        confirmation: confirmation,
-      ),
-    );
-  }
-}
-
-class _CookingSituationInternal extends StatefulWidget {
-  final List<String> timeOptions;
-  final List<String> servingSize;
-  final List<String> cuisineType;
-  final List<String> mealSize;
-  final List<String> preferences;
-  final List<String> confirmation;
-
   _CookingSituationInternal({
-    required this.timeOptions,
-    required this.servingSize,
-    required this.cuisineType,
-    required this.mealSize,
-    required this.preferences,
-    required this.confirmation,
+    required this.selectedVegetables,
   });
 
   @override
@@ -229,7 +202,8 @@ class _CookingSituationInternalState extends State<_CookingSituationInternal> {
                     ElevatedButton(
                       onPressed: () {
                         List<String> selectedVegetables = selectedButtons
-                            .where((item) => widget.timeOptions.contains(item))
+                            .where((item) =>
+                                widget.selectedVegetables.contains(item))
                             .toList();
                         List<String> timeConditions = selectedButtons
                             .where((item) => widget.timeOptions.contains(item))
@@ -251,7 +225,7 @@ class _CookingSituationInternalState extends State<_CookingSituationInternal> {
                             .toList();
 
                         CookingData data = CookingData(
-                          selectedIngredients: selectedVegetables,
+                          selectedIngredients: widget.selectedVegetables,
                           timeConditions: timeConditions,
                           servingConditions: servingConditions,
                           cuisineConditions: cuisineConditions,
