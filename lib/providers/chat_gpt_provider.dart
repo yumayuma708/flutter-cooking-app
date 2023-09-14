@@ -43,6 +43,14 @@ class ChatGPTProvider {
       'Content-Type': 'application/json',
     };
 
+    // confirmationConditionsに基づくメッセージを設定
+    String confirmationMessage = '';
+    if (data.confirmationConditions.contains('はい')) {
+      confirmationMessage = '食材にないものを追加して作っても構いません。';
+    } else if (data.confirmationConditions.contains('いいえ')) {
+      confirmationMessage = '食材として挙げたもののみで作ってください。';
+    }
+
     final prompts = '次に挙げる食材や各条件に従って、料理を作ってください。\n\n'
         '食材：${data.selectedIngredients.join('、')}\n'
         '調理時間：${data.timeConditions.join('、')}\n'
@@ -50,22 +58,26 @@ class ChatGPTProvider {
         '料理タイプ：${data.cuisineConditions.join('、')}\n'
         '食事量：${data.sizeConditions.join('、')}\n'
         'その他の条件：${data.preferenceConditions.join('、')}\n'
-        '確認：${data.confirmationConditions.join('、')}\n\n'
+        '$confirmationMessage\n\n'
         // 以下、既存のテンプレートを使用
         '答える際は、以下のテンプレートに従ってお答えください。\n\n'
         '表示テンプレートは以下：\n'
         '料理名：〇〇\n'
         '目安時間：◯時間◯分\n'
         '人数：◯人分\n'
-        '食材：〇〇、〇〇、〇〇、・・・\n'
-        '〇〇：◯g\n'
+        '材料\n'
+        '\t〇〇：◯g\n'
         '\t〇〇：◯g\n'
         '\t〇〇：◯g\n'
         '作り方：\n'
         '〇〇〇〇〇〇〇〇〇〇\n'
         '〇〇〇〇〇〇〇〇〇〇\n'
         '〇〇〇〇〇〇〇〇〇〇\n'
-        'その他料理を作る際に押さえておきたいポイント、料理のアピールポイントなど';
+        '料理のアピールポイント:""';
+    '前回までのメッセージを考慮せずに、今回のメッセージのみ考慮して作成してください。';
+
+    print('Sending the following to ChatGPT:');
+    print(prompts); // この行でprompts変数の内容を出力
 
     final body = json.encode({
       'messages': [

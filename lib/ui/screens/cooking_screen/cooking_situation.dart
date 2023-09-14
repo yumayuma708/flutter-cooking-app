@@ -228,16 +228,39 @@ class _CookingSituationInternalState extends State<_CookingSituationInternal> {
                     // 料理を作る！ボタン
                     ElevatedButton(
                       onPressed: () {
+                        List<String> selectedVegetables = selectedButtons
+                            .where((item) => widget.timeOptions.contains(item))
+                            .toList();
+                        List<String> timeConditions = selectedButtons
+                            .where((item) => widget.timeOptions.contains(item))
+                            .toList();
+                        List<String> servingConditions = selectedButtons
+                            .where((item) => widget.servingSize.contains(item))
+                            .toList();
+                        List<String> cuisineConditions = selectedButtons
+                            .where((item) => widget.cuisineType.contains(item))
+                            .toList();
+                        List<String> sizeConditions = selectedButtons
+                            .where((item) => widget.mealSize.contains(item))
+                            .toList();
+                        List<String> preferenceConditions = selectedButtons
+                            .where((item) => widget.preferences.contains(item))
+                            .toList();
+                        List<String> confirmationConditions = selectedButtons
+                            .where((item) => widget.confirmation.contains(item))
+                            .toList();
+
                         CookingData data = CookingData(
                           selectedIngredients: selectedVegetables,
-                          timeConditions: [], // ここに適切な値をセットする必要があります。
-                          servingConditions: [], // 同上
-                          cuisineConditions: [], // 同上
-                          sizeConditions: [], // 同上
-                          preferenceConditions: [], // 同上
-                          confirmationConditions: [], // 同上
+                          timeConditions: timeConditions,
+                          servingConditions: servingConditions,
+                          cuisineConditions: cuisineConditions,
+                          sizeConditions: sizeConditions,
+                          preferenceConditions: preferenceConditions,
+                          confirmationConditions: confirmationConditions,
                           instruction: "",
                         );
+
                         Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => LoadingScreen(data: data),
                         ));
