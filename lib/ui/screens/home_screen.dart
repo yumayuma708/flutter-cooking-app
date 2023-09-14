@@ -4,7 +4,8 @@ import 'package:caul/ui/screens/my_page_screen.dart';
 import 'package:caul/ui/screens/popup_dialog.dart';
 import 'package:caul/ui/screens/save_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart'; // 追加
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -42,13 +43,13 @@ class _MyHomePageState extends State<MyHomePage> {
                   builder: (context) {
                     switch (index) {
                       case 0:
-                        return ChooseIngredients();
+                        return const ChooseIngredients();
                       case 1:
-                        return SearchScreen();
+                        return const SearchScreen();
                       case 2:
-                        return FavoriteScreen();
+                        return const FavoriteScreen();
                       case 3:
-                        return MyPageScreen();
+                        return const MyPageScreen();
                       default:
                         throw Exception("Invalid index");
                     }
@@ -59,64 +60,76 @@ class _MyHomePageState extends State<MyHomePage> {
           );
         }),
       ),
-      bottomNavigationBar: Container(
-        color: Colors.orange,
-        child: Consumer(builder: (context, ref, child) {
-          return BottomNavigationBar(
-            backgroundColor: Colors.orange,
-            currentIndex: _currentIndex,
-            selectedItemColor: Colors.black,
-            unselectedItemColor: Colors.black,
-            items: const [
-              BottomNavigationBarItem(
-                icon: Icon(FontAwesomeIcons.utensils),
-                label: '料理',
+      bottomNavigationBar: Consumer(builder: (context, ref, child) {
+        return BottomNavigationBar(
+          backgroundColor: const Color.fromARGB(255, 4, 7, 47),
+          type: BottomNavigationBarType.fixed,
+          currentIndex: _currentIndex,
+          selectedItemColor: Colors.white,
+          unselectedItemColor: Colors.white70,
+          selectedLabelStyle: GoogleFonts.zenKakuGothicNew(), // <-- この行を追加
+          unselectedLabelStyle: GoogleFonts.zenKakuGothicNew(),
+          items: [
+            BottomNavigationBarItem(
+              icon: Icon(
+                FontAwesomeIcons.utensils,
+                color: _currentIndex == 0 ? Colors.white : Colors.white70,
               ),
-              BottomNavigationBarItem(
-                icon: Icon(FontAwesomeIcons.bookmark),
-                label: '保存',
+              label: '料理',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(
+                FontAwesomeIcons.bookmark,
+                color: _currentIndex == 1 ? Colors.white : Colors.white70,
               ),
-              BottomNavigationBarItem(
-                icon: FaIcon(FontAwesomeIcons.star),
-                label: 'お気に入り',
+              label: '保存',
+            ),
+            BottomNavigationBarItem(
+              icon: FaIcon(
+                FontAwesomeIcons.star,
+                color: _currentIndex == 2 ? Colors.white : Colors.white70,
               ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.person),
-                label: 'マイページ',
+              label: 'お気に入り',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(
+                Icons.person,
+                color: _currentIndex == 3 ? Colors.white : Colors.white70,
               ),
-            ],
-            onTap: (index) {
-              setState(() {
-                _currentIndex = index;
-              });
+              label: 'マイページ',
+            ),
+          ],
+          onTap: (index) {
+            setState(() {
+              _currentIndex = index;
+            });
 
-              String tabType;
-              switch (index) {
-                case 0:
-                  tabType = 'cook';
-                  break;
-                case 1:
-                  tabType = 'save';
-                  break;
-                case 2:
-                  tabType = 'favorite';
-                  break;
-                case 3:
-                  tabType = 'mypage';
-                  break;
-                default:
-                  throw Exception("Invalid tab index");
-              }
+            String tabType;
+            switch (index) {
+              case 0:
+                tabType = 'cook';
+                break;
+              case 1:
+                tabType = 'save';
+                break;
+              case 2:
+                tabType = 'favorite';
+                break;
+              case 3:
+                tabType = 'mypage';
+                break;
+              default:
+                throw Exception("Invalid tab index");
+            }
 
-              PopupDialog(
-                context: context,
-                ref: ref,
-                tabType: tabType,
-              ).show();
-            },
-          );
-        }),
-      ),
+            PopupDialog(
+              context: context,
+              ref: ref,
+              tabType: tabType,
+            ).show();
+          },
+        );
+      }),
     );
   }
 }

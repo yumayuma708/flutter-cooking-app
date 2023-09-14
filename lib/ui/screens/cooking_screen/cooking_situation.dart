@@ -2,6 +2,7 @@ import 'package:caul/providers/chat_gpt_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:caul/ui/screens/loading_screen.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class CookingSituation extends ConsumerWidget {
   CookingSituation({Key? key}) : super(key: key);
@@ -42,12 +43,13 @@ class _CookingSituationInternalState extends State<_CookingSituationInternal> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.orange[300],
+      backgroundColor: Colors.orange[100],
       appBar: AppBar(
-        backgroundColor: Colors.orange[300],
-        title: const Text(
-          '条件を選ぶ',
-          style: TextStyle(color: Colors.black, fontSize: 35),
+        backgroundColor: Colors.orange[500],
+        title: Text(
+          '条件を選びます',
+          style: GoogleFonts.zenKakuGothicNew(
+              color: Colors.black, fontSize: 25, fontWeight: FontWeight.w500),
         ),
       ),
       body: Column(
@@ -83,7 +85,8 @@ class _CookingSituationInternalState extends State<_CookingSituationInternal> {
                     child: Center(
                       child: Text(
                         widget.buttons[index],
-                        style: const TextStyle(color: Colors.black),
+                        style:
+                            GoogleFonts.zenKakuGothicNew(color: Colors.black),
                       ),
                     ),
                   ),
@@ -109,9 +112,9 @@ class _CookingSituationInternalState extends State<_CookingSituationInternal> {
                           borderRadius: BorderRadius.circular(30.0),
                         ),
                       ),
-                      child: const Text(
+                      child: Text(
                         "戻る",
-                        style: TextStyle(
+                        style: GoogleFonts.zenKakuGothicNew(
                           color: Colors.black,
                           fontSize: 20,
                         ),
@@ -138,9 +141,9 @@ class _CookingSituationInternalState extends State<_CookingSituationInternal> {
                           borderRadius: BorderRadius.circular(30.0),
                         ),
                       ),
-                      child: const Text(
+                      child: Text(
                         "料理を作る！",
-                        style: TextStyle(
+                        style: GoogleFonts.zenKakuGothicNew(
                           color: Colors.black,
                           fontSize: 20,
                         ),
