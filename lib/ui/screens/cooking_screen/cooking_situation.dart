@@ -42,9 +42,9 @@ class _CookingSituationInternalState extends State<_CookingSituationInternal> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.orange[300],
+      backgroundColor: Colors.orange[100],
       appBar: AppBar(
-        backgroundColor: Colors.orange[300],
+        backgroundColor: Colors.orange[500],
         title: const Text(
           '条件を選びます',
           style: TextStyle(color: Colors.black, fontSize: 35),
