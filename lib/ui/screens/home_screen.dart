@@ -64,26 +64,35 @@ class _MyHomePageState extends State<MyHomePage> {
           backgroundColor: const Color.fromARGB(255, 4, 7, 47),
           type: BottomNavigationBarType.fixed,
           currentIndex: _currentIndex,
-          selectedItemColor: Colors.white70,
-          unselectedItemColor: Colors.white12,
-          items: const [
+          selectedItemColor: Colors.white,
+          unselectedItemColor: Colors.white70,
+          items: [
             BottomNavigationBarItem(
               icon: Icon(
                 FontAwesomeIcons.utensils,
-                color: Colors.white,
+                color: _currentIndex == 0 ? Colors.white : Colors.white70,
               ),
               label: '料理',
             ),
             BottomNavigationBarItem(
-              icon: Icon(FontAwesomeIcons.bookmark, color: Colors.white70),
+              icon: Icon(
+                FontAwesomeIcons.bookmark,
+                color: _currentIndex == 1 ? Colors.white : Colors.white70,
+              ),
               label: '保存',
             ),
             BottomNavigationBarItem(
-              icon: FaIcon(FontAwesomeIcons.star, color: Colors.white70),
+              icon: FaIcon(
+                FontAwesomeIcons.star,
+                color: _currentIndex == 2 ? Colors.white : Colors.white70,
+              ),
               label: 'お気に入り',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.person, color: Colors.white70),
+              icon: Icon(
+                Icons.person,
+                color: _currentIndex == 3 ? Colors.white : Colors.white70,
+              ),
               label: 'マイページ',
             ),
           ],
