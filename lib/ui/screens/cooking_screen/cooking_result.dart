@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:caul/providers/chat_gpt_provider.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class CookingResultPage extends StatelessWidget {
   final CookingData data;
@@ -12,15 +13,24 @@ class CookingResultPage extends StatelessWidget {
         backgroundColor: Colors.orange[100],
         appBar: AppBar(
           backgroundColor: Colors.orange[500],
-          title: const Text(
+          title: Text(
             'AIの考えたレシピ',
-            style: TextStyle(fontSize: 25, color: Colors.black),
+            style: GoogleFonts.zenKakuGothicNew(
+                // 2. フォントを変更
+                fontSize: 25,
+                color: Colors.black,
+                fontWeight: FontWeight.w500),
           ),
         ),
         body: Container(
           child: SingleChildScrollView(
             child: Column(
-              children: [Text(data.instruction)],
+              children: [
+                Text(
+                  data.instruction,
+                  style: GoogleFonts.zenKurenaido(fontSize: 15), // 2. フォントを変更
+                ),
+              ],
             ),
           ),
         ));

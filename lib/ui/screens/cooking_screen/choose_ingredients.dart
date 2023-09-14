@@ -2,6 +2,7 @@ import 'package:caul/ui/screens/cooking_screen/cooking_situation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:caul/status/popup.state.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 final pageControllerProvider = Provider((ref) => PageController());
 
@@ -14,10 +15,10 @@ class ChooseIngredients extends ConsumerWidget {
       backgroundColor: Colors.orange[100],
       appBar: AppBar(
         backgroundColor: Colors.orange[500],
-        title: const Text(
+        title: Text(
           '食材を選びます',
-          style: TextStyle(
-              color: Colors.black, fontSize: 25, fontWeight: FontWeight.w400),
+          style: GoogleFonts.zenKakuGothicNew(
+              color: Colors.black, fontSize: 25, fontWeight: FontWeight.w500),
         ),
       ),
       body: VegetablesGridView(), // ボディ部分を変更
@@ -176,7 +177,7 @@ class _VegetablesGridViewState extends State<VegetablesGridView> {
                   child: Center(
                     child: Text(
                       vegetables[index],
-                      style: const TextStyle(color: Colors.black),
+                      style: GoogleFonts.zenKakuGothicNew(color: Colors.black),
                     ),
                   ),
                 ),
@@ -215,9 +216,9 @@ class _VegetablesGridViewState extends State<VegetablesGridView> {
                   borderRadius: BorderRadius.circular(30.0),
                 ),
               ),
-              child: const Text(
+              child: Text(
                 "条件選択へ",
-                style: TextStyle(
+                style: GoogleFonts.zenKakuGothicNew(
                   color: Colors.black,
                   fontSize: 20,
                 ),

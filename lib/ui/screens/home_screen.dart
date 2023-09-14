@@ -4,7 +4,8 @@ import 'package:caul/ui/screens/my_page_screen.dart';
 import 'package:caul/ui/screens/popup_dialog.dart';
 import 'package:caul/ui/screens/save_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart'; // 追加
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -66,6 +67,8 @@ class _MyHomePageState extends State<MyHomePage> {
           currentIndex: _currentIndex,
           selectedItemColor: Colors.white,
           unselectedItemColor: Colors.white70,
+          selectedLabelStyle: GoogleFonts.zenKakuGothicNew(), // <-- この行を追加
+          unselectedLabelStyle: GoogleFonts.zenKakuGothicNew(),
           items: [
             BottomNavigationBarItem(
               icon: Icon(

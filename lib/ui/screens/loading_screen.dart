@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:caul/providers/chat_gpt_provider.dart';
 import 'package:caul/ui/screens/cooking_screen/cooking_result.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class LoadingScreen extends StatefulWidget {
   final CookingData data;
@@ -46,11 +47,11 @@ class _LoadingScreenState extends State<LoadingScreen> {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Text(
+          Text(
             "レシピを作っています...",
-            style: TextStyle(
+            style: GoogleFonts.zenKakuGothicNew(
               fontSize: 20.0,
-              fontWeight: FontWeight.bold,
+              fontWeight: FontWeight.w500,
             ),
           ),
           const SizedBox(height: 20.0), // この部分でテキストとアイコンの間にスペースを追加します
