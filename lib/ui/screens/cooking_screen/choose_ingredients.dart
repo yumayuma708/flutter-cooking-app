@@ -41,7 +41,11 @@ class _VegetablesGridViewState extends State<VegetablesGridView> {
     'じゃがいも',
     'しめじ',
     'ほうれん草',
+    'マイタケ',
+    'れんこん',
+    'エリンギ',
     'ブロッコリー',
+    '小松菜',
     'キャベツ',
     'さつまいも',
     'きゅうり',
@@ -115,7 +119,6 @@ class _VegetablesGridViewState extends State<VegetablesGridView> {
     'くるみ',
     'しょうが',
     'オリーブオイル',
-    '醤油',
     '塩',
     'こしょう',
     '砂糖',
@@ -132,7 +135,8 @@ class _VegetablesGridViewState extends State<VegetablesGridView> {
     'バター',
     'チリペッパー',
     'チリソース',
-    'ケチャップ'
+    'ケチャップ',
+    '牛乳',
   ];
 
   List<String> selectedVegetables = [];

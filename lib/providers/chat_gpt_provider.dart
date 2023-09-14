@@ -5,10 +5,12 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 class CookingData {
   final List<String> selectedIngredients;
   final List<String> selectedSituations;
+  final String instruction; // ここを変更
 
   CookingData({
     required this.selectedIngredients,
     required this.selectedSituations,
+    required this.instruction, // ここを変更
   });
 
   Map<String, dynamic> toJson() => {
@@ -34,7 +36,7 @@ class ChatGPTProvider {
         '料理名：〇〇\n'
         '目安時間：◯時間◯分\n'
         '人数：◯人分\n'
-        '食材：\n'
+        '食材：〇〇、〇〇、〇〇、・・・\n'
         '〇〇：◯g\n'
         '\t〇〇：◯g\n'
         '\t〇〇：◯g\n'

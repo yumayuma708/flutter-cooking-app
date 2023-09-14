@@ -1,0 +1,104 @@
+import 'package:flutter/material.dart';
+import 'package:caul/providers/chat_gpt_provider.dart';
+import 'package:caul/ui/screens/cooking_screen/cooking_result.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
+class LoadingScreen extends StatefulWidget {
+  final CookingData data;
+
+  LoadingScreen({required this.data});
+
+  @override
+  _LoadingScreenState createState() => _LoadingScreenState();
+}
+
+class _LoadingScreenState extends State<LoadingScreen> {
+  @override
+  void initState() {
+    super.initState();
+    fetchData();
+  }
+
+  void fetchData() async {
+    final provider = ChatGPTProvider();
+
+    try {
+      final instruction =
+          await provider.getCookingInstruction(widget.data); // ここを変更
+      CookingData finalData = CookingData(
+        selectedIngredients: widget.data.selectedIngredients,
+        selectedSituations: widget.data.selectedSituations,
+        instruction: instruction,
+      );
+
+      Navigator.of(context).pushReplacement(MaterialPageRoute(
+        builder: (context) => CookingResultPage(data: finalData),
+      ));
+    } catch (e) {
+      print('Error: $e');
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const Text(
+            "レシピを作っています...",
+            style: TextStyle(
+              fontSize: 20.0,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          const SizedBox(height: 20.0), // この部分でテキストとアイコンの間にスペースを追加します
+          HourglassAnimation(),
+        ],
+      ),
+    );
+  }
+}
+
+class HourglassAnimation extends StatefulWidget {
+  @override
+  _HourglassAnimationState createState() => _HourglassAnimationState();
+}
+
+class _HourglassAnimationState extends State<HourglassAnimation>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  late Animation<int> _animation;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _controller = AnimationController(
+      duration: const Duration(seconds: 4), // アニメーションの長さ
+      vsync: this,
+    )..repeat();
+
+    _animation = IntTween(begin: 0, end: 3).animate(_controller)
+      ..addListener(() {
+        setState(() {});
+      });
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    List<IconData> icons = [
+      FontAwesomeIcons.hourglassStart,
+      FontAwesomeIcons.hourglassHalf,
+      FontAwesomeIcons.hourglassEnd,
+      FontAwesomeIcons.hourglass,
+    ];
+    return Center(child: FaIcon(icons[_animation.value], size: 50.0));
+  }
+}
