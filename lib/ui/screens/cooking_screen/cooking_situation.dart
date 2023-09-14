@@ -7,29 +7,63 @@ import 'package:google_fonts/google_fonts.dart';
 class CookingSituation extends ConsumerWidget {
   CookingSituation({Key? key}) : super(key: key);
 
-  final List<String> buttons = [
+// 配列１: 時間に関する要素
+  final List<String> timeOptions = ['30分以内', '1時間以内', '1.5時間以内', '指定しない'];
+
+// 配列２: 人数に関する要素
+  final List<String> servingSize = ['1人分', '2人分', '3人分', '4人分'];
+
+// 配列３: 料理のジャンルに関する要素
+  final List<String> cuisineType = ['和食', '洋食', '中華', 'イタリアン', '指定しない'];
+
+// 配列４: 量に関する要素
+  final List<String> mealSize = ['軽め', 'がっつり', '指定しない'];
+
+// 配列５: その他の要素
+  final List<String> preferences = [
     '短い時間で',
     '洗い物少なく',
     'お弁当用',
+    'ヘルシー',
     '筋トレ食',
     '完全食',
-    'カロリー少なめ',
-    '軽め',
-    'がっつり'
+    '指定しない'
   ];
+
+// 配列６: 確認に関する要素
+  final List<String> confirmation = ['はい', 'いいえ'];
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return ProviderScope(
-      // Riverpodのスコープを提供
-      child: _CookingSituationInternal(buttons: buttons),
+      child: _CookingSituationInternal(
+        timeOptions: timeOptions,
+        servingSize: servingSize,
+        cuisineType: cuisineType,
+        mealSize: mealSize,
+        preferences: preferences,
+        confirmation: confirmation,
+      ),
     );
   }
 }
 
 class _CookingSituationInternal extends StatefulWidget {
-  final List<String> buttons;
-  _CookingSituationInternal({required this.buttons});
+  final List<String> timeOptions;
+  final List<String> servingSize;
+  final List<String> cuisineType;
+  final List<String> mealSize;
+  final List<String> preferences;
+  final List<String> confirmation;
+
+  _CookingSituationInternal({
+    required this.timeOptions,
+    required this.servingSize,
+    required this.cuisineType,
+    required this.mealSize,
+    required this.preferences,
+    required this.confirmation,
+  });
 
   @override
   _CookingSituationInternalState createState() =>
@@ -37,8 +71,30 @@ class _CookingSituationInternal extends StatefulWidget {
 }
 
 class _CookingSituationInternalState extends State<_CookingSituationInternal> {
-  Set<String> selectedButtons = {}; // 選択されたボタンの名前を保存するSet
-  List<String> selectedVegetables = []; // ここでselectedVegetablesを追加します
+  Set<String> selectedButtons = {};
+  List<String> selectedVegetables = [];
+  List<String> headers = [
+    "調理時間",
+    "人数",
+    "タイプ",
+    "量",
+    "その他の条件",
+    "選んだ食材以外を材料に含めてもよい"
+  ];
+  late List<List<String>> buttonGroups;
+
+  @override
+  void initState() {
+    super.initState();
+    buttonGroups = [
+      widget.timeOptions,
+      widget.servingSize,
+      widget.cuisineType,
+      widget.mealSize,
+      widget.preferences,
+      widget.confirmation
+    ];
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -55,41 +111,58 @@ class _CookingSituationInternalState extends State<_CookingSituationInternal> {
       body: Column(
         children: [
           Expanded(
-            child: GridView.builder(
+            child: ListView.builder(
               padding: const EdgeInsets.all(8.0),
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 3,
-                mainAxisSpacing: 8.0,
-                crossAxisSpacing: 8.0,
-                childAspectRatio: 3.0,
-              ),
-              itemCount: widget.buttons.length,
+              itemCount: headers.length,
               itemBuilder: (context, index) {
-                bool isSelected =
-                    selectedButtons.contains(widget.buttons[index]);
-                return GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      if (isSelected) {
-                        selectedButtons.remove(widget.buttons[index]);
-                      } else {
-                        selectedButtons.add(widget.buttons[index]);
-                      }
-                    });
-                  },
-                  child: Card(
-                    color: isSelected ? Colors.blueGrey[300] : Colors.white,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30.0),
-                    ),
-                    child: Center(
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 10.0),
                       child: Text(
-                        widget.buttons[index],
-                        style:
-                            GoogleFonts.zenKakuGothicNew(color: Colors.black),
+                        headers[index],
+                        style: const TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
-                  ),
+                    Wrap(
+                      spacing: 8.0,
+                      children: buttonGroups[index].map((button) {
+                        bool isSelected = selectedButtons.contains(button);
+                        return GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              if (isSelected) {
+                                selectedButtons.remove(button);
+                              } else {
+                                selectedButtons.add(button);
+                              }
+                            });
+                          },
+                          child: Card(
+                            color: isSelected
+                                ? Colors.blueGrey[300]
+                                : Colors.white,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30.0),
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 10.0, vertical: 5.0),
+                              child: Text(
+                                button,
+                                style: GoogleFonts.zenKakuGothicNew(
+                                    color: Colors.black),
+                              ),
+                            ),
+                          ),
+                        );
+                      }).toList(),
+                    ),
+                  ],
                 );
               },
             ),
