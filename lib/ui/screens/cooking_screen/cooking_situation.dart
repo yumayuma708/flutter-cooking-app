@@ -47,7 +47,7 @@ class _CookingSituationInternalState extends State<_CookingSituationInternal> {
         backgroundColor: Colors.orange[500],
         title: const Text(
           '条件を選びます',
-          style: TextStyle(color: Colors.black, fontSize: 35),
+          style: TextStyle(color: Colors.black, fontSize: 25),
         ),
       ),
       body: Column(

@@ -17,7 +17,7 @@ class ChooseIngredients extends ConsumerWidget {
         title: const Text(
           '食材を選びます',
           style: TextStyle(
-              color: Colors.black, fontSize: 35, fontWeight: FontWeight.w400),
+              color: Colors.black, fontSize: 25, fontWeight: FontWeight.w400),
         ),
       ),
       body: VegetablesGridView(), // ボディ部分を変更
