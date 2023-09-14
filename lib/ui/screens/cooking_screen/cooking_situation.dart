@@ -120,12 +120,14 @@ class _CookingSituationInternalState extends State<_CookingSituationInternal> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 10.0),
+                      padding: const EdgeInsets.fromLTRB(10.0, 10.0, 0.0, 10.0),
                       child: Text(
                         headers[index],
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
+                          fontFamily: GoogleFonts.zenKakuGothicNew()
+                              .fontFamily, // フォントを追加
                         ),
                       ),
                     ),
@@ -146,9 +148,7 @@ class _CookingSituationInternalState extends State<_CookingSituationInternal> {
                                 });
                               },
                               child: Card(
-                                color: isSelected
-                                    ? Colors.blueGrey[300]
-                                    : Colors.transparent,
+                                color: Colors.transparent,
                                 elevation: 0.0,
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(30.0),
@@ -197,10 +197,21 @@ class _CookingSituationInternalState extends State<_CookingSituationInternal> {
                       onPressed: () {
                         Navigator.pop(context, 'choose_ingredients');
                       },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.blueGrey[200],
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30.0),
+                      style: ButtonStyle(
+                        backgroundColor:
+                            MaterialStateProperty.all(Colors.transparent),
+                        elevation: MaterialStateProperty.resolveWith<double>(
+                          (Set<MaterialState> states) {
+                            if (states.contains(MaterialState.pressed))
+                              return 0.0;
+                            return 0.0;
+                          },
+                        ),
+                        shape: MaterialStateProperty.all(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30.0),
+                            side: const BorderSide(color: Colors.orangeAccent),
+                          ),
                         ),
                       ),
                       child: Text(
@@ -226,10 +237,21 @@ class _CookingSituationInternalState extends State<_CookingSituationInternal> {
                           builder: (context) => LoadingScreen(data: data),
                         ));
                       },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.blueGrey[200],
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30.0),
+                      style: ButtonStyle(
+                        backgroundColor:
+                            MaterialStateProperty.all(Colors.transparent),
+                        elevation: MaterialStateProperty.resolveWith<double>(
+                          (Set<MaterialState> states) {
+                            if (states.contains(MaterialState.pressed))
+                              return 0.0;
+                            return 0.0;
+                          },
+                        ),
+                        shape: MaterialStateProperty.all(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30.0),
+                            side: const BorderSide(color: Colors.orangeAccent),
+                          ),
                         ),
                       ),
                       child: Text(
