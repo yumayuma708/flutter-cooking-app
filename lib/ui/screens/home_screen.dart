@@ -42,13 +42,13 @@ class _MyHomePageState extends State<MyHomePage> {
                   builder: (context) {
                     switch (index) {
                       case 0:
-                        return ChooseIngredients();
+                        return const ChooseIngredients();
                       case 1:
-                        return SearchScreen();
+                        return const SearchScreen();
                       case 2:
-                        return FavoriteScreen();
+                        return const FavoriteScreen();
                       case 3:
-                        return MyPageScreen();
+                        return const MyPageScreen();
                       default:
                         throw Exception("Invalid index");
                     }
@@ -59,64 +59,65 @@ class _MyHomePageState extends State<MyHomePage> {
           );
         }),
       ),
-      bottomNavigationBar: Container(
-        color: Colors.orange,
-        child: Consumer(builder: (context, ref, child) {
-          return BottomNavigationBar(
-            backgroundColor: Colors.orange,
-            currentIndex: _currentIndex,
-            selectedItemColor: Colors.black,
-            unselectedItemColor: Colors.black,
-            items: const [
-              BottomNavigationBarItem(
-                icon: Icon(FontAwesomeIcons.utensils),
-                label: '料理',
+      bottomNavigationBar: Consumer(builder: (context, ref, child) {
+        return BottomNavigationBar(
+          backgroundColor: const Color.fromARGB(255, 4, 7, 47),
+          type: BottomNavigationBarType.fixed,
+          currentIndex: _currentIndex,
+          selectedItemColor: Colors.white70,
+          unselectedItemColor: Colors.white12,
+          items: const [
+            BottomNavigationBarItem(
+              icon: Icon(
+                FontAwesomeIcons.utensils,
+                color: Colors.white,
               ),
-              BottomNavigationBarItem(
-                icon: Icon(FontAwesomeIcons.bookmark),
-                label: '保存',
-              ),
-              BottomNavigationBarItem(
-                icon: FaIcon(FontAwesomeIcons.star),
-                label: 'お気に入り',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.person),
-                label: 'マイページ',
-              ),
-            ],
-            onTap: (index) {
-              setState(() {
-                _currentIndex = index;
-              });
+              label: '料理',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(FontAwesomeIcons.bookmark, color: Colors.white70),
+              label: '保存',
+            ),
+            BottomNavigationBarItem(
+              icon: FaIcon(FontAwesomeIcons.star, color: Colors.white70),
+              label: 'お気に入り',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.person, color: Colors.white70),
+              label: 'マイページ',
+            ),
+          ],
+          onTap: (index) {
+            setState(() {
+              _currentIndex = index;
+            });
 
-              String tabType;
-              switch (index) {
-                case 0:
-                  tabType = 'cook';
-                  break;
-                case 1:
-                  tabType = 'save';
-                  break;
-                case 2:
-                  tabType = 'favorite';
-                  break;
-                case 3:
-                  tabType = 'mypage';
-                  break;
-                default:
-                  throw Exception("Invalid tab index");
-              }
+            String tabType;
+            switch (index) {
+              case 0:
+                tabType = 'cook';
+                break;
+              case 1:
+                tabType = 'save';
+                break;
+              case 2:
+                tabType = 'favorite';
+                break;
+              case 3:
+                tabType = 'mypage';
+                break;
+              default:
+                throw Exception("Invalid tab index");
+            }
 
-              PopupDialog(
-                context: context,
-                ref: ref,
-                tabType: tabType,
-              ).show();
-            },
-          );
-        }),
-      ),
+            PopupDialog(
+              context: context,
+              ref: ref,
+              tabType: tabType,
+            ).show();
+          },
+        );
+      }),
     );
   }
 }

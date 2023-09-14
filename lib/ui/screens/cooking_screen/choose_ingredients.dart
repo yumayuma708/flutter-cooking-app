@@ -11,11 +11,11 @@ class ChooseIngredients extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
-      backgroundColor: Colors.orange[300],
+      backgroundColor: Colors.orange[100],
       appBar: AppBar(
-        backgroundColor: Colors.orange[300],
+        backgroundColor: Colors.orange[500],
         title: const Text(
-          '食材を選ぶ',
+          '食材を選びます',
           style: TextStyle(
               color: Colors.black, fontSize: 35, fontWeight: FontWeight.w400),
         ),

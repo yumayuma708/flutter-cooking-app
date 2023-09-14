@@ -46,7 +46,7 @@ class _CookingSituationInternalState extends State<_CookingSituationInternal> {
       appBar: AppBar(
         backgroundColor: Colors.orange[300],
         title: const Text(
-          '条件を選ぶ',
+          '条件を選びます',
           style: TextStyle(color: Colors.black, fontSize: 35),
         ),
       ),
