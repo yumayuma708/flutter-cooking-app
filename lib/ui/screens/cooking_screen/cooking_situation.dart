@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:caul/ui/screens/loading_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class CookingSituation extends ConsumerWidget {
   CookingSituation({Key? key}) : super(key: key);
@@ -133,36 +134,50 @@ class _CookingSituationInternalState extends State<_CookingSituationInternal> {
                       children: buttonGroups[index].map((button) {
                         bool isSelected = selectedButtons.contains(button);
                         return Align(
-                          alignment: Alignment.centerLeft, // この行を追加
-                          child: GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                if (isSelected) {
-                                  selectedButtons.remove(button);
-                                } else {
-                                  selectedButtons.add(button);
-                                }
-                              });
-                            },
-                            child: Card(
-                              color: isSelected
-                                  ? Colors.blueGrey[300]
-                                  : Colors.white,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(30.0),
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 10.0, vertical: 5.0),
-                                child: Text(
-                                  button,
-                                  style: GoogleFonts.zenKakuGothicNew(
-                                      color: Colors.black),
+                            alignment: Alignment.centerLeft, // この行を追加
+                            child: GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  if (isSelected) {
+                                    selectedButtons.remove(button);
+                                  } else {
+                                    selectedButtons.add(button);
+                                  }
+                                });
+                              },
+                              child: Card(
+                                color: isSelected
+                                    ? Colors.blueGrey[300]
+                                    : Colors.transparent,
+                                elevation: 0.0,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(30.0),
+                                  side: const BorderSide(
+                                      color: Colors.orangeAccent),
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 10.0, vertical: 5.0),
+                                  child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          button,
+                                          style: GoogleFonts.zenKakuGothicNew(
+                                              color: Colors.black),
+                                        ),
+                                        Icon(
+                                          FontAwesomeIcons
+                                              .circleCheck, // FontAwesomeのアイコンを追加
+                                          color: isSelected
+                                              ? Colors.black
+                                              : Colors.transparent,
+                                        ),
+                                      ]),
                                 ),
                               ),
-                            ),
-                          ),
-                        );
+                            ));
                       }).toList(),
                     ),
                   ],
