@@ -126,8 +126,9 @@ class _CookingSituationInternalState extends State<_CookingSituationInternal> {
                         CookingData data = CookingData(
                           selectedIngredients: selectedVegetables,
                           selectedSituations: selectedButtons.toList(),
+                          instruction: "",
                         );
-                        Navigator.of(context).pushReplacement(MaterialPageRoute(
+                        Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => LoadingScreen(data: data),
                         ));
                       },
