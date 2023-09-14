@@ -115,7 +115,6 @@ class _VegetablesGridViewState extends State<VegetablesGridView> {
     'くるみ',
     'しょうが',
     'オリーブオイル',
-    '醤油',
     '塩',
     'こしょう',
     '砂糖',
