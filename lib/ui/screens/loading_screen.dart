@@ -28,7 +28,12 @@ class _LoadingScreenState extends State<LoadingScreen> {
           await provider.getCookingInstruction(widget.data); // ここを変更
       CookingData finalData = CookingData(
         selectedIngredients: widget.data.selectedIngredients,
-        selectedSituations: widget.data.selectedSituations,
+        timeConditions: widget.data.timeConditions,
+        servingConditions: widget.data.servingConditions,
+        cuisineConditions: widget.data.cuisineConditions,
+        sizeConditions: widget.data.sizeConditions,
+        preferenceConditions: widget.data.preferenceConditions,
+        confirmationConditions: widget.data.confirmationConditions,
         instruction: instruction,
       );
 

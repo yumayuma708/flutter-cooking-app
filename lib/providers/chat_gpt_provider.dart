@@ -4,18 +4,33 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class CookingData {
   final List<String> selectedIngredients;
-  final List<String> selectedSituations;
-  final String instruction; // ここを変更
+  final List<String> timeConditions;
+  final List<String> servingConditions;
+  final List<String> cuisineConditions;
+  final List<String> sizeConditions;
+  final List<String> preferenceConditions;
+  final List<String> confirmationConditions;
+  final String instruction;
 
   CookingData({
     required this.selectedIngredients,
-    required this.selectedSituations,
-    required this.instruction, // ここを変更
+    required this.timeConditions,
+    required this.servingConditions,
+    required this.cuisineConditions,
+    required this.sizeConditions,
+    required this.preferenceConditions,
+    required this.confirmationConditions,
+    required this.instruction,
   });
 
   Map<String, dynamic> toJson() => {
         'ingredients': selectedIngredients,
-        'situations': selectedSituations,
+        'time_conditions': timeConditions,
+        'serving_conditions': servingConditions,
+        'cuisine_conditions': cuisineConditions,
+        'size_conditions': sizeConditions,
+        'preference_conditions': preferenceConditions,
+        'confirmation_conditions': confirmationConditions,
       };
 }
 
@@ -30,7 +45,13 @@ class ChatGPTProvider {
 
     final prompts = '次に挙げる食材や各条件に従って、料理を作ってください。\n\n'
         '食材：${data.selectedIngredients.join('、')}\n'
-        '条件：${data.selectedSituations.join('、')}\n\n'
+        '調理時間：${data.timeConditions.join('、')}\n'
+        '人数：${data.servingConditions.join('、')}\n'
+        '料理タイプ：${data.cuisineConditions.join('、')}\n'
+        '食事量：${data.sizeConditions.join('、')}\n'
+        'その他の条件：${data.preferenceConditions.join('、')}\n'
+        '確認：${data.confirmationConditions.join('、')}\n\n'
+        // 以下、既存のテンプレートを使用
         '答える際は、以下のテンプレートに従ってお答えください。\n\n'
         '表示テンプレートは以下：\n'
         '料理名：〇〇\n'

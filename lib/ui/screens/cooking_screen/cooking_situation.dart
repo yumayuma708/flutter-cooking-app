@@ -230,7 +230,12 @@ class _CookingSituationInternalState extends State<_CookingSituationInternal> {
                       onPressed: () {
                         CookingData data = CookingData(
                           selectedIngredients: selectedVegetables,
-                          selectedSituations: selectedButtons.toList(),
+                          timeConditions: [], // ここに適切な値をセットする必要があります。
+                          servingConditions: [], // 同上
+                          cuisineConditions: [], // 同上
+                          sizeConditions: [], // 同上
+                          preferenceConditions: [], // 同上
+                          confirmationConditions: [], // 同上
                           instruction: "",
                         );
                         Navigator.of(context).push(MaterialPageRoute(
