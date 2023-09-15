@@ -192,10 +192,12 @@ class _VegetablesGridViewState extends State<VegetablesGridView> {
             height: (MediaQuery.of(context).size.height / 10) * 0.4,
             child: ElevatedButton(
               onPressed: () {
+                print('選択された食材: ${selectedVegetables.join(', ')}');
                 Navigator.of(context).push(
                   PageRouteBuilder(
                     pageBuilder: (context, animation, secondaryAnimation) =>
-                        CookingSituation(),
+                        CookingSituation(
+                            selectedVegetables: selectedVegetables),
                     transitionsBuilder:
                         (context, animation, secondaryAnimation, child) {
                       const begin = Offset(1.0, 0.0);

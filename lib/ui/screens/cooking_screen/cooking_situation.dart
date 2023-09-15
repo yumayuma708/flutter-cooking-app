@@ -3,33 +3,41 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:caul/ui/screens/loading_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class CookingSituation extends ConsumerWidget {
-  CookingSituation({Key? key}) : super(key: key);
+  final List<String> selectedVegetables;
 
-  final List<String> buttons = [
-    '短い時間で',
-    '洗い物少なく',
-    'お弁当用',
-    '筋トレ食',
-    '完全食',
-    'カロリー少なめ',
-    '軽め',
-    'がっつり'
-  ];
+  CookingSituation({Key? key, required this.selectedVegetables})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return ProviderScope(
-      // Riverpodのスコープを提供
-      child: _CookingSituationInternal(buttons: buttons),
-    );
+    return _CookingSituationInternal(selectedVegetables: selectedVegetables);
   }
 }
 
 class _CookingSituationInternal extends StatefulWidget {
-  final List<String> buttons;
-  _CookingSituationInternal({required this.buttons});
+  final List<String> selectedVegetables;
+
+  final List<String> timeOptions = ['30分以内', '1時間以内', '1.5時間以内', '指定しない'];
+  final List<String> servingSize = ['1人分', '2人分', '3人分', '4人分'];
+  final List<String> cuisineType = ['和食', '洋食', '中華', 'イタリアン', '指定しない'];
+  final List<String> mealSize = ['軽め', 'がっつり', '指定しない'];
+  final List<String> preferences = [
+    '短い時間で',
+    '洗い物少なく',
+    'お弁当用',
+    'ヘルシー',
+    '筋トレ食',
+    '完全食',
+    '指定しない'
+  ];
+  final List<String> confirmation = ['はい', 'いいえ'];
+
+  _CookingSituationInternal({
+    required this.selectedVegetables,
+  });
 
   @override
   _CookingSituationInternalState createState() =>
@@ -37,8 +45,30 @@ class _CookingSituationInternal extends StatefulWidget {
 }
 
 class _CookingSituationInternalState extends State<_CookingSituationInternal> {
-  Set<String> selectedButtons = {}; // 選択されたボタンの名前を保存するSet
-  List<String> selectedVegetables = []; // ここでselectedVegetablesを追加します
+  Set<String> selectedButtons = {};
+  List<String> selectedVegetables = [];
+  List<String> headers = [
+    "調理時間",
+    "人数",
+    "タイプ",
+    "量",
+    "その他の条件",
+    "選んだ食材以外を材料に含めてもよい"
+  ];
+  late List<List<String>> buttonGroups;
+
+  @override
+  void initState() {
+    super.initState();
+    buttonGroups = [
+      widget.timeOptions,
+      widget.servingSize,
+      widget.cuisineType,
+      widget.mealSize,
+      widget.preferences,
+      widget.confirmation
+    ];
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -55,41 +85,75 @@ class _CookingSituationInternalState extends State<_CookingSituationInternal> {
       body: Column(
         children: [
           Expanded(
-            child: GridView.builder(
+            child: ListView.builder(
               padding: const EdgeInsets.all(8.0),
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 3,
-                mainAxisSpacing: 8.0,
-                crossAxisSpacing: 8.0,
-                childAspectRatio: 3.0,
-              ),
-              itemCount: widget.buttons.length,
+              itemCount: headers.length,
               itemBuilder: (context, index) {
-                bool isSelected =
-                    selectedButtons.contains(widget.buttons[index]);
-                return GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      if (isSelected) {
-                        selectedButtons.remove(widget.buttons[index]);
-                      } else {
-                        selectedButtons.add(widget.buttons[index]);
-                      }
-                    });
-                  },
-                  child: Card(
-                    color: isSelected ? Colors.blueGrey[300] : Colors.white,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30.0),
-                    ),
-                    child: Center(
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(10.0, 10.0, 0.0, 10.0),
                       child: Text(
-                        widget.buttons[index],
-                        style:
-                            GoogleFonts.zenKakuGothicNew(color: Colors.black),
+                        headers[index],
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: GoogleFonts.zenKakuGothicNew()
+                              .fontFamily, // フォントを追加
+                        ),
                       ),
                     ),
-                  ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start, // この行を追加
+                      children: buttonGroups[index].map((button) {
+                        bool isSelected = selectedButtons.contains(button);
+                        return Align(
+                            alignment: Alignment.centerLeft, // この行を追加
+                            child: GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  if (isSelected) {
+                                    selectedButtons.remove(button);
+                                  } else {
+                                    selectedButtons.add(button);
+                                  }
+                                });
+                              },
+                              child: Card(
+                                color: Colors.transparent,
+                                elevation: 0.0,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(30.0),
+                                  side: const BorderSide(
+                                      color: Colors.orangeAccent),
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 10.0, vertical: 5.0),
+                                  child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          button,
+                                          style: GoogleFonts.zenKakuGothicNew(
+                                              color: Colors.black),
+                                        ),
+                                        Icon(
+                                          FontAwesomeIcons
+                                              .circleCheck, // FontAwesomeのアイコンを追加
+                                          color: isSelected
+                                              ? Colors.black
+                                              : Colors.transparent,
+                                        ),
+                                      ]),
+                                ),
+                              ),
+                            ));
+                      }).toList(),
+                    ),
+                  ],
                 );
               },
             ),
@@ -106,10 +170,21 @@ class _CookingSituationInternalState extends State<_CookingSituationInternal> {
                       onPressed: () {
                         Navigator.pop(context, 'choose_ingredients');
                       },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.blueGrey[200],
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30.0),
+                      style: ButtonStyle(
+                        backgroundColor:
+                            MaterialStateProperty.all(Colors.transparent),
+                        elevation: MaterialStateProperty.resolveWith<double>(
+                          (Set<MaterialState> states) {
+                            if (states.contains(MaterialState.pressed))
+                              return 0.0;
+                            return 0.0;
+                          },
+                        ),
+                        shape: MaterialStateProperty.all(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30.0),
+                            side: const BorderSide(color: Colors.orangeAccent),
+                          ),
                         ),
                       ),
                       child: Text(
@@ -126,19 +201,59 @@ class _CookingSituationInternalState extends State<_CookingSituationInternal> {
                     // 料理を作る！ボタン
                     ElevatedButton(
                       onPressed: () {
+                        List<String> selectedVegetables = selectedButtons
+                            .where((item) =>
+                                widget.selectedVegetables.contains(item))
+                            .toList();
+                        List<String> timeConditions = selectedButtons
+                            .where((item) => widget.timeOptions.contains(item))
+                            .toList();
+                        List<String> servingConditions = selectedButtons
+                            .where((item) => widget.servingSize.contains(item))
+                            .toList();
+                        List<String> cuisineConditions = selectedButtons
+                            .where((item) => widget.cuisineType.contains(item))
+                            .toList();
+                        List<String> sizeConditions = selectedButtons
+                            .where((item) => widget.mealSize.contains(item))
+                            .toList();
+                        List<String> preferenceConditions = selectedButtons
+                            .where((item) => widget.preferences.contains(item))
+                            .toList();
+                        List<String> confirmationConditions = selectedButtons
+                            .where((item) => widget.confirmation.contains(item))
+                            .toList();
+
                         CookingData data = CookingData(
-                          selectedIngredients: selectedVegetables,
-                          selectedSituations: selectedButtons.toList(),
+                          selectedIngredients: widget.selectedVegetables,
+                          timeConditions: timeConditions,
+                          servingConditions: servingConditions,
+                          cuisineConditions: cuisineConditions,
+                          sizeConditions: sizeConditions,
+                          preferenceConditions: preferenceConditions,
+                          confirmationConditions: confirmationConditions,
                           instruction: "",
                         );
+
                         Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => LoadingScreen(data: data),
                         ));
                       },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.blueGrey[200],
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30.0),
+                      style: ButtonStyle(
+                        backgroundColor:
+                            MaterialStateProperty.all(Colors.transparent),
+                        elevation: MaterialStateProperty.resolveWith<double>(
+                          (Set<MaterialState> states) {
+                            if (states.contains(MaterialState.pressed))
+                              return 0.0;
+                            return 0.0;
+                          },
+                        ),
+                        shape: MaterialStateProperty.all(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30.0),
+                            side: const BorderSide(color: Colors.orangeAccent),
+                          ),
                         ),
                       ),
                       child: Text(
