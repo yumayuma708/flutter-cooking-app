@@ -21,7 +21,7 @@ class ChooseIngredients extends ConsumerWidget {
               color: Colors.black, fontSize: 25, fontWeight: FontWeight.w500),
         ),
       ),
-      body: VegetablesGridView(),
+      body: VegetablesGridView(), // ボディ部分を変更
     );
   }
 }
@@ -32,27 +32,7 @@ class VegetablesGridView extends StatefulWidget {
 }
 
 class _VegetablesGridViewState extends State<VegetablesGridView> {
-  late Map<String, List<String>> categorizedIngredients;
-
-  // この部分を追加します
-  List<String> get categories => categorizedIngredients.keys.toList();
-
-  @override
-  void initState() {
-    super.initState();
-    categorizedIngredients = {
-      '野菜': vegetables,
-      '肉類': meats,
-      '魚類': fish,
-      'フルーツ': fruits,
-      'スパイス': spices,
-      '乳製品': dairys,
-      '調味料': seasonings,
-      '穀物': beans,
-      'アルコール': alcohols,
-    };
-  }
-
+  // 人気の野菜のリスト
   final List<String> vegetables = [
     'トマト',
     'にんにく',
@@ -82,19 +62,20 @@ class _VegetablesGridViewState extends State<VegetablesGridView> {
     'カボチャ',
     '大根',
     'ネギ',
-    'みょうが'
-  ];
-  final List<String> meats = [
+    'みょうが',
     '豚肉',
     '鶏むね肉',
     '鶏もも肉',
     '牛肉',
+    '魚',
+    'エビ',
+    'イカ',
+    'タコ',
+    'カニ',
+    '牡蠣',
     'ウィンナー',
     'ベーコン',
-    'ハム'
-  ];
-  final List<String> fish = ['魚', 'エビ', 'イカ', 'タコ', 'カニ', '牡蠣'];
-  final List<String> fruits = [
+    'ハム',
     'レモン',
     'ライム',
     'ブルーベリー',
@@ -110,162 +91,145 @@ class _VegetablesGridViewState extends State<VegetablesGridView> {
     'オレンジ',
     '柿',
     'ゆず',
-    '梅'
-  ];
-  final List<String> spices = [
+    '梅',
     'バジル',
     'パセリ',
     'ローズマリー',
     'タイム',
-    'ハーブ',
-    'オレガノ',
-    'クミン',
-    'カレー粉',
-    '生姜',
-    '山椒',
-    'わさび',
-    'しょうが',
-    '塩',
-    'こしょう',
-    '乾燥わかめ',
-    'ゴマ',
-    'チリペッパー'
-  ];
-  final List<String> dairys = [
     'ヨーグルト',
     'クリームチーズ',
     'モッツァレラチーズ',
     'チェダーチーズ',
-    '牛乳'
-  ];
-  final List<String> seasonings = [
+    'ハーブ',
+    'オレガノ',
+    'クミン',
+    'カレー粉',
+    'ワイン',
+    '白ワイン',
+    '赤ワイン',
+    'ビール',
+    '納豆',
+    '豆腐',
+    'おから',
+    '生姜',
+    'レンズ豆',
+    '山椒',
+    'わさび',
+    '栗',
+    '松の実',
+    'くるみ',
+    'しょうが',
     'オリーブオイル',
+    '塩',
+    'こしょう',
     '砂糖',
     'みそ',
     '酢',
     'しょうゆ',
     'みりん',
     'だし',
+    '乾燥わかめ',
     'ごま油',
+    'ゴマ',
     'マヨネーズ',
     'サラダ油',
     'バター',
+    'チリペッパー',
     'チリソース',
-    'ケチャップ'
+    'ケチャップ',
+    '牛乳',
   ];
-  final List<String> beans = ['納豆', '豆腐', 'おから', 'レンズ豆', '栗', 'くるみ'];
-  final List<String> alcohols = ['ワイン', '白ワイン', '赤ワイン', 'ビール'];
 
   List<String> selectedVegetables = [];
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-        itemCount: categories.length + 1,
-        itemBuilder: (context, index) {
-          // 最後のアイテムの場合、ボタンを返す
-          if (index == categories.length) {
-            return Padding(
-              padding: const EdgeInsets.all(15.0),
-              child: SizedBox(
-                width: MediaQuery.of(context).size.width / 2,
-                height: (MediaQuery.of(context).size.height / 10) * 0.4,
-                child: ElevatedButton(
-                  onPressed: () {
-                    print('選択された食材: ${selectedVegetables.join(', ')}');
-                    Navigator.of(context).push(
-                      PageRouteBuilder(
-                        pageBuilder: (context, animation, secondaryAnimation) =>
-                            CookingSituation(
-                                selectedVegetables: selectedVegetables),
-                        transitionsBuilder:
-                            (context, animation, secondaryAnimation, child) {
-                          const begin = Offset(1.0, 0.0);
-                          const end = Offset.zero;
-                          const curve = Curves.easeInOut;
-                          var tween = Tween(begin: begin, end: end)
-                              .chain(CurveTween(curve: curve));
-                          var offsetAnimation = animation.drive(tween);
-                          return SlideTransition(
-                              position: offsetAnimation, child: child);
-                        },
-                      ),
-                    );
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.blueGrey[200],
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30.0),
-                    ),
-                  ),
-                  child: Text(
-                    "条件選択へ",
-                    style: GoogleFonts.zenKakuGothicNew(
-                      color: Colors.black,
-                      fontSize: 20,
-                    ),
-                  ),
-                ),
-              ),
-            );
-          }
-
-          // それ以外の場合、カテゴリーの食材を表示
-          String category = categories[index];
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  category,
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                ),
-              ),
-              GridView.builder(
-                physics: NeverScrollableScrollPhysics(),
-                shrinkWrap: true,
-                padding: const EdgeInsets.all(8.0),
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 3,
-                  mainAxisSpacing: 8.0,
-                  crossAxisSpacing: 8.0,
-                  childAspectRatio: 3.0,
-                ),
-                itemCount: categorizedIngredients[category]!.length,
-                itemBuilder: (context, idx) {
-                  String ingredient = categorizedIngredients[category]![idx];
-                  return InkWell(
-                    onTap: () {
-                      setState(() {
-                        if (selectedVegetables.contains(ingredient)) {
-                          selectedVegetables.remove(ingredient);
-                        } else {
-                          selectedVegetables.add(ingredient);
-                        }
-                      });
-                    },
-                    child: Card(
-                      color: selectedVegetables.contains(ingredient)
-                          ? Colors.blueGrey[300]
-                          : Colors.white,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30.0),
-                      ),
-                      child: Center(
-                        child: Text(
-                          ingredient,
-                          style:
-                              GoogleFonts.zenKakuGothicNew(color: Colors.black),
-                        ),
-                      ),
-                    ),
-                  );
+    return Column(
+      children: [
+        Expanded(
+          child: GridView.builder(
+            padding: const EdgeInsets.all(8.0),
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 3,
+              mainAxisSpacing: 8.0,
+              crossAxisSpacing: 8.0,
+              childAspectRatio: 3.0,
+            ),
+            itemCount: vegetables.length,
+            itemBuilder: (context, index) {
+              return InkWell(
+                onTap: () {
+                  setState(() {
+                    if (selectedVegetables.contains(vegetables[index])) {
+                      selectedVegetables.remove(vegetables[index]);
+                    } else {
+                      selectedVegetables.add(vegetables[index]);
+                    }
+                  });
                 },
+                child: Card(
+                  color: selectedVegetables.contains(vegetables[index])
+                      ? Colors.blueGrey[300]
+                      : Colors.white,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30.0),
+                  ),
+                  child: Center(
+                    child: Text(
+                      vegetables[index],
+                      style: GoogleFonts.zenKakuGothicNew(color: Colors.black),
+                    ),
+                  ),
+                ),
+              );
+            },
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(15.0), // タブとボタンの間に8.0ピクセルのスペースを追加
+          child: SizedBox(
+            width: MediaQuery.of(context).size.width / 2,
+            height: (MediaQuery.of(context).size.height / 10) * 0.4,
+            child: ElevatedButton(
+              onPressed: () {
+                print('選択された食材: ${selectedVegetables.join(', ')}');
+                Navigator.of(context).push(
+                  PageRouteBuilder(
+                    pageBuilder: (context, animation, secondaryAnimation) =>
+                        CookingSituation(
+                            selectedVegetables: selectedVegetables),
+                    transitionsBuilder:
+                        (context, animation, secondaryAnimation, child) {
+                      const begin = Offset(1.0, 0.0);
+                      const end = Offset.zero;
+                      const curve = Curves.easeInOut;
+                      var tween = Tween(begin: begin, end: end)
+                          .chain(CurveTween(curve: curve));
+                      var offsetAnimation = animation.drive(tween);
+                      return SlideTransition(
+                          position: offsetAnimation, child: child);
+                    },
+                  ),
+                );
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.blueGrey[200],
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30.0),
+                ),
               ),
-            ],
-          );
-        });
+              child: Text(
+                "条件選択へ",
+                style: GoogleFonts.zenKakuGothicNew(
+                  color: Colors.black,
+                  fontSize: 20,
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
   }
 }
 
