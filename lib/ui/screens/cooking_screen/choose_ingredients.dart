@@ -173,25 +173,47 @@ class _VegetablesGridViewState extends State<VegetablesGridView> {
                 height: (MediaQuery.of(context).size.height / 10) * 0.4,
                 child: ElevatedButton(
                   onPressed: () {
-                    print('選択された食材: ${selectedVegetables.join(', ')}');
-                    Navigator.of(context).push(
-                      PageRouteBuilder(
-                        pageBuilder: (context, animation, secondaryAnimation) =>
-                            CookingSituation(
-                                selectedVegetables: selectedVegetables),
-                        transitionsBuilder:
-                            (context, animation, secondaryAnimation, child) {
-                          const begin = Offset(1.0, 0.0);
-                          const end = Offset.zero;
-                          const curve = Curves.easeInOut;
-                          var tween = Tween(begin: begin, end: end)
-                              .chain(CurveTween(curve: curve));
-                          var offsetAnimation = animation.drive(tween);
-                          return SlideTransition(
-                              position: offsetAnimation, child: child);
+                    if (selectedVegetables.isEmpty) {
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: Text('警告'),
+                            content: Text('食材を最低１つは追加してください。'),
+                            actions: [
+                              TextButton(
+                                child: Text('閉じる'),
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                              ),
+                            ],
+                          );
                         },
-                      ),
-                    );
+                      );
+                    } else {
+                      // 以前のロジックはこの部分に残します。
+                      print('選択された食材: ${selectedVegetables.join(', ')}');
+                      Navigator.of(context).push(
+                        PageRouteBuilder(
+                          pageBuilder:
+                              (context, animation, secondaryAnimation) =>
+                                  CookingSituation(
+                                      selectedVegetables: selectedVegetables),
+                          transitionsBuilder:
+                              (context, animation, secondaryAnimation, child) {
+                            const begin = Offset(1.0, 0.0);
+                            const end = Offset.zero;
+                            const curve = Curves.easeInOut;
+                            var tween = Tween(begin: begin, end: end)
+                                .chain(CurveTween(curve: curve));
+                            var offsetAnimation = animation.drive(tween);
+                            return SlideTransition(
+                                position: offsetAnimation, child: child);
+                          },
+                        ),
+                      );
+                    }
                   },
                   style: ButtonStyle(
                     backgroundColor:
@@ -228,7 +250,6 @@ class _VegetablesGridViewState extends State<VegetablesGridView> {
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
               ),
-              // 以下の条件を追加: カテゴリーが「調味料」の場合にテキストを挿入
               if (category == '調味料')
                 Padding(
                   padding:
@@ -236,10 +257,8 @@ class _VegetablesGridViewState extends State<VegetablesGridView> {
                   child: Text("指定しない場合は'おまかせ'を選べます。",
                       style: GoogleFonts.zenKakuGothicNew(
                         fontSize: 16.0,
-                      ) // ここでフォントサイズを指定
-                      ),
+                      )),
                 ),
-              // ここまで追加
               GridView.builder(
                 physics: NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
@@ -263,12 +282,12 @@ class _VegetablesGridViewState extends State<VegetablesGridView> {
                         }
                       });
                     },
-                    splashColor: Colors.transparent, // これを追加
+                    splashColor: Colors.transparent,
                     highlightColor: Colors.transparent,
                     child: Card(
                       color: selectedVegetables.contains(ingredient)
-                          ? Colors.orange[200] // 選択された食材の場合、色をorange[200]にする
-                          : Colors.transparent, // それ以外の場合、色を透明にする
+                          ? Colors.orange[200]
+                          : Colors.transparent,
                       elevation: 0.0,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(30.0),
