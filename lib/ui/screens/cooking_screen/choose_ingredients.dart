@@ -139,6 +139,7 @@ class _VegetablesGridViewState extends State<VegetablesGridView> {
     '牛乳'
   ];
   final List<String> seasonings = [
+    'おまかせ',
     'オリーブオイル',
     '砂糖',
     'みそ',
@@ -151,7 +152,7 @@ class _VegetablesGridViewState extends State<VegetablesGridView> {
     'サラダ油',
     'バター',
     'チリソース',
-    'ケチャップ'
+    'ケチャップ',
   ];
   final List<String> beans = ['納豆', '豆腐', 'おから', 'レンズ豆', '栗', 'くるみ'];
   final List<String> alcohols = ['ワイン', '白ワイン', '赤ワイン', 'ビール'];
@@ -227,6 +228,18 @@ class _VegetablesGridViewState extends State<VegetablesGridView> {
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
               ),
+              // 以下の条件を追加: カテゴリーが「調味料」の場合にテキストを挿入
+              if (category == '調味料')
+                Padding(
+                  padding:
+                      const EdgeInsets.only(left: 20.0, top: 5.0, bottom: 10.0),
+                  child: Text("指定しない場合は'おまかせ'を選べます。",
+                      style: GoogleFonts.zenKakuGothicNew(
+                        fontSize: 16.0,
+                      ) // ここでフォントサイズを指定
+                      ),
+                ),
+              // ここまで追加
               GridView.builder(
                 physics: NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
