@@ -200,17 +200,30 @@ class _VegetablesGridViewState extends State<VegetablesGridView> {
                                   alignment:
                                       MainAxisAlignment.center, // ボタンを中央に配置
                                   children: [
-                                    TextButton(
+                                    ElevatedButton(
                                       onPressed: () {
                                         Navigator.of(context).pop();
                                       },
-                                      style: TextButton.styleFrom(
-                                        backgroundColor: Colors.transparent,
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(30.0),
-                                          side: const BorderSide(
-                                              color: Colors.orangeAccent),
+                                      style: ButtonStyle(
+                                        backgroundColor:
+                                            MaterialStateProperty.all(
+                                                Colors.transparent),
+                                        elevation: MaterialStateProperty
+                                            .resolveWith<double>(
+                                          (Set<MaterialState> states) {
+                                            if (states.contains(
+                                                MaterialState.pressed))
+                                              return 0.0;
+                                            return 0.0;
+                                          },
+                                        ),
+                                        shape: MaterialStateProperty.all(
+                                          RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(30.0),
+                                            side: const BorderSide(
+                                                color: Colors.orangeAccent),
+                                          ),
                                         ),
                                       ),
                                       child: Text(
@@ -218,7 +231,7 @@ class _VegetablesGridViewState extends State<VegetablesGridView> {
                                         style: GoogleFonts.zenKakuGothicNew(
                                             color: Colors.black),
                                       ),
-                                    ),
+                                    )
                                   ],
                                 ),
                               ),
