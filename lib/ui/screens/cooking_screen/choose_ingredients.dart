@@ -2,6 +2,7 @@ import 'package:caul/ui/screens/cooking_screen/cooking_situation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:caul/status/popup.state.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 final pageControllerProvider = Provider((ref) => PageController());
@@ -178,14 +179,48 @@ class _VegetablesGridViewState extends State<VegetablesGridView> {
                         context: context,
                         builder: (BuildContext context) {
                           return AlertDialog(
-                            title: Text('警告'),
-                            content: Text('食材を最低１つは追加してください。'),
+                            // ポップアップの角を丸くする
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15.0),
+                            ),
+                            // 背景色をorange[200]に設定
+                            backgroundColor: Colors.orange[200],
+                            // タイトルをアイコンに変更
+                            title: const Icon(
+                              FontAwesomeIcons
+                                  .circleExclamation, // FontAwesomeのアイコンを設定
+                              color: Colors.black,
+                              size: 32, // アイコンの色を黒に設定
+                            ),
+                            content: const Text('食材を最低１つは追加してください'),
                             actions: [
-                              TextButton(
-                                child: Text('閉じる'),
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                },
+                              // OKボタンを中央揃えにするためのExpandedとColumnを使用
+                              Expanded(
+                                child: ButtonBar(
+                                  alignment:
+                                      MainAxisAlignment.center, // ボタンを中央に配置
+                                  children: [
+                                    TextButton(
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                      style: TextButton.styleFrom(
+                                        backgroundColor: Colors.transparent,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(30.0),
+                                          side: const BorderSide(
+                                              color: Colors.orangeAccent),
+                                        ),
+                                      ),
+                                      child: Text(
+                                        'OK',
+                                        style: GoogleFonts.zenKakuGothicNew(
+                                            color: Colors.black),
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ],
                           );
@@ -247,7 +282,8 @@ class _VegetablesGridViewState extends State<VegetablesGridView> {
                 padding: const EdgeInsets.only(left: 20.0),
                 child: Text(
                   category,
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  style: const TextStyle(
+                      fontSize: 20, fontWeight: FontWeight.bold),
                 ),
               ),
               if (category == '調味料')
@@ -260,7 +296,7 @@ class _VegetablesGridViewState extends State<VegetablesGridView> {
                       )),
                 ),
               GridView.builder(
-                physics: NeverScrollableScrollPhysics(),
+                physics: const NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
                 padding: const EdgeInsets.all(8.0),
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
