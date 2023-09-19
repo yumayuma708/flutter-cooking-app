@@ -343,12 +343,13 @@ class _VegetablesGridViewState extends State<VegetablesGridView> {
                         side: const BorderSide(color: Colors.orangeAccent),
                       ),
                       child: Center(
-                        child: Text(
-                          ingredient,
-                          style:
-                              GoogleFonts.zenKakuGothicNew(color: Colors.black),
+                          child: Text(
+                        ingredient,
+                        style: GoogleFonts.zenKakuGothicNew(
+                          color: Colors.black,
+                          fontSize: ingredient == 'モッツァレラチーズ' ? 13.0 : 14.0,
                         ),
-                      ),
+                      )),
                     ),
                   );
                 },
