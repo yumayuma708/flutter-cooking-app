@@ -1,5 +1,4 @@
 import 'package:caul/ui/screens/cooking_screen/choose_ingredients.dart';
-import 'package:caul/ui/screens/favorite_screen.dart';
 import 'package:caul/ui/screens/my_page_screen.dart';
 import 'package:caul/ui/screens/popup_dialog.dart';
 import 'package:caul/ui/screens/save_screen.dart';
@@ -26,7 +25,6 @@ class _MyHomePageState extends State<MyHomePage> {
     GlobalKey<NavigatorState>(),
     GlobalKey<NavigatorState>(),
     GlobalKey<NavigatorState>(),
-    GlobalKey<NavigatorState>(),
   ];
 
   @override
@@ -47,8 +45,6 @@ class _MyHomePageState extends State<MyHomePage> {
                       case 1:
                         return const SearchScreen();
                       case 2:
-                        return const FavoriteScreen();
-                      case 3:
                         return const MyPageScreen();
                       default:
                         throw Exception("Invalid index");
@@ -67,7 +63,7 @@ class _MyHomePageState extends State<MyHomePage> {
           currentIndex: _currentIndex,
           selectedItemColor: Colors.white,
           unselectedItemColor: Colors.white70,
-          selectedLabelStyle: GoogleFonts.zenKakuGothicNew(), // <-- この行を追加
+          selectedLabelStyle: GoogleFonts.zenKakuGothicNew(),
           unselectedLabelStyle: GoogleFonts.zenKakuGothicNew(),
           items: [
             BottomNavigationBarItem(
@@ -85,16 +81,9 @@ class _MyHomePageState extends State<MyHomePage> {
               label: '保存',
             ),
             BottomNavigationBarItem(
-              icon: FaIcon(
-                FontAwesomeIcons.star,
-                color: _currentIndex == 2 ? Colors.white : Colors.white70,
-              ),
-              label: 'お気に入り',
-            ),
-            BottomNavigationBarItem(
               icon: Icon(
                 Icons.person,
-                color: _currentIndex == 3 ? Colors.white : Colors.white70,
+                color: _currentIndex == 2 ? Colors.white : Colors.white70,
               ),
               label: 'マイページ',
             ),
@@ -113,9 +102,6 @@ class _MyHomePageState extends State<MyHomePage> {
                 tabType = 'save';
                 break;
               case 2:
-                tabType = 'favorite';
-                break;
-              case 3:
                 tabType = 'mypage';
                 break;
               default:

@@ -303,7 +303,7 @@ class _VegetablesGridViewState extends State<VegetablesGridView> {
                 Padding(
                   padding:
                       const EdgeInsets.only(left: 20.0, top: 5.0, bottom: 10.0),
-                  child: Text("指定しない場合は'おまかせ'を選べます。",
+                  child: Text("指定しない場合は'おまかせ'を選べます",
                       style: GoogleFonts.zenKakuGothicNew(
                         fontSize: 16.0,
                       )),
