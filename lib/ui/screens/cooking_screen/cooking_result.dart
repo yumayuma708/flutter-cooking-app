@@ -44,7 +44,7 @@ class CookingResultPage extends StatelessWidget {
               children: [
                 Text(
                   data.instruction,
-                  style: GoogleFonts.zenKurenaido(fontSize: 15),
+                  style: GoogleFonts.zenKurenaido(fontSize: 20),
                 ),
               ],
             ),
