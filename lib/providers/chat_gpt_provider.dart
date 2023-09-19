@@ -44,7 +44,7 @@ class ChatGPTProvider {
     };
 
     // confirmationConditionsに基づくメッセージを設定
-    String confirmationMessage = '';
+    String confirmationMessage = '食材にないものを追加して作ってもかまいません。'; // 初期値を変更
     if (data.confirmationConditions.contains('はい')) {
       confirmationMessage = '食材にないものを追加して作っても構いません。';
     } else if (data.confirmationConditions.contains('いいえ')) {
