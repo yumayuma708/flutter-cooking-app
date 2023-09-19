@@ -24,8 +24,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
     final provider = ChatGPTProvider();
 
     try {
-      final instruction =
-          await provider.getCookingInstruction(widget.data); // ここを変更
+      final instruction = await provider.getCookingInstruction(widget.data);
       CookingData finalData = CookingData(
         selectedIngredients: widget.data.selectedIngredients,
         timeConditions: widget.data.timeConditions,
@@ -59,7 +58,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
               fontWeight: FontWeight.w500,
             ),
           ),
-          const SizedBox(height: 20.0), // この部分でテキストとアイコンの間にスペースを追加します
+          const SizedBox(height: 20.0),
           HourglassAnimation(),
         ],
       ),

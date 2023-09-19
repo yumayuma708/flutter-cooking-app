@@ -16,10 +16,7 @@ class CookingResultPage extends StatelessWidget {
           title: Text(
             'AIの考えたレシピ',
             style: GoogleFonts.zenKakuGothicNew(
-                // 2. フォントを変更
-                fontSize: 25,
-                color: Colors.black,
-                fontWeight: FontWeight.w500),
+                fontSize: 25, color: Colors.black, fontWeight: FontWeight.w500),
           ),
         ),
         body: Container(
@@ -28,7 +25,7 @@ class CookingResultPage extends StatelessWidget {
               children: [
                 Text(
                   data.instruction,
-                  style: GoogleFonts.zenKurenaido(fontSize: 15), // 2. フォントを変更
+                  style: GoogleFonts.zenKurenaido(fontSize: 15),
                 ),
               ],
             ),

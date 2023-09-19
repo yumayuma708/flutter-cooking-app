@@ -8,14 +8,14 @@ import 'package:shared_preferences/shared_preferences.dart';
 class PopupDialog {
   final BuildContext context;
   final WidgetRef ref;
-  final String tabType; // <-- 追加
+  final String tabType;
   final PageController pageController = PageController(initialPage: 0);
   final ValueNotifier<int> currentPageNotifier = ValueNotifier<int>(0);
 
   PopupDialog({
     required this.context,
     required this.ref,
-    required this.tabType, // <-- 追加
+    required this.tabType,
   });
 
   String getTabDescription(int pageIndex) {
@@ -34,12 +34,12 @@ class PopupDialog {
   }
 
   String getPopupKey() {
-    return 'hasShownPopup_$tabType'; // <-- 追加
+    return 'hasShownPopup_$tabType';
   }
 
   Future<void> show() async {
     final prefs = await SharedPreferences.getInstance();
-    final key = getPopupKey(); // <-- 変更
+    final key = getPopupKey();
     final hasShownPopup = prefs.getBool(key) ?? false;
 
     if (!hasShownPopup) {
@@ -63,7 +63,7 @@ class PopupDialog {
                       controller: pageController,
                       itemCount: 3,
                       onPageChanged: (index) {
-                        currentPageNotifier.value = index; // この行を追加
+                        currentPageNotifier.value = index;
                       },
                       itemBuilder: (context, index) {
                         switch (index) {
@@ -114,7 +114,7 @@ class PopupDialog {
           );
         },
       );
-      await prefs.setBool(key, true); // <-- 変更
+      await prefs.setBool(key, true);
     }
   }
 }

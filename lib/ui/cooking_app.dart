@@ -9,7 +9,7 @@ class CookingApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
         bottomNavigationBarTheme: const BottomNavigationBarThemeData(
-          backgroundColor: Colors.blue, // これでBottomNavigationBarの背景色を青に設定
+          backgroundColor: Colors.blue,
         ),
       ),
       home: const MyHomePage(title: 'Flutter Demo Home Page'),

@@ -35,7 +35,6 @@ class VegetablesGridView extends StatefulWidget {
 class _VegetablesGridViewState extends State<VegetablesGridView> {
   late Map<String, List<String>> categorizedIngredients;
 
-  // この部分を追加します
   List<String> get categories => categorizedIngredients.keys.toList();
 
   @override
@@ -183,14 +182,12 @@ class _VegetablesGridViewState extends State<VegetablesGridView> {
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(15.0),
                             ),
-                            // 背景色をorange[200]に設定
                             backgroundColor: Colors.orange[200],
                             // タイトルをアイコンに変更
                             title: const Icon(
-                              FontAwesomeIcons
-                                  .circleExclamation, // FontAwesomeのアイコンを設定
+                              FontAwesomeIcons.circleExclamation,
                               color: Colors.black,
-                              size: 32, // アイコンの色を黒に設定
+                              size: 32,
                             ),
                             content: const Text('食材を最低１つは追加してください'),
                             actions: [
@@ -240,7 +237,6 @@ class _VegetablesGridViewState extends State<VegetablesGridView> {
                         },
                       );
                     } else {
-                      // 以前のロジックはこの部分に残します。
                       print('選択された食材: ${selectedVegetables.join(', ')}');
                       Navigator.of(context).push(
                         PageRouteBuilder(

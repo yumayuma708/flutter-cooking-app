@@ -8,8 +8,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, required this.title})
-      : super(key: key); // keyがsuper.keyからKey? keyに変更されました
+  const MyHomePage({Key? key, required this.title}) : super(key: key);
 
   final String title;
 

@@ -19,7 +19,7 @@ class PopupPage extends StatelessWidget {
     required this.pageController,
     this.showBackButton = true,
     this.showNextButton = true,
-    required this.currentPageNotifier, // ← コンストラクタにこれも追加します
+    required this.currentPageNotifier,
   });
 
   @override

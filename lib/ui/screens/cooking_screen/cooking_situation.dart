@@ -114,18 +114,17 @@ class _CookingSituationInternalState extends State<_CookingSituationInternal> {
                         style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
-                          fontFamily: GoogleFonts.zenKakuGothicNew()
-                              .fontFamily, // フォントを追加
+                          fontFamily: GoogleFonts.zenKakuGothicNew().fontFamily,
                         ),
                       ),
                     ),
                     Column(
-                      crossAxisAlignment: CrossAxisAlignment.start, // この行を追加
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: buttonGroups[index].map((button) {
                         bool isSelected =
                             selectedHeaders[headers[index]]!.contains(button);
                         return Align(
-                            alignment: Alignment.centerLeft, // この行を追加
+                            alignment: Alignment.centerLeft,
                             child: GestureDetector(
                               onTap: () {
                                 setState(() {
@@ -153,8 +152,7 @@ class _CookingSituationInternalState extends State<_CookingSituationInternal> {
                                               color: Colors.black),
                                         ),
                                         Icon(
-                                          FontAwesomeIcons
-                                              .circleCheck, // FontAwesomeのアイコンを追加
+                                          FontAwesomeIcons.circleCheck,
                                           color: isSelected
                                               ? Colors.black
                                               : Colors.transparent,
