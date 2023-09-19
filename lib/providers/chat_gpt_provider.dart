@@ -53,13 +53,12 @@ class ChatGPTProvider {
 
     final prompts = '次に挙げる食材や各条件に従って、料理を作ってください。\n\n'
         '食材：${data.selectedIngredients.join('、')}\n'
-        '調理時間：${data.timeConditions.join('、')}\n'
+        '調理時間：${data.timeConditions.isNotEmpty ? data.timeConditions.join('、') : '指定しない'}\n'
         '人数：${data.servingConditions.join('、')}\n'
         '料理タイプ：${data.cuisineConditions.join('、')}\n'
         '食事量：${data.sizeConditions.join('、')}\n'
         'その他の条件：${data.preferenceConditions.join('、')}\n'
         '$confirmationMessage\n\n'
-        // 以下、既存のテンプレートを使用
         '答える際は、以下のテンプレートに従ってお答えください。\n\n'
         '表示テンプレートは以下：\n'
         '料理名："   "\n'
