@@ -13,10 +13,29 @@ class CookingResultPage extends StatelessWidget {
         backgroundColor: Colors.orange[100],
         appBar: AppBar(
           backgroundColor: Colors.orange[500],
-          title: Text(
-            'AIの考えたレシピ',
-            style: GoogleFonts.zenKakuGothicNew(
-                fontSize: 25, color: Colors.black, fontWeight: FontWeight.w500),
+          centerTitle: true, // この行を追加
+          title: Row(
+            children: [
+              const SizedBox(width: 12.5),
+              const Icon(
+                Icons.restaurant_menu, // Google IconsのRestaurant Menuアイコンを追加
+                color: Colors.black,
+              ),
+              const SizedBox(width: 8.0), // アイコンとテキストの間にスペースを追加
+
+              Text(
+                'AIの考えたレシピ',
+                style: GoogleFonts.zenKakuGothicNew(
+                    fontSize: 25,
+                    color: Colors.black,
+                    fontWeight: FontWeight.w500),
+              ),
+              const SizedBox(width: 8.0), // アイコンとテキストの間にスペースを追加
+              const Icon(
+                Icons.restaurant_menu, // Google IconsのRestaurant Menuアイコンを追加
+                color: Colors.black,
+              ),
+            ],
           ),
         ),
         body: Container(
