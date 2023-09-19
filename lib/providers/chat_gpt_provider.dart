@@ -3,7 +3,8 @@ import 'dart:convert';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class CookingData {
-  final List<String> selectedIngredients;
+  final List<String> selectedVegetables;
+  final List<String> selectedSeasonings; // 新しいフィールド
   final List<String> timeConditions;
   final List<String> servingConditions;
   final List<String> cuisineConditions;
@@ -13,7 +14,8 @@ class CookingData {
   final String instruction;
 
   CookingData({
-    required this.selectedIngredients,
+    required this.selectedVegetables,
+    required this.selectedSeasonings, // コンストラクタに追加
     required this.timeConditions,
     required this.servingConditions,
     required this.cuisineConditions,
@@ -24,7 +26,8 @@ class CookingData {
   });
 
   Map<String, dynamic> toJson() => {
-        'ingredients': selectedIngredients,
+        'ingredients': selectedVegetables,
+        'seasonings': selectedSeasonings, // 追加
         'time_conditions': timeConditions,
         'serving_conditions': servingConditions,
         'cuisine_conditions': cuisineConditions,
@@ -43,16 +46,20 @@ class ChatGPTProvider {
       'Content-Type': 'application/json',
     };
 
-    // confirmationConditionsに基づくメッセージを設定
-    String confirmationMessage = '食材にないものを追加して作ってもかまいません。'; // 初期値を変更
+    String confirmationMessage = '食材にないものを追加して作ってもかまいません。';
     if (data.confirmationConditions.contains('はい')) {
       confirmationMessage = '食材にないものを追加して作っても構いません。';
     } else if (data.confirmationConditions.contains('いいえ')) {
       confirmationMessage = '食材として挙げたもののみで作ってください。';
     }
 
+    String seasoningMessage = data.selectedSeasonings.isNotEmpty
+        ? '調味料として、${data.selectedSeasonings.join('、')}を使ってください。'
+        : '調味料は自由に使ってかまいません。';
+
     final prompts = '次に挙げる食材や各条件に従って、料理を作ってください。\n\n'
-        '食材：${data.selectedIngredients.join('、')}\n'
+        '食材：${data.selectedVegetables.join('、')}\n'
+        '$seasoningMessage\n' // 調味料メッセージをここに追加
         '調理時間：${data.timeConditions.isNotEmpty ? data.timeConditions.join('、') : '指定しない'}\n'
         '人数：${data.servingConditions.isNotEmpty ? data.servingConditions.join('、') : '1人分'}\n'
         '料理タイプ：${data.cuisineConditions.isNotEmpty ? data.cuisineConditions.join('、') : '指定しない'}\n'
@@ -76,7 +83,7 @@ class ChatGPTProvider {
         '※前回までのメッセージを考慮せずに、今回のメッセージのみ考慮して作成してください。';
 
     print('Sending the following to ChatGPT:');
-    print(prompts); // この行でprompts変数の内容を出力
+    print(prompts);
 
     final body = json.encode({
       'messages': [

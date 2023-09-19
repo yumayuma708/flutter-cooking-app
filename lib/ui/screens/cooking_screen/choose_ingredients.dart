@@ -50,6 +50,7 @@ class _VegetablesGridViewState extends State<VegetablesGridView> {
       '調味料': seasonings,
       '穀物': beans,
       'アルコール': alcohols,
+      'その他': [],
     };
   }
 
@@ -129,7 +130,10 @@ class _VegetablesGridViewState extends State<VegetablesGridView> {
     'こしょう',
     '乾燥わかめ',
     'ゴマ',
-    'チリペッパー'
+    'チリペッパー',
+    'カレーのルー',
+    'ハヤシライスのルー',
+    'シチューのルー',
   ];
   final List<String> dairys = [
     'ヨーグルト',
@@ -156,8 +160,36 @@ class _VegetablesGridViewState extends State<VegetablesGridView> {
   ];
   final List<String> beans = ['納豆', '豆腐', 'おから', 'レンズ豆', '栗', 'くるみ'];
   final List<String> alcohols = ['ワイン', '白ワイン', '赤ワイン', 'ビール'];
+  final TextEditingController _otherController = TextEditingController();
 
-  List<String> selectedVegetables = [];
+  List<String> selectedIngredients = [];
+  List<String> selectedSeasonings = [];
+
+  void toggleSeasoning(String seasoning) {
+    setState(() {
+      // 「おまかせ」が押された場合の処理
+      if (seasoning == 'おまかせ') {
+        if (selectedSeasonings.contains(seasoning)) {
+          // 「おまかせ」が既に選択されていれば、選択を解除
+          selectedSeasonings.remove(seasoning);
+        } else {
+          // 他の調味料の選択を全て解除し、おまかせだけを選択状態にする
+          selectedSeasonings.clear();
+          selectedSeasonings.add(seasoning);
+        }
+      } else {
+        // 「おまかせ」が選択されていれば解除
+        selectedSeasonings.remove('おまかせ');
+
+        // 押された調味料がすでに選択されていれば、選択を解除。そうでなければ、選択を追加
+        if (selectedSeasonings.contains(seasoning)) {
+          selectedSeasonings.remove(seasoning);
+        } else {
+          selectedSeasonings.add(seasoning);
+        }
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -173,7 +205,7 @@ class _VegetablesGridViewState extends State<VegetablesGridView> {
                 height: (MediaQuery.of(context).size.height / 10) * 0.4,
                 child: ElevatedButton(
                   onPressed: () {
-                    if (selectedVegetables.isEmpty) {
+                    if (selectedIngredients.isEmpty) {
                       showDialog(
                         context: context,
                         builder: (BuildContext context) {
@@ -237,13 +269,15 @@ class _VegetablesGridViewState extends State<VegetablesGridView> {
                         },
                       );
                     } else {
-                      print('選択された食材: ${selectedVegetables.join(', ')}');
+                      print('選択された食材: ${selectedIngredients.join(' , ')}\n'
+                          '選択された調味料: ${selectedSeasonings.join(' , ')}');
                       Navigator.of(context).push(
                         PageRouteBuilder(
                           pageBuilder:
                               (context, animation, secondaryAnimation) =>
                                   CookingSituation(
-                                      selectedVegetables: selectedVegetables),
+                                      selectedVegetables: selectedIngredients,
+                                      selectedSeasonings: selectedSeasonings),
                           transitionsBuilder:
                               (context, animation, secondaryAnimation, child) {
                             const begin = Offset(1.0, 0.0);
@@ -304,6 +338,52 @@ class _VegetablesGridViewState extends State<VegetablesGridView> {
                         fontSize: 16.0,
                       )),
                 ),
+              if (category == 'その他') // 新しい部分の追加
+                Padding(
+                  padding:
+                      const EdgeInsets.only(left: 20.0, right: 20.0, top: 10.0),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: TextField(
+                          controller: _otherController,
+                          cursorColor: Colors.black, // カーソルの色をオレンジに変更
+                          decoration: const InputDecoration(
+                            labelText: '食材を追加',
+                            labelStyle:
+                                TextStyle(color: Colors.black), // ラベルの色をオレンジに変更
+                            border: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.orange),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide:
+                                  BorderSide(color: Colors.orange, width: 2.0),
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderSide:
+                                  BorderSide(color: Colors.orange, width: 1.0),
+                            ),
+                          ),
+                        ),
+                      ),
+                      IconButton(
+                        icon: const Icon(Icons.add),
+                        onPressed: () {
+                          setState(() {
+                            String newIngredient = _otherController.text;
+                            if (newIngredient.isNotEmpty &&
+                                !categorizedIngredients['その他']!
+                                    .contains(newIngredient)) {
+                              categorizedIngredients['その他']!.add(newIngredient);
+                              selectedIngredients.add(newIngredient); // この部分を変更
+                            }
+                            _otherController.clear(); // テキストフィールドの内容をクリア
+                          });
+                        },
+                      ),
+                    ],
+                  ),
+                ),
               GridView.builder(
                 physics: const NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
@@ -320,32 +400,55 @@ class _VegetablesGridViewState extends State<VegetablesGridView> {
                   return InkWell(
                     onTap: () {
                       setState(() {
-                        if (selectedVegetables.contains(ingredient)) {
-                          selectedVegetables.remove(ingredient);
+                        if (category == '調味料') {
+                          if (ingredient == 'おまかせ') {
+                            selectedSeasonings.clear();
+                            selectedSeasonings.add('おまかせ');
+                          } else {
+                            selectedSeasonings.remove('おまかせ');
+                            if (selectedSeasonings.contains(ingredient)) {
+                              selectedSeasonings.remove(ingredient);
+                            } else {
+                              selectedSeasonings.add(ingredient);
+                            }
+                          }
                         } else {
-                          selectedVegetables.add(ingredient);
+                          if (selectedIngredients.contains(ingredient)) {
+                            selectedIngredients.remove(ingredient);
+                          } else {
+                            selectedIngredients.add(ingredient);
+                          }
                         }
                       });
                     },
                     splashColor: Colors.transparent,
                     highlightColor: Colors.transparent,
                     child: Card(
-                      color: selectedVegetables.contains(ingredient)
-                          ? Colors.orange[200]
-                          : Colors.transparent,
+                      color: category == '調味料'
+                          ? selectedSeasonings.contains(ingredient)
+                              ? Colors.orange[200]
+                              : Colors.transparent
+                          : selectedIngredients.contains(ingredient)
+                              ? Colors.orange[200]
+                              : Colors.transparent,
                       elevation: 0.0,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(30.0),
                         side: const BorderSide(color: Colors.orangeAccent),
                       ),
                       child: Center(
-                          child: Text(
-                        ingredient,
-                        style: GoogleFonts.zenKakuGothicNew(
-                          color: Colors.black,
-                          fontSize: ingredient == 'モッツァレラチーズ' ? 13.0 : 14.0,
+                        child: Text(
+                          ingredient,
+                          style: GoogleFonts.zenKakuGothicNew(
+                            color: Colors.black,
+                            fontSize: ingredient == 'モッツァレラチーズ'
+                                ? 13.0
+                                : ingredient == 'ハヤシライスのルー'
+                                    ? 13.0
+                                    : 14.0,
+                          ),
                         ),
-                      )),
+                      ),
                     ),
                   );
                 },

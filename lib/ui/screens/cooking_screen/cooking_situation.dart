@@ -8,17 +8,28 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 class CookingSituation extends ConsumerWidget {
   final List<String> selectedVegetables;
 
-  CookingSituation({Key? key, required this.selectedVegetables})
+  var selectedSeasonings;
+
+  CookingSituation(
+      {Key? key,
+      required this.selectedVegetables,
+      required this.selectedSeasonings
+      // 他の必要なパラメータをここに追加
+      })
       : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return _CookingSituationInternal(selectedVegetables: selectedVegetables);
+    return _CookingSituationInternal(
+      selectedVegetables: selectedVegetables,
+      selectedSeasonings: selectedSeasonings,
+    );
   }
 }
 
 class _CookingSituationInternal extends StatefulWidget {
   final List<String> selectedVegetables;
+  final List<String> selectedSeasonings;
 
   final List<String> timeOptions = ['30分以内', '1時間以内', '1.5時間以内', '指定しない'];
   final List<String> servingSize = ['1人分', '2人分', '3人分', '4人分'];
@@ -37,6 +48,7 @@ class _CookingSituationInternal extends StatefulWidget {
 
   _CookingSituationInternal({
     required this.selectedVegetables,
+    required this.selectedSeasonings,
   });
 
   @override
@@ -260,6 +272,8 @@ class _CookingSituationInternalState extends State<_CookingSituationInternal> {
                             selectedHeaders["人数"]!.toList();
                         List<String> cuisineConditions =
                             selectedHeaders["タイプ"]!.toList();
+                        List<String> selectedSeasonings =
+                            selectedHeaders["タイプ"]!.toList();
                         List<String> sizeConditions =
                             selectedHeaders["量"]!.toList();
                         List<String> preferenceConditions =
@@ -268,9 +282,10 @@ class _CookingSituationInternalState extends State<_CookingSituationInternal> {
                             selectedHeaders["選んだ食材以外を材料に含めてもよい"]!.toList();
 
                         CookingData data = CookingData(
-                          selectedIngredients: widget.selectedVegetables,
+                          selectedVegetables: widget.selectedVegetables,
                           timeConditions: timeConditions,
                           servingConditions: servingConditions,
+                          selectedSeasonings: selectedSeasonings,
                           cuisineConditions: cuisineConditions,
                           sizeConditions: sizeConditions,
                           preferenceConditions: preferenceConditions,
