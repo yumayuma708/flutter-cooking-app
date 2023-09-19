@@ -65,10 +65,27 @@ class _CookingSituationInternalState extends State<_CookingSituationInternal> {
   late List<List<String>> buttonGroups;
 
   void _toggleSelection(String header, String button) {
-    if (selectedHeaders[header]!.contains(button)) {
-      selectedHeaders[header]!.remove(button);
+    if (header == "その他の条件") {
+      if (button == "指定しない") {
+        selectedHeaders[header]!.clear();
+        selectedHeaders[header]!.add(button);
+      } else {
+        if (selectedHeaders[header]!.contains("指定しない")) {
+          selectedHeaders[header]!.remove("指定しない");
+        }
+        if (selectedHeaders[header]!.contains(button)) {
+          selectedHeaders[header]!.remove(button);
+        } else {
+          selectedHeaders[header]!.add(button);
+        }
+      }
     } else {
-      selectedHeaders[header]!.add(button);
+      if (selectedHeaders[header]!.contains(button)) {
+        selectedHeaders[header]!.remove(button);
+      } else {
+        selectedHeaders[header]!.clear();
+        selectedHeaders[header]!.add(button);
+      }
     }
   }
 
@@ -109,13 +126,39 @@ class _CookingSituationInternalState extends State<_CookingSituationInternal> {
                   children: [
                     Padding(
                       padding: const EdgeInsets.fromLTRB(10.0, 10.0, 0.0, 10.0),
-                      child: Text(
-                        headers[index],
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: GoogleFonts.zenKakuGothicNew().fontFamily,
-                        ),
+                      child: Row(
+                        children: [
+                          Icon(
+                            headers[index] == "調理時間"
+                                ? FontAwesomeIcons.clock
+                                : headers[index] == "人数"
+                                    ? FontAwesomeIcons.user
+                                    : headers[index] == "タイプ"
+                                        ? FontAwesomeIcons.pepperHot
+                                        : headers[index] == "量"
+                                            ? FontAwesomeIcons.bowlRice
+                                            : headers[index] == "その他の条件"
+                                                ? FontAwesomeIcons.kitchenSet
+                                                : headers[index] ==
+                                                        "選んだ食材以外を材料に含めてもよい"
+                                                    ? FontAwesomeIcons
+                                                        .commentDots
+                                                    : null,
+                            size: 20.0,
+                          ),
+                          const SizedBox(
+                            width: 10.0,
+                          ),
+                          Text(
+                            headers[index],
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              fontFamily:
+                                  GoogleFonts.zenKakuGothicNew().fontFamily,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                     Column(
@@ -211,9 +254,6 @@ class _CookingSituationInternalState extends State<_CookingSituationInternal> {
                     // 料理を作る！ボタン
                     ElevatedButton(
                       onPressed: () {
-                        List<String> selectedVegetables =
-                            selectedHeaders["選んだ食材以外を材料に含めてもよい"]!.toList();
-
                         List<String> timeConditions =
                             selectedHeaders["調理時間"]!.toList();
                         List<String> servingConditions =
