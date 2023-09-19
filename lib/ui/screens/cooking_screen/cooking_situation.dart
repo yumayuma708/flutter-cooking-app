@@ -66,10 +66,18 @@ class _CookingSituationInternalState extends State<_CookingSituationInternal> {
 
   void _toggleSelection(String header, String button) {
     if (header == "その他の条件") {
-      if (selectedHeaders[header]!.contains(button)) {
-        selectedHeaders[header]!.remove(button);
-      } else {
+      if (button == "指定しない") {
+        selectedHeaders[header]!.clear();
         selectedHeaders[header]!.add(button);
+      } else {
+        if (selectedHeaders[header]!.contains("指定しない")) {
+          selectedHeaders[header]!.remove("指定しない");
+        }
+        if (selectedHeaders[header]!.contains(button)) {
+          selectedHeaders[header]!.remove(button);
+        } else {
+          selectedHeaders[header]!.add(button);
+        }
       }
     } else {
       if (selectedHeaders[header]!.contains(button)) {
