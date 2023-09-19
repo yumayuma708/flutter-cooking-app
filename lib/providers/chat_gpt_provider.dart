@@ -1,10 +1,11 @@
+import 'package:caul/providers/chat_gpt_devider.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class CookingData {
   final List<String> selectedVegetables;
-  final List<String> selectedSeasonings; // 新しいフィールド
+  final List<String> selectedSeasonings;
   final List<String> timeConditions;
   final List<String> servingConditions;
   final List<String> cuisineConditions;
@@ -15,7 +16,7 @@ class CookingData {
 
   CookingData({
     required this.selectedVegetables,
-    required this.selectedSeasonings, // コンストラクタに追加
+    required this.selectedSeasonings,
     required this.timeConditions,
     required this.servingConditions,
     required this.cuisineConditions,
@@ -27,7 +28,7 @@ class CookingData {
 
   Map<String, dynamic> toJson() => {
         'ingredients': selectedVegetables,
-        'seasonings': selectedSeasonings, // 追加
+        'seasonings': selectedSeasonings,
         'time_conditions': timeConditions,
         'serving_conditions': servingConditions,
         'cuisine_conditions': cuisineConditions,
@@ -59,7 +60,7 @@ class ChatGPTProvider {
 
     final prompts = '次に挙げる食材や各条件に従って、料理を作ってください。\n\n'
         '食材：${data.selectedVegetables.join('、')}\n'
-        '$seasoningMessage\n' // 調味料メッセージをここに追加
+        '$seasoningMessage\n'
         '調理時間：${data.timeConditions.isNotEmpty ? data.timeConditions.join('、') : '指定しない'}\n'
         '人数：${data.servingConditions.isNotEmpty ? data.servingConditions.join('、') : '1人分'}\n'
         '料理タイプ：${data.cuisineConditions.isNotEmpty ? data.cuisineConditions.join('、') : '指定しない'}\n'
@@ -68,7 +69,7 @@ class ChatGPTProvider {
         '$confirmationMessage\n\n'
         '答える際は、以下のテンプレートに従ってお答えください。\n\n'
         '表示テンプレートは以下：\n'
-        '料理名："   "\n'
+        '料理名：〇〇\n'
         '目安時間：◯時間◯分\n'
         '人数：◯人分\n'
         '材料\n'
@@ -109,7 +110,19 @@ class ChatGPTProvider {
     if (responseData['choices'] != null &&
         responseData['choices'].isNotEmpty &&
         responseData['choices'][0]['message']['content'] != null) {
-      return responseData['choices'][0]['message']['content'].trim();
+      String instruction =
+          responseData['choices'][0]['message']['content'].trim();
+
+      // ここに追加
+      final dividedData = ChatGPTDividedData.parseFromInstruction(instruction);
+      print('料理名: ${dividedData.dishName}');
+      print('目安時間: ${dividedData.estimatedTime}');
+      print('人数: ${dividedData.numberOfPeople}');
+      print('材料: ${dividedData.ingredients}');
+      print('作り方: ${dividedData.recipe}');
+      print('料理のアピールポイント: ${dividedData.appealPoint}');
+
+      return instruction;
     } else {
       throw Exception('Unexpected data format from ChatGPT API: $responseData');
     }

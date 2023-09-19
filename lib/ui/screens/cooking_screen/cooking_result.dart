@@ -18,11 +18,10 @@ class CookingResultPage extends StatelessWidget {
             children: [
               const SizedBox(width: 12.5),
               const Icon(
-                Icons.restaurant_menu, // Google IconsのRestaurant Menuアイコンを追加
+                Icons.restaurant_menu,
                 color: Colors.black,
               ),
-              const SizedBox(width: 8.0), // アイコンとテキストの間にスペースを追加
-
+              const SizedBox(width: 8.0),
               Text(
                 'AIの考えたレシピ',
                 style: GoogleFonts.zenKakuGothicNew(
@@ -30,9 +29,9 @@ class CookingResultPage extends StatelessWidget {
                     color: Colors.black,
                     fontWeight: FontWeight.w500),
               ),
-              const SizedBox(width: 8.0), // アイコンとテキストの間にスペースを追加
+              const SizedBox(width: 8.0),
               const Icon(
-                Icons.restaurant_menu, // Google IconsのRestaurant Menuアイコンを追加
+                Icons.restaurant_menu,
                 color: Colors.black,
               ),
             ],
