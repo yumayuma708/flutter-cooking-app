@@ -10,14 +10,6 @@ class MyPageScreen extends StatefulWidget {
 }
 
 class _MyPageScreenState extends State<MyPageScreen> {
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance?.addPostFrameCallback((_) {
-      _showLoginPopup();
-    });
-  }
-
   static const clientId = 'YOUR_CLIENT_ID.apps.googleusercontent.com';
   final GoogleSignIn _googleSignIn = GoogleSignIn();
 
@@ -69,10 +61,12 @@ class _MyPageScreenState extends State<MyPageScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        color: Colors.orange[100], // <- この行を追加して背景色をオレンジに変更
+        body: Container(
+      color: Colors.orange[100],
+      child: GestureDetector(
+        onTap: _showLoginPopup, // ← テキストをタップ時に_showLoginPopupを呼び出し
         child: const Center(child: Text('マイページ')),
       ),
-    );
+    ));
   }
 }
