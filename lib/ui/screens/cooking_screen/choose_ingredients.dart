@@ -50,6 +50,7 @@ class _VegetablesGridViewState extends State<VegetablesGridView> {
       '調味料': seasonings,
       '穀物': beans,
       'アルコール': alcohols,
+      'その他': [],
     };
   }
 
@@ -129,7 +130,10 @@ class _VegetablesGridViewState extends State<VegetablesGridView> {
     'こしょう',
     '乾燥わかめ',
     'ゴマ',
-    'チリペッパー'
+    'チリペッパー',
+    'カレーのルー',
+    'ハヤシライスのルー',
+    'シチューのルー',
   ];
   final List<String> dairys = [
     'ヨーグルト',
@@ -156,6 +160,7 @@ class _VegetablesGridViewState extends State<VegetablesGridView> {
   ];
   final List<String> beans = ['納豆', '豆腐', 'おから', 'レンズ豆', '栗', 'くるみ'];
   final List<String> alcohols = ['ワイン', '白ワイン', '赤ワイン', 'ビール'];
+  final TextEditingController _otherController = TextEditingController();
 
   List<String> selectedVegetables = [];
 
@@ -304,6 +309,52 @@ class _VegetablesGridViewState extends State<VegetablesGridView> {
                         fontSize: 16.0,
                       )),
                 ),
+              if (category == 'その他') // 新しい部分の追加
+                Padding(
+                  padding:
+                      const EdgeInsets.only(left: 20.0, right: 20.0, top: 10.0),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: TextField(
+                          controller: _otherController,
+                          cursorColor: Colors.black, // カーソルの色をオレンジに変更
+                          decoration: const InputDecoration(
+                            labelText: '食材を追加',
+                            labelStyle:
+                                TextStyle(color: Colors.black), // ラベルの色をオレンジに変更
+                            border: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.orange),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide:
+                                  BorderSide(color: Colors.orange, width: 2.0),
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderSide:
+                                  BorderSide(color: Colors.orange, width: 1.0),
+                            ),
+                          ),
+                        ),
+                      ),
+                      IconButton(
+                        icon: const Icon(Icons.add),
+                        onPressed: () {
+                          setState(() {
+                            String newIngredient = _otherController.text;
+                            if (newIngredient.isNotEmpty &&
+                                !categorizedIngredients['その他']!
+                                    .contains(newIngredient)) {
+                              categorizedIngredients['その他']!.add(newIngredient);
+                              selectedVegetables.add(newIngredient);
+                            }
+                            _otherController.clear(); // テキストフィールドの内容をクリア
+                          });
+                        },
+                      ),
+                    ],
+                  ),
+                ),
               GridView.builder(
                 physics: const NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
@@ -343,7 +394,11 @@ class _VegetablesGridViewState extends State<VegetablesGridView> {
                         ingredient,
                         style: GoogleFonts.zenKakuGothicNew(
                           color: Colors.black,
-                          fontSize: ingredient == 'モッツァレラチーズ' ? 13.0 : 14.0,
+                          fontSize: ingredient == 'モッツァレラチーズ'
+                              ? 13.0
+                              : ingredient == 'ハヤシライスのルー'
+                                  ? 13.0
+                                  : 14.0,
                         ),
                       )),
                     ),
