@@ -1,5 +1,4 @@
 import 'package:caul/ui/screens/cooking_screen/choose_ingredients.dart';
-import 'package:caul/ui/screens/favorite_screen.dart';
 import 'package:caul/ui/screens/my_page_screen.dart';
 import 'package:caul/ui/screens/popup_dialog.dart';
 import 'package:caul/ui/screens/save_screen.dart';
@@ -9,8 +8,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, required this.title})
-      : super(key: key); // keyがsuper.keyからKey? keyに変更されました
+  const MyHomePage({Key? key, required this.title}) : super(key: key);
 
   final String title;
 
@@ -23,7 +21,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
   // 各ページのルートのキーを格納するためのリスト
   final List<GlobalKey<NavigatorState>> _navigatorKeys = [
-    GlobalKey<NavigatorState>(),
     GlobalKey<NavigatorState>(),
     GlobalKey<NavigatorState>(),
     GlobalKey<NavigatorState>(),
@@ -47,8 +44,6 @@ class _MyHomePageState extends State<MyHomePage> {
                       case 1:
                         return const SearchScreen();
                       case 2:
-                        return const FavoriteScreen();
-                      case 3:
                         return const MyPageScreen();
                       default:
                         throw Exception("Invalid index");
@@ -67,7 +62,7 @@ class _MyHomePageState extends State<MyHomePage> {
           currentIndex: _currentIndex,
           selectedItemColor: Colors.white,
           unselectedItemColor: Colors.white70,
-          selectedLabelStyle: GoogleFonts.zenKakuGothicNew(), // <-- この行を追加
+          selectedLabelStyle: GoogleFonts.zenKakuGothicNew(),
           unselectedLabelStyle: GoogleFonts.zenKakuGothicNew(),
           items: [
             BottomNavigationBarItem(
@@ -85,16 +80,9 @@ class _MyHomePageState extends State<MyHomePage> {
               label: '保存',
             ),
             BottomNavigationBarItem(
-              icon: FaIcon(
-                FontAwesomeIcons.star,
-                color: _currentIndex == 2 ? Colors.white : Colors.white70,
-              ),
-              label: 'お気に入り',
-            ),
-            BottomNavigationBarItem(
               icon: Icon(
                 Icons.person,
-                color: _currentIndex == 3 ? Colors.white : Colors.white70,
+                color: _currentIndex == 2 ? Colors.white : Colors.white70,
               ),
               label: 'マイページ',
             ),
@@ -113,9 +101,6 @@ class _MyHomePageState extends State<MyHomePage> {
                 tabType = 'save';
                 break;
               case 2:
-                tabType = 'favorite';
-                break;
-              case 3:
                 tabType = 'mypage';
                 break;
               default:
