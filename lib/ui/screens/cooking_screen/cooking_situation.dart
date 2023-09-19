@@ -65,10 +65,19 @@ class _CookingSituationInternalState extends State<_CookingSituationInternal> {
   late List<List<String>> buttonGroups;
 
   void _toggleSelection(String header, String button) {
-    if (selectedHeaders[header]!.contains(button)) {
-      selectedHeaders[header]!.remove(button);
+    if (header == "その他の条件") {
+      if (selectedHeaders[header]!.contains(button)) {
+        selectedHeaders[header]!.remove(button);
+      } else {
+        selectedHeaders[header]!.add(button);
+      }
     } else {
-      selectedHeaders[header]!.add(button);
+      if (selectedHeaders[header]!.contains(button)) {
+        selectedHeaders[header]!.remove(button);
+      } else {
+        selectedHeaders[header]!.clear();
+        selectedHeaders[header]!.add(button);
+      }
     }
   }
 
