@@ -70,7 +70,7 @@ class _MyPageScreenState extends State<MyPageScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        color: Colors.blueGrey[200], // <- この行を追加して背景色をオレンジに変更
+        color: Colors.orange[100], // <- この行を追加して背景色をオレンジに変更
         child: const Center(child: Text('マイページ')),
       ),
     );

@@ -7,7 +7,7 @@ class SearchScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         body: Container(
-      color: Colors.yellow[300],
+      color: Colors.orange[100],
       child: const Center(child: Text('保存')),
     ));
   }
