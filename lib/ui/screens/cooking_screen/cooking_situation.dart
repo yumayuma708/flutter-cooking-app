@@ -45,7 +45,14 @@ class _CookingSituationInternal extends StatefulWidget {
 }
 
 class _CookingSituationInternalState extends State<_CookingSituationInternal> {
-  Set<String> selectedButtons = {};
+  Map<String, Set<String>> selectedHeaders = {
+    "調理時間": {},
+    "人数": {},
+    "タイプ": {},
+    "量": {},
+    "その他の条件": {},
+    "選んだ食材以外を材料に含めてもよい": {},
+  };
   List<String> selectedVegetables = [];
   List<String> headers = [
     "調理時間",
@@ -56,6 +63,14 @@ class _CookingSituationInternalState extends State<_CookingSituationInternal> {
     "選んだ食材以外を材料に含めてもよい"
   ];
   late List<List<String>> buttonGroups;
+
+  void _toggleSelection(String header, String button) {
+    if (selectedHeaders[header]!.contains(button)) {
+      selectedHeaders[header]!.remove(button);
+    } else {
+      selectedHeaders[header]!.add(button);
+    }
+  }
 
   @override
   void initState() {
@@ -107,17 +122,14 @@ class _CookingSituationInternalState extends State<_CookingSituationInternal> {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start, // この行を追加
                       children: buttonGroups[index].map((button) {
-                        bool isSelected = selectedButtons.contains(button);
+                        bool isSelected =
+                            selectedHeaders[headers[index]]!.contains(button);
                         return Align(
                             alignment: Alignment.centerLeft, // この行を追加
                             child: GestureDetector(
                               onTap: () {
                                 setState(() {
-                                  if (isSelected) {
-                                    selectedButtons.remove(button);
-                                  } else {
-                                    selectedButtons.add(button);
-                                  }
+                                  _toggleSelection(headers[index], button);
                                 });
                               },
                               child: Card(
@@ -201,28 +213,21 @@ class _CookingSituationInternalState extends State<_CookingSituationInternal> {
                     // 料理を作る！ボタン
                     ElevatedButton(
                       onPressed: () {
-                        List<String> selectedVegetables = selectedButtons
-                            .where((item) =>
-                                widget.selectedVegetables.contains(item))
-                            .toList();
-                        List<String> timeConditions = selectedButtons
-                            .where((item) => widget.timeOptions.contains(item))
-                            .toList();
-                        List<String> servingConditions = selectedButtons
-                            .where((item) => widget.servingSize.contains(item))
-                            .toList();
-                        List<String> cuisineConditions = selectedButtons
-                            .where((item) => widget.cuisineType.contains(item))
-                            .toList();
-                        List<String> sizeConditions = selectedButtons
-                            .where((item) => widget.mealSize.contains(item))
-                            .toList();
-                        List<String> preferenceConditions = selectedButtons
-                            .where((item) => widget.preferences.contains(item))
-                            .toList();
-                        List<String> confirmationConditions = selectedButtons
-                            .where((item) => widget.confirmation.contains(item))
-                            .toList();
+                        List<String> selectedVegetables =
+                            selectedHeaders["選んだ食材以外を材料に含めてもよい"]!.toList();
+
+                        List<String> timeConditions =
+                            selectedHeaders["調理時間"]!.toList();
+                        List<String> servingConditions =
+                            selectedHeaders["人数"]!.toList();
+                        List<String> cuisineConditions =
+                            selectedHeaders["タイプ"]!.toList();
+                        List<String> sizeConditions =
+                            selectedHeaders["量"]!.toList();
+                        List<String> preferenceConditions =
+                            selectedHeaders["その他の条件"]!.toList();
+                        List<String> confirmationConditions =
+                            selectedHeaders["選んだ食材以外を材料に含めてもよい"]!.toList();
 
                         CookingData data = CookingData(
                           selectedIngredients: widget.selectedVegetables,
