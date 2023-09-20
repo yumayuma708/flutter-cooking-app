@@ -8,9 +8,9 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 class CookingSituation extends ConsumerWidget {
   final List<String> selectedVegetables;
 
-  var selectedSeasonings;
+  final List<String> selectedSeasonings;
 
-  CookingSituation(
+  const CookingSituation(
       {Key? key,
       required this.selectedVegetables,
       required this.selectedSeasonings

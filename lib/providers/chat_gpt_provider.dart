@@ -1,4 +1,5 @@
 import 'package:caul/providers/chat_gpt_devider.dart';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -84,8 +85,8 @@ class ChatGPTProvider {
         '※前回までのメッセージを考慮せずに、今回のメッセージのみ考慮して作成してください。\n'
         '※「：」は全て全角を使用してください。';
 
-    print('Sending the following to ChatGPT:');
-    print(prompts);
+    debugPrint('Sending the following to ChatGPT:');
+    debugPrint(prompts);
 
     final body = json.encode({
       'messages': [
@@ -116,12 +117,12 @@ class ChatGPTProvider {
 
       // ここに追加
       final dividedData = ChatGPTDividedData.parseFromInstruction(instruction);
-      print('料理名: ${dividedData.dishName}');
-      print('目安時間: ${dividedData.estimatedTime}');
-      print('人数: ${dividedData.numberOfPeople}');
-      print('材料: ${dividedData.ingredients}');
-      print('作り方: ${dividedData.recipe}');
-      print('料理のアピールポイント: ${dividedData.appealPoint}');
+      debugPrint('料理名: ${dividedData.dishName}');
+      debugPrint('目安時間: ${dividedData.estimatedTime}');
+      debugPrint('人数: ${dividedData.numberOfPeople}');
+      debugPrint('材料: ${dividedData.ingredients}');
+      debugPrint('作り方: ${dividedData.recipe}');
+      debugPrint('料理のアピールポイント: ${dividedData.appealPoint}');
 
       return instruction;
     } else {

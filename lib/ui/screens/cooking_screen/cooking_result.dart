@@ -232,23 +232,21 @@ class CookingResultPage extends StatelessWidget {
                           },
                           splashColor: Colors.transparent, // 水滴エフェクトを透明に
                           highlightColor: Colors.transparent, // 押下時のハイライトを透明に
-                          child: Container(
-                            child: FloatingActionButton(
-                              backgroundColor: Colors.orange[200],
-                              onPressed: () {}, // onPressedは空の関数として保持
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(28.0),
-                                side: const BorderSide(
-                                    color: Colors.orangeAccent, width: 2.0),
-                              ),
-                              elevation: 0.0, // 通常時の影を削除
-                              focusElevation: 0.0, // フォーカス時の影を削除
-                              hoverElevation: 0.0, // ホバー時の影を削除
-                              highlightElevation: 0.0, // 押下時の影を削除
-                              disabledElevation: 0.0,
-                              child: Image.asset('assets/images/renew.png',
-                                  width: 24, height: 24), // 無効時の影を削除
+                          child: FloatingActionButton(
+                            backgroundColor: Colors.orange[200],
+                            onPressed: () {}, // onPressedは空の関数として保持
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(28.0),
+                              side: const BorderSide(
+                                  color: Colors.orangeAccent, width: 2.0),
                             ),
+                            elevation: 0.0, // 通常時の影を削除
+                            focusElevation: 0.0, // フォーカス時の影を削除
+                            hoverElevation: 0.0, // ホバー時の影を削除
+                            highlightElevation: 0.0, // 押下時の影を削除
+                            disabledElevation: 0.0,
+                            child: Image.asset('assets/images/renew.png',
+                                width: 24, height: 24), // 無効時の影を削除
                           ),
                         ),
                       );
@@ -280,10 +278,10 @@ class BookmarkButton extends StatefulWidget {
   const BookmarkButton({super.key});
 
   @override
-  _BookmarkButtonState createState() => _BookmarkButtonState();
+  BookmarkButtonState createState() => BookmarkButtonState();
 }
 
-class _BookmarkButtonState extends State<BookmarkButton> {
+class BookmarkButtonState extends State<BookmarkButton> {
   bool isPressed = false;
 
   @override
