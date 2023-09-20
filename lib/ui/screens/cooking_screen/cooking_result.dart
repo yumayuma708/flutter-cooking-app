@@ -76,27 +76,84 @@ class CookingResultPage extends StatelessWidget {
             ),
             Container(
               // 画面下部のバーを追加
-              height: 60.0,
-              color: Colors.white,
+              height: 80.0,
+              color: Colors.transparent,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  FloatingActionButton(
-                    // 丸いボタンを追加
-                    backgroundColor: Colors.orange[300],
+                  MyFloatingActionButton(
+                    backgroundColor: Colors.orange[300]!,
+                    onPressed: () {
+                      // ボタンの処理を記述
+                    },
+                    shape: RoundedRectangleBorder(
+                        borderRadius:
+                            BorderRadius.circular(28.0), // 丸みをつけるための半径
+                        side: const BorderSide(
+                            color: Colors.orangeAccent, width: 2.0) // 枠の色と太さを設定
+                        ),
                     child: const Icon(
                       FontAwesomeIcons.bookmark,
                       color: Colors.black,
                     ),
-                    onPressed: () {
-                      // ボタンの処理を記述
-                    },
                   ),
-                  const SizedBox(width: 20.0), // ボタンと端の間にスペースを追加
+                  const SizedBox(width: 20.0),
                 ],
               ),
             ),
           ],
         ));
+  }
+}
+
+class MyFloatingActionButton extends StatefulWidget {
+  final VoidCallback onPressed;
+  final Widget child;
+  final ShapeBorder shape;
+  final Color backgroundColor;
+
+  MyFloatingActionButton({
+    required this.onPressed,
+    required this.child,
+    required this.shape,
+    required this.backgroundColor,
+  });
+
+  @override
+  _MyFloatingActionButtonState createState() => _MyFloatingActionButtonState();
+}
+
+class _MyFloatingActionButtonState extends State<MyFloatingActionButton> {
+  bool isPressed = false; // 追加：ボタンが押された状態を保持
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      type: MaterialType.transparency,
+      color: Colors.transparent, // Materialの背景色を透明に
+      elevation: isPressed ? 0.0 : 0.0, // 押されたときの影の高さを設定
+      shadowColor: isPressed ? Colors.transparent : null, // 押されたときの影の色を白に設定
+      child: FloatingActionButton(
+        backgroundColor: widget.backgroundColor,
+        splashColor: Colors.transparent, // 押された時の水滴エフェクトの色を透明に設定
+        elevation: 0.0, // 通常時の影を削除
+        focusElevation: 0.0, // フォーカス時の影を削除
+        hoverElevation: 0.0, // ホバー時の影を削除
+        highlightElevation: 0.0, // 押下時の影を削除
+        disabledElevation: 0.0, // 無効時の影を削除
+        child: Icon(
+            isPressed
+                ? FontAwesomeIcons.solidBookmark
+                : FontAwesomeIcons.bookmark,
+            color: Colors.black),
+        shape: widget.shape,
+        onPressed: () {
+          widget.onPressed();
+          setState(() {
+            isPressed = !isPressed;
+          });
+        },
+      ),
+    );
   }
 }
