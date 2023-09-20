@@ -48,27 +48,40 @@ class CookingResultPage extends StatelessWidget {
                 child: Column(
                   children: [
                     const SizedBox(height: 20.0), // AppBarとの間にスペースを追加
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const SizedBox(
-                          width: 20,
+                    Center(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                        child: Text(
+                          "〜${dividedData.dishName}〜", // 料理名を"〜"で囲む
+                          style: GoogleFonts.zenKakuGothicNew(
+                            fontSize: 25,
+                            color: Colors.black,
+                            fontWeight: FontWeight.w700,
+                          ),
+                          textAlign: TextAlign.center,
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 2,
                         ),
-                        Expanded(
-                          child: Text(
-                            "〜${dividedData.dishName}〜", // 料理名を"〜"で囲む
-                            style: GoogleFonts.zenKakuGothicNew(
-                              fontSize: 25,
-                              color: Colors.black,
-                              fontWeight: FontWeight.w700,
-                            ),
-                            overflow: TextOverflow.ellipsis,
-                            maxLines: 2,
+                      ),
+                    ),
+
+                    const SizedBox(height: 15.0), // タイトルとの間にスペースを追加
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        const Icon(FontAwesomeIcons.stopwatch),
+                        const SizedBox(width: 8.0),
+                        Text(
+                          "目安時間：${dividedData.estimatedTime}",
+                          style: GoogleFonts.zenKakuGothicNew(
+                            fontSize: 20,
+                            color: Colors.black,
+                            fontWeight: FontWeight.w600,
                           ),
                         ),
                         const SizedBox(
                           width: 20,
-                        ),
+                        )
                       ],
                     ),
                   ],
@@ -141,19 +154,19 @@ class _MyFloatingActionButtonState extends State<MyFloatingActionButton> {
         focusElevation: 0.0, // フォーカス時の影を削除
         hoverElevation: 0.0, // ホバー時の影を削除
         highlightElevation: 0.0, // 押下時の影を削除
-        disabledElevation: 0.0, // 無効時の影を削除
-        child: Icon(
-            isPressed
-                ? FontAwesomeIcons.solidBookmark
-                : FontAwesomeIcons.bookmark,
-            color: Colors.black),
+        disabledElevation: 0.0,
         shape: widget.shape,
         onPressed: () {
           widget.onPressed();
           setState(() {
             isPressed = !isPressed;
           });
-        },
+        }, // 無効時の影を削除
+        child: Icon(
+            isPressed
+                ? FontAwesomeIcons.solidBookmark
+                : FontAwesomeIcons.bookmark,
+            color: Colors.black),
       ),
     );
   }
