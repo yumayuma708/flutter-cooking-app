@@ -6,16 +6,16 @@ class MyPageScreen extends StatefulWidget {
   const MyPageScreen({Key? key}) : super(key: key);
 
   @override
-  _MyPageScreenState createState() => _MyPageScreenState();
+  MyPageScreenState createState() => MyPageScreenState();
 }
 
-class _MyPageScreenState extends State<MyPageScreen> {
-  static const clientId = 'YOUR_CLIENT_ID.apps.googleusercontent.com';
+class MyPageScreenState extends State<MyPageScreen> {
   final GoogleSignIn _googleSignIn = GoogleSignIn();
 
   Future<void> _handleGoogleSignIn() async {
     try {
       await _googleSignIn.signIn();
+      if (!mounted) return;
       Navigator.of(context).pop(); // Close the popup after successful login
     } catch (error) {
       if (kDebugMode) {

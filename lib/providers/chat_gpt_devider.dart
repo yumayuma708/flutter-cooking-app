@@ -46,8 +46,9 @@ class ChatGPTDividedData {
     final endIndex = nextIndex == -1
         ? data.indexOf('\n', startIndex + prefix.length)
         : nextIndex;
-    if (endIndex == -1)
+    if (endIndex == -1) {
       return data.substring(startIndex + prefix.length).trim();
+    }
     return data
         .substring(startIndex + prefix.length, endIndex)
         .trim() // この行で前後の空白やインデントを除去

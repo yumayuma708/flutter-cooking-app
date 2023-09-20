@@ -11,7 +11,7 @@ class PopupPage extends StatelessWidget {
   final PageController pageController;
   final ValueNotifier<int> currentPageNotifier;
 
-  PopupPage({
+  const PopupPage({
     super.key,
     required this.description,
     required this.buttonLabel,
@@ -31,7 +31,7 @@ class PopupPage extends StatelessWidget {
         ),
         Padding(
           padding: const EdgeInsets.all(16.0),
-          child: Text(description, style: TextStyle(fontSize: 16.0)),
+          child: Text(description, style: const TextStyle(fontSize: 16.0)),
         ),
         const Spacer(
           flex: 5,
@@ -65,10 +65,6 @@ class PopupPage extends StatelessWidget {
                       duration: const Duration(milliseconds: 300),
                       curve: Curves.easeInOut);
                 },
-                child: const Text(
-                  '戻る',
-                  style: TextStyle(color: Colors.black),
-                ),
                 style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.resolveWith<Color>(
                     (Set<MaterialState> states) {
@@ -94,16 +90,16 @@ class PopupPage extends StatelessWidget {
                       borderRadius: BorderRadius.circular(5),
                     ),
                   ),
+                ),
+                child: const Text(
+                  '戻る',
+                  style: TextStyle(color: Colors.black),
                 ),
               ),
             const Spacer(flex: 7),
             if (showNextButton)
               ElevatedButton(
                 onPressed: onPressed,
-                child: Text(
-                  buttonLabel,
-                  style: const TextStyle(color: Colors.black),
-                ),
                 style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.resolveWith<Color>(
                     (Set<MaterialState> states) {
@@ -129,6 +125,10 @@ class PopupPage extends StatelessWidget {
                       borderRadius: BorderRadius.circular(5),
                     ),
                   ),
+                ),
+                child: Text(
+                  buttonLabel,
+                  style: const TextStyle(color: Colors.black),
                 ),
               ),
             const Spacer(),

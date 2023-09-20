@@ -7,13 +7,13 @@ import 'package:google_fonts/google_fonts.dart';
 class LoadingScreen extends StatefulWidget {
   final CookingData data;
 
-  LoadingScreen({required this.data});
+  const LoadingScreen({super.key, required this.data});
 
   @override
-  _LoadingScreenState createState() => _LoadingScreenState();
+  LoadingScreenState createState() => LoadingScreenState();
 }
 
-class _LoadingScreenState extends State<LoadingScreen> {
+class LoadingScreenState extends State<LoadingScreen> {
   @override
   void initState() {
     super.initState();
@@ -37,11 +37,12 @@ class _LoadingScreenState extends State<LoadingScreen> {
         instruction: instruction,
       );
 
+      if (!mounted) return;
       Navigator.of(context).pushReplacement(MaterialPageRoute(
         builder: (context) => CookingResultPage(data: finalData),
       ));
     } catch (e) {
-      print('Error: $e');
+      debugPrint('Error: $e');
     }
   }
 
@@ -60,7 +61,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
             ),
           ),
           const SizedBox(height: 20.0),
-          HourglassAnimation(),
+          const HourglassAnimation(),
         ],
       ),
     );
@@ -68,11 +69,13 @@ class _LoadingScreenState extends State<LoadingScreen> {
 }
 
 class HourglassAnimation extends StatefulWidget {
+  const HourglassAnimation({super.key});
+
   @override
-  _HourglassAnimationState createState() => _HourglassAnimationState();
+  HourglassAnimationState createState() => HourglassAnimationState();
 }
 
-class _HourglassAnimationState extends State<HourglassAnimation>
+class HourglassAnimationState extends State<HourglassAnimation>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<int> _animation;

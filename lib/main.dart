@@ -8,7 +8,7 @@ void main() async {
   await dotenv.load(fileName: '.env');
   OpenAI.apiKey = dotenv.get('API_KEY');
   runApp(
-    ProviderScope(
+    const ProviderScope(
       child: CookingApp(),
     ),
   );
