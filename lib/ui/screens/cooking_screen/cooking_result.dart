@@ -31,7 +31,7 @@ class CookingResultPage extends StatelessWidget {
                 style: GoogleFonts.zenKakuGothicNew(
                     fontSize: 25,
                     color: Colors.black,
-                    fontWeight: FontWeight.w500),
+                    fontWeight: FontWeight.w800),
               ),
               const SizedBox(width: 8.0),
               const Icon(
@@ -49,17 +49,18 @@ class CookingResultPage extends StatelessWidget {
                   children: [
                     const SizedBox(height: 20.0), // AppBarとの間にスペースを追加
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         const SizedBox(
                           width: 20,
                         ),
                         Expanded(
                           child: Text(
-                            dividedData.dishName,
+                            "〜${dividedData.dishName}〜", // 料理名を"〜"で囲む
                             style: GoogleFonts.zenKakuGothicNew(
                               fontSize: 25,
                               color: Colors.black,
-                              fontWeight: FontWeight.bold,
+                              fontWeight: FontWeight.w700,
                             ),
                             overflow: TextOverflow.ellipsis,
                             maxLines: 2,

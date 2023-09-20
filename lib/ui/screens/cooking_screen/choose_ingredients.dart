@@ -92,7 +92,8 @@ class _VegetablesGridViewState extends State<VegetablesGridView> {
     '牛肉',
     'ウィンナー',
     'ベーコン',
-    'ハム'
+    'ハム',
+    '卵',
   ];
   final List<String> fish = ['魚', 'エビ', 'イカ', 'タコ', 'カニ', '牡蠣'];
   final List<String> fruits = [
