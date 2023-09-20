@@ -99,7 +99,9 @@ class CookingResultPage extends StatelessWidget {
                         ),
                       ],
                     ),
-                    const SizedBox(height: 10.0), // 材料タイトルと材料内容の間にスペースを追加
+                    const SizedBox(
+                      height: 8,
+                    ),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 20.0),
                       child: Align(
@@ -117,7 +119,85 @@ class CookingResultPage extends StatelessWidget {
                           textAlign: TextAlign.left, // この行を追加
                         ),
                       ),
-                    )
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          '作り方：',
+                          style: GoogleFonts.zenKakuGothicNew(
+                            fontSize: 20,
+                            color: Colors.black,
+                            fontWeight:
+                                FontWeight.bold, // この行でフォントの太さを変更して「作り方」を強調
+                          ),
+                          textAlign: TextAlign.left,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 8,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          dividedData.recipe,
+                          style: GoogleFonts.zenKakuGothicNew(
+                            fontSize: 18,
+                            color: Colors.black,
+                            fontWeight: FontWeight.w500,
+                          ),
+                          textAlign: TextAlign.left,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          'ポイント',
+                          style: GoogleFonts.zenKakuGothicNew(
+                            fontSize: 20,
+                            color: Colors.black,
+                            fontWeight:
+                                FontWeight.bold, // この行でフォントの太さを変更して「作り方」を強調
+                          ),
+                          textAlign: TextAlign.left,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 8,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          (dividedData.appealPoint.startsWith('：') ||
+                                      dividedData.appealPoint.startsWith(':')
+                                  ? dividedData.appealPoint.substring(1)
+                                  : dividedData.appealPoint)
+                              .trim(), // trimの適用を最後に移動
+                          style: GoogleFonts.zenKakuGothicNew(
+                            fontSize: 18,
+                            color: Colors.black,
+                            fontWeight: FontWeight.w500,
+                          ),
+                          textAlign: TextAlign.left,
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -130,7 +210,7 @@ class CookingResultPage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   MyFloatingActionButton(
-                    backgroundColor: Colors.orange[300]!,
+                    backgroundColor: Colors.orange[200]!,
                     onPressed: () {
                       // ボタンの処理を記述
                     },
