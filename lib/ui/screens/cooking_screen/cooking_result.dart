@@ -52,7 +52,7 @@ class CookingResultPage extends StatelessWidget {
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 20.0),
                         child: Text(
-                          "〜${dividedData.dishName}〜", // 料理名を"〜"で囲む
+                          "【${dividedData.dishName}】", // 料理名を"〜"で囲む
                           style: GoogleFonts.zenKakuGothicNew(
                             fontSize: 25,
                             color: Colors.black,
@@ -218,35 +218,54 @@ class CookingResultPage extends StatelessWidget {
               height: 80.0,
               color: Colors.transparent,
               child: Row(
-                mainAxisAlignment: MainAxisAlignment
-                    .spaceEvenly, // Change alignment to spaceEvenly for equal spacing
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  MyFloatingActionButton(
-                    backgroundColor: Colors.orange[200]!,
-                    onPressed: () {},
+                  FloatingActionButton(
+                    backgroundColor: Colors.orange[200],
+                    onPressed: () {
+                      Material(
+                        color: Colors.transparent, // Materialの背景を透明に
+                        child: InkWell(
+                          onTap: () {
+                            // こちらにボタンがタップされたときの処理を書く
+                          },
+                          splashColor: Colors.transparent, // 水滴エフェクトを透明に
+                          highlightColor: Colors.transparent, // 押下時のハイライトを透明に
+                          child: Container(
+                            child: FloatingActionButton(
+                              backgroundColor: Colors.orange[200],
+                              onPressed: () {}, // onPressedは空の関数として保持
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(28.0),
+                                side: const BorderSide(
+                                    color: Colors.orangeAccent, width: 2.0),
+                              ),
+                              child: Image.asset('assets/images/renew.png',
+                                  width: 24, height: 24),
+                              elevation: 0.0, // 通常時の影を削除
+                              focusElevation: 0.0, // フォーカス時の影を削除
+                              hoverElevation: 0.0, // ホバー時の影を削除
+                              highlightElevation: 0.0, // 押下時の影を削除
+                              disabledElevation: 0.0, // 無効時の影を削除
+                            ),
+                          ),
+                        ),
+                      );
+                    },
                     shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(28.0),
-                        side: const BorderSide(
-                            color: Colors.orangeAccent, width: 2.0)),
-                    child: const Icon(
-                      FontAwesomeIcons.bookmark,
-                      color: Colors.black,
+                      borderRadius: BorderRadius.circular(28.0),
+                      side: const BorderSide(
+                          color: Colors.orangeAccent, width: 2.0),
                     ),
+                    child: Image.asset('assets/images/renew.png',
+                        width: 24, height: 24),
+                    splashColor: Colors.transparent, // 水滴エフェクトを透明に
+                    focusElevation: 0.0, // フォーカス時の影を削除
+                    hoverElevation: 0.0, // ホバー時の影を削除
+                    highlightElevation: 0.0, // 押下時の影を削除
+                    disabledElevation: 0.0, // 無効時の影を削除
                   ),
-                  MyFloatingActionButton(
-                    // New FAB added
-                    backgroundColor: Colors.orange[200]!,
-                    onPressed: () {},
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(28.0),
-                        side: const BorderSide(
-                            color: Colors.orangeAccent, width: 2.0)),
-                    child: const Icon(
-                      FontAwesomeIcons
-                          .plus, // example icon for the new FAB, you can change this
-                      color: Colors.black,
-                    ),
-                  ),
+                  BookmarkButton(),
                 ],
               ),
             )
@@ -255,54 +274,38 @@ class CookingResultPage extends StatelessWidget {
   }
 }
 
-class MyFloatingActionButton extends StatefulWidget {
-  final VoidCallback onPressed;
-  final Widget child;
-  final ShapeBorder shape;
-  final Color backgroundColor;
-
-  MyFloatingActionButton({
-    required this.onPressed,
-    required this.child,
-    required this.shape,
-    required this.backgroundColor,
-  });
-
+class BookmarkButton extends StatefulWidget {
   @override
-  _MyFloatingActionButtonState createState() => _MyFloatingActionButtonState();
+  _BookmarkButtonState createState() => _BookmarkButtonState();
 }
 
-class _MyFloatingActionButtonState extends State<MyFloatingActionButton> {
-  bool isPressed = false; // 追加：ボタンが押された状態を保持
+class _BookmarkButtonState extends State<BookmarkButton> {
+  bool isPressed = false;
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      type: MaterialType.transparency,
-      color: Colors.transparent, // Materialの背景色を透明に
-      elevation: isPressed ? 0.0 : 0.0, // 押されたときの影の高さを設定
-      shadowColor: isPressed ? Colors.transparent : null, // 押されたときの影の色を白に設定
-      child: FloatingActionButton(
-        backgroundColor: widget.backgroundColor,
-        splashColor: Colors.transparent, // 押された時の水滴エフェクトの色を透明に設定
-        elevation: 0.0, // 通常時の影を削除
-        focusElevation: 0.0, // フォーカス時の影を削除
-        hoverElevation: 0.0, // ホバー時の影を削除
-        highlightElevation: 0.0, // 押下時の影を削除
-        disabledElevation: 0.0,
-        shape: widget.shape,
-        onPressed: () {
-          widget.onPressed();
-          setState(() {
-            isPressed = !isPressed;
-          });
-        }, // 無効時の影を削除
-        child: Icon(
-            isPressed
-                ? FontAwesomeIcons.solidBookmark
-                : FontAwesomeIcons.bookmark,
-            color: Colors.black),
+    return FloatingActionButton(
+      backgroundColor: Colors.orange[200],
+      onPressed: () {
+        setState(() {
+          isPressed = !isPressed;
+        });
+      },
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(28.0),
+        side: const BorderSide(color: Colors.orangeAccent, width: 2.0),
       ),
+      child: Icon(
+        isPressed
+            ? FontAwesomeIcons.solidBookmark
+            : FontAwesomeIcons.bookmark, // ここでアイコンを変更
+        color: Colors.black,
+      ),
+      splashColor: Colors.transparent, // 水滴エフェクトを透明に
+      focusElevation: 0.0, // フォーカス時の影を削除
+      hoverElevation: 0.0, // ホバー時の影を削除
+      highlightElevation: 0.0, // 押下時の影を削除
+      disabledElevation: 0.0, // 無効時の影を削除
     );
   }
 }
