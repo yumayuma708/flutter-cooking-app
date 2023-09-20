@@ -140,27 +140,8 @@ class _CookingSituationInternalState extends State<_CookingSituationInternal> {
                       padding: const EdgeInsets.fromLTRB(10.0, 10.0, 0.0, 10.0),
                       child: Row(
                         children: [
-                          Icon(
-                            headers[index] == "調理時間"
-                                ? FontAwesomeIcons.clock
-                                : headers[index] == "人数"
-                                    ? FontAwesomeIcons.user
-                                    : headers[index] == "タイプ"
-                                        ? FontAwesomeIcons.pepperHot
-                                        : headers[index] == "量"
-                                            ? FontAwesomeIcons.bowlRice
-                                            : headers[index] == "その他の条件"
-                                                ? FontAwesomeIcons.kitchenSet
-                                                : headers[index] ==
-                                                        "選んだ食材以外を材料に含めてもよい"
-                                                    ? FontAwesomeIcons
-                                                        .commentDots
-                                                    : null,
-                            size: 20.0,
-                          ),
-                          const SizedBox(
-                            width: 10.0,
-                          ),
+                          _getIconOrImageForHeader(headers[index]),
+                          const SizedBox(width: 10.0),
                           Text(
                             headers[index],
                             style: TextStyle(
@@ -328,5 +309,24 @@ class _CookingSituationInternalState extends State<_CookingSituationInternal> {
         ],
       ),
     );
+  }
+}
+
+Widget _getIconOrImageForHeader(String header) {
+  switch (header) {
+    case "調理時間":
+      return const Icon(FontAwesomeIcons.clock, size: 20.0);
+    case "人数":
+      return const Icon(FontAwesomeIcons.user, size: 20.0);
+    case "タイプ":
+      return Image.asset('assets/images/curry.png', width: 28.0, height: 28.0);
+    case "量":
+      return const Icon(FontAwesomeIcons.bowlRice, size: 20.0);
+    case "その他の条件":
+      return const Icon(FontAwesomeIcons.kitchenSet, size: 20.0);
+    case "選んだ食材以外を材料に含めてもよい":
+      return const Icon(FontAwesomeIcons.commentDots, size: 20.0);
+    default:
+      return const SizedBox.shrink(); // 不明なヘッダーの場合は、何も表示しない
   }
 }

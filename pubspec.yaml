@@ -42,3 +42,9 @@ flutter:
   assets:
     - .env
     - assets/images/icon.jpg
+    - assets/images/rice.png
+    - assets/images/curry.png
+    - assets/images/meat.png
+    - assets/images/salt.png
+    - assets/images/fruit.png
+
