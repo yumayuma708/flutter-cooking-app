@@ -41,35 +41,62 @@ class CookingResultPage extends StatelessWidget {
             ],
           ),
         ),
-        body: Container(
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                Row(
+        body: Column(
+          children: [
+            Expanded(
+              child: SingleChildScrollView(
+                child: Column(
                   children: [
-                    const SizedBox(
-                      width: 20,
-                    ),
-                    Expanded(
-                      child: Text(
-                        dividedData.dishName,
-                        style: GoogleFonts.zenKakuGothicNew(
-                          fontSize: 25,
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
+                    const SizedBox(height: 20.0), // AppBarとの間にスペースを追加
+                    Row(
+                      children: [
+                        const SizedBox(
+                          width: 20,
                         ),
-                        overflow: TextOverflow.ellipsis, // はみ出る場合、末尾を省略記号にする
-                        maxLines: 2, // 最大2行までとする
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 20,
+                        Expanded(
+                          child: Text(
+                            dividedData.dishName,
+                            style: GoogleFonts.zenKakuGothicNew(
+                              fontSize: 25,
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
+                            ),
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 2,
+                          ),
+                        ),
+                        const SizedBox(
+                          width: 20,
+                        ),
+                      ],
                     ),
                   ],
                 ),
-              ],
+              ),
             ),
-          ),
+            Container(
+              // 画面下部のバーを追加
+              height: 60.0,
+              color: Colors.white,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  FloatingActionButton(
+                    // 丸いボタンを追加
+                    backgroundColor: Colors.orange[300],
+                    child: const Icon(
+                      FontAwesomeIcons.bookmark,
+                      color: Colors.black,
+                    ),
+                    onPressed: () {
+                      // ボタンの処理を記述
+                    },
+                  ),
+                  const SizedBox(width: 20.0), // ボタンと端の間にスペースを追加
+                ],
+              ),
+            ),
+          ],
         ));
   }
 }
