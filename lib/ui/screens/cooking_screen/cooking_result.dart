@@ -215,32 +215,41 @@ class CookingResultPage extends StatelessWidget {
               ),
             ),
             Container(
-              // 画面下部のバーを追加
               height: 80.0,
               color: Colors.transparent,
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
+                mainAxisAlignment: MainAxisAlignment
+                    .spaceEvenly, // Change alignment to spaceEvenly for equal spacing
                 children: [
                   MyFloatingActionButton(
                     backgroundColor: Colors.orange[200]!,
-                    onPressed: () {
-                      // ボタンの処理を記述
-                    },
+                    onPressed: () {},
                     shape: RoundedRectangleBorder(
-                        borderRadius:
-                            BorderRadius.circular(28.0), // 丸みをつけるための半径
+                        borderRadius: BorderRadius.circular(28.0),
                         side: const BorderSide(
-                            color: Colors.orangeAccent, width: 2.0) // 枠の色と太さを設定
-                        ),
+                            color: Colors.orangeAccent, width: 2.0)),
                     child: const Icon(
                       FontAwesomeIcons.bookmark,
                       color: Colors.black,
                     ),
                   ),
-                  const SizedBox(width: 20.0),
+                  MyFloatingActionButton(
+                    // New FAB added
+                    backgroundColor: Colors.orange[200]!,
+                    onPressed: () {},
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(28.0),
+                        side: const BorderSide(
+                            color: Colors.orangeAccent, width: 2.0)),
+                    child: const Icon(
+                      FontAwesomeIcons
+                          .plus, // example icon for the new FAB, you can change this
+                      color: Colors.black,
+                    ),
+                  ),
                 ],
               ),
-            ),
+            )
           ],
         ));
   }
