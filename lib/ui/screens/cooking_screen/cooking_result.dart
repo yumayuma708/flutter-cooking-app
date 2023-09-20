@@ -77,7 +77,7 @@ class CookingResultPage extends StatelessWidget {
             Container(
               // 画面下部のバーを追加
               height: 60.0,
-              color: Colors.white,
+              color: Colors.transparent,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
