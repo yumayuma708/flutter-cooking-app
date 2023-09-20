@@ -19,8 +19,9 @@ class CookingResultPage extends StatelessWidget {
           backgroundColor: Colors.orange[500],
           centerTitle: true,
           title: Row(
+            mainAxisSize: MainAxisSize.min, // この行を追加
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const SizedBox(width: 12.5),
               const Icon(
                 Icons.restaurant_menu,
                 color: Colors.black,
@@ -48,113 +49,265 @@ class CookingResultPage extends StatelessWidget {
                 child: Column(
                   children: [
                     const SizedBox(height: 20.0), // AppBarとの間にスペースを追加
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const SizedBox(
-                          width: 20,
+                    Center(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                        child: Text(
+                          "【${dividedData.dishName}】", // 料理名を"〜"で囲む
+                          style: GoogleFonts.zenKakuGothicNew(
+                            fontSize: 25,
+                            color: Colors.black,
+                            fontWeight: FontWeight.w700,
+                          ),
+                          textAlign: TextAlign.center,
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 2,
                         ),
-                        Expanded(
-                          child: Text(
-                            "〜${dividedData.dishName}〜", // 料理名を"〜"で囲む
-                            style: GoogleFonts.zenKakuGothicNew(
-                              fontSize: 25,
-                              color: Colors.black,
-                              fontWeight: FontWeight.w700,
-                            ),
-                            overflow: TextOverflow.ellipsis,
-                            maxLines: 2,
+                      ),
+                    ),
+
+                    const SizedBox(height: 15.0), // タイトルとの間にスペースを追加
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        const Icon(FontAwesomeIcons.stopwatch),
+                        const SizedBox(width: 8.0),
+                        Text(
+                          "目安時間：${dividedData.estimatedTime}",
+                          style: GoogleFonts.zenKakuGothicNew(
+                            fontSize: 20,
+                            color: Colors.black,
+                            fontWeight: FontWeight.w600,
                           ),
                         ),
                         const SizedBox(
                           width: 20,
+                        )
+                      ],
+                    ),
+                    const SizedBox(height: 15.0), // 目安時間と材料の間にスペースを追加
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        const SizedBox(width: 20.0),
+                        const Icon(FontAwesomeIcons.carrot,
+                            size: 20), // carrot icon added
+                        const SizedBox(width: 8.0), // spacing
+                        Text(
+                          "材料(${dividedData.numberOfPeople})",
+                          style: GoogleFonts.zenKakuGothicNew(
+                            fontSize: 20,
+                            color: Colors.black,
+                            fontWeight: FontWeight.w700,
+                          ),
                         ),
                       ],
+                    ),
+
+                    const SizedBox(
+                      height: 8,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          dividedData.ingredients
+                              .split('\n')
+                              .map((line) => '・$line')
+                              .join('\n'),
+                          style: GoogleFonts.zenKakuGothicNew(
+                            fontSize: 18,
+                            color: Colors.black,
+                            fontWeight: FontWeight.w500,
+                          ),
+                          textAlign: TextAlign.left, // この行を追加
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                      child: Row(
+                        children: [
+                          Image.asset('assets/images/knife.png',
+                              width: 20, height: 20), // knife image added
+                          const SizedBox(width: 8.0), // spacing
+                          Text(
+                            '作り方',
+                            style: GoogleFonts.zenKakuGothicNew(
+                              fontSize: 20,
+                              color: Colors.black,
+                              fontWeight:
+                                  FontWeight.bold, // この行でフォントの太さを変更して「作り方」を強調
+                            ),
+                            textAlign: TextAlign.left,
+                          ),
+                        ],
+                      ),
+                    ),
+
+                    const SizedBox(
+                      height: 8,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          dividedData.recipe,
+                          style: GoogleFonts.zenKakuGothicNew(
+                            fontSize: 18,
+                            color: Colors.black,
+                            fontWeight: FontWeight.w500,
+                          ),
+                          textAlign: TextAlign.left,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                      child: Row(
+                        children: [
+                          Icon(Icons.star, size: 20), // star icon added
+                          const SizedBox(width: 8.0), // spacing
+                          Text(
+                            'ポイント',
+                            style: GoogleFonts.zenKakuGothicNew(
+                              fontSize: 20,
+                              color: Colors.black,
+                              fontWeight:
+                                  FontWeight.bold, // この行でフォントの太さを変更して「作り方」を強調
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+
+                    const SizedBox(
+                      height: 8,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          (dividedData.appealPoint.startsWith('：') ||
+                                      dividedData.appealPoint.startsWith(':')
+                                  ? dividedData.appealPoint.substring(1)
+                                  : dividedData.appealPoint)
+                              .trim(), // trimの適用を最後に移動
+                          style: GoogleFonts.zenKakuGothicNew(
+                            fontSize: 18,
+                            color: Colors.black,
+                            fontWeight: FontWeight.w500,
+                          ),
+                          textAlign: TextAlign.left,
+                        ),
+                      ),
                     ),
                   ],
                 ),
               ),
             ),
             Container(
-              // 画面下部のバーを追加
               height: 80.0,
               color: Colors.transparent,
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  MyFloatingActionButton(
-                    backgroundColor: Colors.orange[300]!,
+                  FloatingActionButton(
+                    backgroundColor: Colors.orange[200],
                     onPressed: () {
-                      // ボタンの処理を記述
+                      Material(
+                        color: Colors.transparent, // Materialの背景を透明に
+                        child: InkWell(
+                          onTap: () {
+                            // こちらにボタンがタップされたときの処理を書く
+                          },
+                          splashColor: Colors.transparent, // 水滴エフェクトを透明に
+                          highlightColor: Colors.transparent, // 押下時のハイライトを透明に
+                          child: Container(
+                            child: FloatingActionButton(
+                              backgroundColor: Colors.orange[200],
+                              onPressed: () {}, // onPressedは空の関数として保持
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(28.0),
+                                side: const BorderSide(
+                                    color: Colors.orangeAccent, width: 2.0),
+                              ),
+                              child: Image.asset('assets/images/renew.png',
+                                  width: 24, height: 24),
+                              elevation: 0.0, // 通常時の影を削除
+                              focusElevation: 0.0, // フォーカス時の影を削除
+                              hoverElevation: 0.0, // ホバー時の影を削除
+                              highlightElevation: 0.0, // 押下時の影を削除
+                              disabledElevation: 0.0, // 無効時の影を削除
+                            ),
+                          ),
+                        ),
+                      );
                     },
                     shape: RoundedRectangleBorder(
-                        borderRadius:
-                            BorderRadius.circular(28.0), // 丸みをつけるための半径
-                        side: const BorderSide(
-                            color: Colors.orangeAccent, width: 2.0) // 枠の色と太さを設定
-                        ),
-                    child: const Icon(
-                      FontAwesomeIcons.bookmark,
-                      color: Colors.black,
+                      borderRadius: BorderRadius.circular(28.0),
+                      side: const BorderSide(
+                          color: Colors.orangeAccent, width: 2.0),
                     ),
+                    child: Image.asset('assets/images/renew.png',
+                        width: 24, height: 24),
+                    splashColor: Colors.transparent, // 水滴エフェクトを透明に
+                    focusElevation: 0.0, // フォーカス時の影を削除
+                    elevation: 0.0,
+                    hoverElevation: 0.0, // ホバー時の影を削除
+                    highlightElevation: 0.0, // 押下時の影を削除
+                    disabledElevation: 0.0, // 無効時の影を削除
                   ),
-                  const SizedBox(width: 20.0),
+                  BookmarkButton(),
                 ],
               ),
-            ),
+            )
           ],
         ));
   }
 }
 
-class MyFloatingActionButton extends StatefulWidget {
-  final VoidCallback onPressed;
-  final Widget child;
-  final ShapeBorder shape;
-  final Color backgroundColor;
-
-  MyFloatingActionButton({
-    required this.onPressed,
-    required this.child,
-    required this.shape,
-    required this.backgroundColor,
-  });
-
+class BookmarkButton extends StatefulWidget {
   @override
-  _MyFloatingActionButtonState createState() => _MyFloatingActionButtonState();
+  _BookmarkButtonState createState() => _BookmarkButtonState();
 }
 
-class _MyFloatingActionButtonState extends State<MyFloatingActionButton> {
-  bool isPressed = false; // 追加：ボタンが押された状態を保持
+class _BookmarkButtonState extends State<BookmarkButton> {
+  bool isPressed = false;
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      type: MaterialType.transparency,
-      color: Colors.transparent, // Materialの背景色を透明に
-      elevation: isPressed ? 0.0 : 0.0, // 押されたときの影の高さを設定
-      shadowColor: isPressed ? Colors.transparent : null, // 押されたときの影の色を白に設定
-      child: FloatingActionButton(
-        backgroundColor: widget.backgroundColor,
-        splashColor: Colors.transparent, // 押された時の水滴エフェクトの色を透明に設定
-        elevation: 0.0, // 通常時の影を削除
-        focusElevation: 0.0, // フォーカス時の影を削除
-        hoverElevation: 0.0, // ホバー時の影を削除
-        highlightElevation: 0.0, // 押下時の影を削除
-        disabledElevation: 0.0, // 無効時の影を削除
-        child: Icon(
-            isPressed
-                ? FontAwesomeIcons.solidBookmark
-                : FontAwesomeIcons.bookmark,
-            color: Colors.black),
-        shape: widget.shape,
-        onPressed: () {
-          widget.onPressed();
-          setState(() {
-            isPressed = !isPressed;
-          });
-        },
+    return FloatingActionButton(
+      backgroundColor: Colors.orange[200],
+      onPressed: () {
+        setState(() {
+          isPressed = !isPressed;
+        });
+      },
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(28.0),
+        side: const BorderSide(color: Colors.orangeAccent, width: 2.0),
       ),
+      child: Icon(
+        isPressed
+            ? FontAwesomeIcons.solidBookmark
+            : FontAwesomeIcons.bookmark, // ここでアイコンを変更
+        color: Colors.black,
+      ),
+      splashColor: Colors.transparent, // 水滴エフェクトを透明に
+      focusElevation: 0.0, // フォーカス時の影を削除
+      hoverElevation: 0.0, // ホバー時の影を削除
+      highlightElevation: 0.0, // 押下時の影を削除
+      disabledElevation: 0.0, // 無効時の影を削除
     );
   }
 }
