@@ -81,8 +81,8 @@ class CookingResultPage extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  FloatingActionButton(
-                    backgroundColor: Colors.orange[300],
+                  MyFloatingActionButton(
+                    backgroundColor: Colors.orange[300]!,
                     onPressed: () {
                       // ボタンの処理を記述
                     },
@@ -103,5 +103,46 @@ class CookingResultPage extends StatelessWidget {
             ),
           ],
         ));
+  }
+}
+
+class MyFloatingActionButton extends StatefulWidget {
+  final VoidCallback onPressed;
+  final Widget child;
+  final ShapeBorder shape;
+  final Color backgroundColor;
+
+  MyFloatingActionButton({
+    required this.onPressed,
+    required this.child,
+    required this.shape,
+    required this.backgroundColor,
+  });
+
+  @override
+  _MyFloatingActionButtonState createState() => _MyFloatingActionButtonState();
+}
+
+class _MyFloatingActionButtonState extends State<MyFloatingActionButton> {
+  bool isPressed = false; // 追加：ボタンが押された状態を保持
+
+  @override
+  Widget build(BuildContext context) {
+    return FloatingActionButton(
+      backgroundColor: widget.backgroundColor,
+      child: Icon(
+        isPressed
+            ? FontAwesomeIcons.solidBookmark
+            : FontAwesomeIcons.bookmark, // 状態に応じてアイコンの種類を変える
+        color: Colors.black,
+      ),
+      shape: widget.shape,
+      onPressed: () {
+        widget.onPressed();
+        setState(() {
+          isPressed = !isPressed;
+        });
+      },
+    );
   }
 }
