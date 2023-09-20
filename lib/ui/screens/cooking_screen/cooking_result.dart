@@ -128,21 +128,32 @@ class _MyFloatingActionButtonState extends State<MyFloatingActionButton> {
 
   @override
   Widget build(BuildContext context) {
-    return FloatingActionButton(
-      backgroundColor: widget.backgroundColor,
-      child: Icon(
-        isPressed
-            ? FontAwesomeIcons.solidBookmark
-            : FontAwesomeIcons.bookmark, // 状態に応じてアイコンの種類を変える
-        color: Colors.black,
+    return Material(
+      type: MaterialType.transparency,
+      color: Colors.transparent, // Materialの背景色を透明に
+      elevation: isPressed ? 0.0 : 0.0, // 押されたときの影の高さを設定
+      shadowColor: isPressed ? Colors.transparent : null, // 押されたときの影の色を白に設定
+      child: FloatingActionButton(
+        backgroundColor: widget.backgroundColor,
+        splashColor: Colors.transparent, // 押された時の水滴エフェクトの色を透明に設定
+        elevation: 0.0, // 通常時の影を削除
+        focusElevation: 0.0, // フォーカス時の影を削除
+        hoverElevation: 0.0, // ホバー時の影を削除
+        highlightElevation: 0.0, // 押下時の影を削除
+        disabledElevation: 0.0, // 無効時の影を削除
+        child: Icon(
+            isPressed
+                ? FontAwesomeIcons.solidBookmark
+                : FontAwesomeIcons.bookmark,
+            color: Colors.black),
+        shape: widget.shape,
+        onPressed: () {
+          widget.onPressed();
+          setState(() {
+            isPressed = !isPressed;
+          });
+        },
       ),
-      shape: widget.shape,
-      onPressed: () {
-        widget.onPressed();
-        setState(() {
-          isPressed = !isPressed;
-        });
-      },
     );
   }
 }
