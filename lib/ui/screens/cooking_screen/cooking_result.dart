@@ -19,8 +19,9 @@ class CookingResultPage extends StatelessWidget {
           backgroundColor: Colors.orange[500],
           centerTitle: true,
           title: Row(
+            mainAxisSize: MainAxisSize.min, // この行を追加
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const SizedBox(width: 12.5),
               const Icon(
                 Icons.restaurant_menu,
                 color: Colors.black,
@@ -261,6 +262,7 @@ class CookingResultPage extends StatelessWidget {
                         width: 24, height: 24),
                     splashColor: Colors.transparent, // 水滴エフェクトを透明に
                     focusElevation: 0.0, // フォーカス時の影を削除
+                    elevation: 0.0,
                     hoverElevation: 0.0, // ホバー時の影を削除
                     highlightElevation: 0.0, // 押下時の影を削除
                     disabledElevation: 0.0, // 無効時の影を削除
