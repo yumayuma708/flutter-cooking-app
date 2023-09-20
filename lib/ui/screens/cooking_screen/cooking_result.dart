@@ -89,8 +89,11 @@ class CookingResultPage extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         const SizedBox(width: 20.0),
+                        const Icon(FontAwesomeIcons.carrot,
+                            size: 20), // carrot icon added
+                        const SizedBox(width: 8.0), // spacing
                         Text(
-                          "材料(${dividedData.numberOfPeople})", // 材料と人数を表示
+                          "材料(${dividedData.numberOfPeople})",
                           style: GoogleFonts.zenKakuGothicNew(
                             fontSize: 20,
                             color: Colors.black,
@@ -99,6 +102,7 @@ class CookingResultPage extends StatelessWidget {
                         ),
                       ],
                     ),
+
                     const SizedBox(
                       height: 8,
                     ),
@@ -125,20 +129,25 @@ class CookingResultPage extends StatelessWidget {
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                      child: Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          '作り方：',
-                          style: GoogleFonts.zenKakuGothicNew(
-                            fontSize: 20,
-                            color: Colors.black,
-                            fontWeight:
-                                FontWeight.bold, // この行でフォントの太さを変更して「作り方」を強調
+                      child: Row(
+                        children: [
+                          Image.asset('assets/images/knife.png',
+                              width: 20, height: 20), // knife image added
+                          const SizedBox(width: 8.0), // spacing
+                          Text(
+                            '作り方',
+                            style: GoogleFonts.zenKakuGothicNew(
+                              fontSize: 20,
+                              color: Colors.black,
+                              fontWeight:
+                                  FontWeight.bold, // この行でフォントの太さを変更して「作り方」を強調
+                            ),
+                            textAlign: TextAlign.left,
                           ),
-                          textAlign: TextAlign.left,
-                        ),
+                        ],
                       ),
                     ),
+
                     const SizedBox(
                       height: 8,
                     ),
@@ -162,20 +171,23 @@ class CookingResultPage extends StatelessWidget {
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                      child: Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          'ポイント',
-                          style: GoogleFonts.zenKakuGothicNew(
-                            fontSize: 20,
-                            color: Colors.black,
-                            fontWeight:
-                                FontWeight.bold, // この行でフォントの太さを変更して「作り方」を強調
-                          ),
-                          textAlign: TextAlign.left,
-                        ),
+                      child: Row(
+                        children: [
+                          Icon(Icons.star, size: 20), // star icon added
+                          const SizedBox(width: 8.0), // spacing
+                          Text(
+                            'ポイント',
+                            style: GoogleFonts.zenKakuGothicNew(
+                              fontSize: 20,
+                              color: Colors.black,
+                              fontWeight:
+                                  FontWeight.bold, // この行でフォントの太さを変更して「作り方」を強調
+                            ),
+                          )
+                        ],
                       ),
                     ),
+
                     const SizedBox(
                       height: 8,
                     ),
