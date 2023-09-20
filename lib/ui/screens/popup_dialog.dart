@@ -119,5 +119,5 @@ class PopupDialog {
   }
 }
 
-// 使用方法: 
+// 使用方法:
 // PopupDialog(context: context, ref: ref, pageController: pageController).show();

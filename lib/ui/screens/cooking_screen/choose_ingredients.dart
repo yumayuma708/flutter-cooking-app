@@ -22,12 +22,14 @@ class ChooseIngredients extends ConsumerWidget {
               color: Colors.black, fontSize: 25, fontWeight: FontWeight.w500),
         ),
       ),
-      body: VegetablesGridView(),
+      body: const VegetablesGridView(),
     );
   }
 }
 
 class VegetablesGridView extends StatefulWidget {
+  const VegetablesGridView({super.key});
+
   @override
   _VegetablesGridViewState createState() => _VegetablesGridViewState();
 }
@@ -95,7 +97,14 @@ class _VegetablesGridViewState extends State<VegetablesGridView> {
     'ハム',
     '卵',
   ];
-  final List<String> fish = ['魚', 'エビ', 'イカ', 'タコ', 'カニ', '牡蠣'];
+  final List<String> fish = [
+    '魚',
+    'エビ',
+    'イカ',
+    'タコ',
+    'カニ',
+    '牡蠣',
+  ];
   final List<String> fruits = [
     'レモン',
     'ライム',
@@ -112,7 +121,7 @@ class _VegetablesGridViewState extends State<VegetablesGridView> {
     'オレンジ',
     '柿',
     'ゆず',
-    '梅'
+    '梅',
   ];
   final List<String> spices = [
     'バジル',
@@ -141,7 +150,7 @@ class _VegetablesGridViewState extends State<VegetablesGridView> {
     'クリームチーズ',
     'モッツァレラチーズ',
     'チェダーチーズ',
-    '牛乳'
+    '牛乳',
   ];
   final List<String> seasonings = [
     'おまかせ',
@@ -159,8 +168,20 @@ class _VegetablesGridViewState extends State<VegetablesGridView> {
     'チリソース',
     'ケチャップ',
   ];
-  final List<String> beans = ['納豆', '豆腐', 'おから', 'レンズ豆', '栗', 'くるみ'];
-  final List<String> alcohols = ['ワイン', '白ワイン', '赤ワイン', 'ビール'];
+  final List<String> beans = [
+    '納豆',
+    '豆腐',
+    'おから',
+    'レンズ豆',
+    '栗',
+    'くるみ',
+  ];
+  final List<String> alcohols = [
+    'ワイン',
+    '白ワイン',
+    '赤ワイン',
+    'ビール',
+  ];
   final TextEditingController _otherController = TextEditingController();
 
   List<String> selectedIngredients = [];
@@ -245,8 +266,9 @@ class _VegetablesGridViewState extends State<VegetablesGridView> {
                                                   .resolveWith<double>(
                                                 (Set<MaterialState> states) {
                                                   if (states.contains(
-                                                      MaterialState.pressed))
+                                                      MaterialState.pressed)) {
                                                     return 0.0;
+                                                  }
                                                   return 0.0;
                                                 },
                                               ),

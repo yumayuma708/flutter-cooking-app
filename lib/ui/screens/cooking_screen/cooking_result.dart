@@ -174,7 +174,7 @@ class CookingResultPage extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(horizontal: 20.0),
                       child: Row(
                         children: [
-                          Icon(Icons.star, size: 20), // star icon added
+                          const Icon(Icons.star, size: 20), // star icon added
                           const SizedBox(width: 8.0), // spacing
                           Text(
                             'ポイント',
@@ -241,13 +241,13 @@ class CookingResultPage extends StatelessWidget {
                                 side: const BorderSide(
                                     color: Colors.orangeAccent, width: 2.0),
                               ),
-                              child: Image.asset('assets/images/renew.png',
-                                  width: 24, height: 24),
                               elevation: 0.0, // 通常時の影を削除
                               focusElevation: 0.0, // フォーカス時の影を削除
                               hoverElevation: 0.0, // ホバー時の影を削除
                               highlightElevation: 0.0, // 押下時の影を削除
-                              disabledElevation: 0.0, // 無効時の影を削除
+                              disabledElevation: 0.0,
+                              child: Image.asset('assets/images/renew.png',
+                                  width: 24, height: 24), // 無効時の影を削除
                             ),
                           ),
                         ),
@@ -258,16 +258,16 @@ class CookingResultPage extends StatelessWidget {
                       side: const BorderSide(
                           color: Colors.orangeAccent, width: 2.0),
                     ),
-                    child: Image.asset('assets/images/renew.png',
-                        width: 24, height: 24),
                     splashColor: Colors.transparent, // 水滴エフェクトを透明に
                     focusElevation: 0.0, // フォーカス時の影を削除
                     elevation: 0.0,
                     hoverElevation: 0.0, // ホバー時の影を削除
                     highlightElevation: 0.0, // 押下時の影を削除
-                    disabledElevation: 0.0, // 無効時の影を削除
+                    disabledElevation: 0.0,
+                    child: Image.asset('assets/images/renew.png',
+                        width: 24, height: 24), // 無効時の影を削除
                   ),
-                  BookmarkButton(),
+                  const BookmarkButton(),
                 ],
               ),
             )
@@ -277,6 +277,8 @@ class CookingResultPage extends StatelessWidget {
 }
 
 class BookmarkButton extends StatefulWidget {
+  const BookmarkButton({super.key});
+
   @override
   _BookmarkButtonState createState() => _BookmarkButtonState();
 }
@@ -297,17 +299,17 @@ class _BookmarkButtonState extends State<BookmarkButton> {
         borderRadius: BorderRadius.circular(28.0),
         side: const BorderSide(color: Colors.orangeAccent, width: 2.0),
       ),
+      splashColor: Colors.transparent, // 水滴エフェクトを透明に
+      focusElevation: 0.0, // フォーカス時の影を削除
+      hoverElevation: 0.0, // ホバー時の影を削除
+      highlightElevation: 0.0, // 押下時の影を削除
+      disabledElevation: 0.0,
       child: Icon(
         isPressed
             ? FontAwesomeIcons.solidBookmark
             : FontAwesomeIcons.bookmark, // ここでアイコンを変更
         color: Colors.black,
-      ),
-      splashColor: Colors.transparent, // 水滴エフェクトを透明に
-      focusElevation: 0.0, // フォーカス時の影を削除
-      hoverElevation: 0.0, // ホバー時の影を削除
-      highlightElevation: 0.0, // 押下時の影を削除
-      disabledElevation: 0.0, // 無効時の影を削除
+      ), // 無効時の影を削除
     );
   }
 }

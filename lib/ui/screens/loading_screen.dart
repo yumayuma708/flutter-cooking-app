@@ -7,7 +7,7 @@ import 'package:google_fonts/google_fonts.dart';
 class LoadingScreen extends StatefulWidget {
   final CookingData data;
 
-  LoadingScreen({required this.data});
+  const LoadingScreen({super.key, required this.data});
 
   @override
   _LoadingScreenState createState() => _LoadingScreenState();
@@ -60,7 +60,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
             ),
           ),
           const SizedBox(height: 20.0),
-          HourglassAnimation(),
+          const HourglassAnimation(),
         ],
       ),
     );
@@ -68,6 +68,8 @@ class _LoadingScreenState extends State<LoadingScreen> {
 }
 
 class HourglassAnimation extends StatefulWidget {
+  const HourglassAnimation({super.key});
+
   @override
   _HourglassAnimationState createState() => _HourglassAnimationState();
 }
