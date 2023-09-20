@@ -76,13 +76,12 @@ class CookingResultPage extends StatelessWidget {
             ),
             Container(
               // 画面下部のバーを追加
-              height: 60.0,
+              height: 80.0,
               color: Colors.transparent,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   FloatingActionButton(
-                    // 丸いボタンを追加
                     backgroundColor: Colors.orange[300],
                     child: const Icon(
                       FontAwesomeIcons.bookmark,
@@ -92,7 +91,7 @@ class CookingResultPage extends StatelessWidget {
                       // ボタンの処理を記述
                     },
                   ),
-                  const SizedBox(width: 20.0), // ボタンと端の間にスペースを追加
+                  const SizedBox(width: 20.0),
                 ],
               ),
             ),
