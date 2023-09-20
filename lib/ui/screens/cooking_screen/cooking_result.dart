@@ -1,11 +1,15 @@
+import 'package:caul/providers/chat_gpt_devider.dart';
 import 'package:flutter/material.dart';
 import 'package:caul/providers/chat_gpt_provider.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class CookingResultPage extends StatelessWidget {
   final CookingData data;
+  final ChatGPTDividedData dividedData;
 
-  const CookingResultPage({super.key, required this.data});
+  CookingResultPage({super.key, required this.data})
+      : dividedData = ChatGPTDividedData.parseFromInstruction(data.instruction);
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +17,7 @@ class CookingResultPage extends StatelessWidget {
         backgroundColor: Colors.orange[100],
         appBar: AppBar(
           backgroundColor: Colors.orange[500],
-          centerTitle: true, // この行を追加
+          centerTitle: true,
           title: Row(
             children: [
               const SizedBox(width: 12.5),
@@ -41,9 +45,27 @@ class CookingResultPage extends StatelessWidget {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                Text(
-                  data.instruction,
-                  style: GoogleFonts.zenKurenaido(fontSize: 20),
+                Row(
+                  children: [
+                    const SizedBox(
+                      width: 20,
+                    ),
+                    Expanded(
+                      child: Text(
+                        dividedData.dishName,
+                        style: GoogleFonts.zenKakuGothicNew(
+                          fontSize: 25,
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        overflow: TextOverflow.ellipsis, // はみ出る場合、末尾を省略記号にする
+                        maxLines: 2, // 最大2行までとする
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 20,
+                    ),
+                  ],
                 ),
               ],
             ),
