@@ -83,13 +83,19 @@ class CookingResultPage extends StatelessWidget {
                 children: [
                   FloatingActionButton(
                     backgroundColor: Colors.orange[300],
+                    onPressed: () {
+                      // ボタンの処理を記述
+                    },
+                    shape: RoundedRectangleBorder(
+                        borderRadius:
+                            BorderRadius.circular(28.0), // 丸みをつけるための半径
+                        side: const BorderSide(
+                            color: Colors.orangeAccent, width: 2.0) // 枠の色と太さを設定
+                        ),
                     child: const Icon(
                       FontAwesomeIcons.bookmark,
                       color: Colors.black,
                     ),
-                    onPressed: () {
-                      // ボタンの処理を記述
-                    },
                   ),
                   const SizedBox(width: 20.0),
                 ],
