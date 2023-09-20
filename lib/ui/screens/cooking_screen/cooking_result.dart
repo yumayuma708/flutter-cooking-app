@@ -84,6 +84,40 @@ class CookingResultPage extends StatelessWidget {
                         )
                       ],
                     ),
+                    const SizedBox(height: 15.0), // 目安時間と材料の間にスペースを追加
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        const SizedBox(width: 20.0),
+                        Text(
+                          "材料(${dividedData.numberOfPeople})", // 材料と人数を表示
+                          style: GoogleFonts.zenKakuGothicNew(
+                            fontSize: 20,
+                            color: Colors.black,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 10.0), // 材料タイトルと材料内容の間にスペースを追加
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          dividedData.ingredients
+                              .split('\n')
+                              .map((line) => '・$line')
+                              .join('\n'),
+                          style: GoogleFonts.zenKakuGothicNew(
+                            fontSize: 18,
+                            color: Colors.black,
+                            fontWeight: FontWeight.w500,
+                          ),
+                          textAlign: TextAlign.left, // この行を追加
+                        ),
+                      ),
+                    )
                   ],
                 ),
               ),

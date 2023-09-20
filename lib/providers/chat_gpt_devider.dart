@@ -17,13 +17,14 @@ class ChatGPTDividedData {
 
   static ChatGPTDividedData parseFromInstruction(String instruction) {
     // テンプレートに基づいて文字列を分割します。
-    final dishName = _parseByPrefix(instruction, '料理名：');
-    final estimatedTime = _parseByPrefix(instruction, '目安時間：');
-    final numberOfPeople = _parseByPrefix(instruction, '人数：');
-    final ingredients = _parseByPrefix(instruction, '材料');
+    final dishName = _parseByPrefix(instruction, '料理名：', nextPrefix: '目安時間');
+    final estimatedTime =
+        _parseByPrefix(instruction, '目安時間：', nextPrefix: '人数');
+    final numberOfPeople = _parseByPrefix(instruction, '人数：', nextPrefix: '材料');
+    final ingredients = _parseByPrefix(instruction, '材料', nextPrefix: '作り方');
     final recipe =
-        _parseByPrefix(instruction, '作り方：', nextPrefix: '料理のアピールポイント:');
-    final appealPoint = _parseByPrefix(instruction, '料理のアピールポイント:');
+        _parseByPrefix(instruction, '作り方', nextPrefix: '料理のアピールポイント');
+    final appealPoint = _parseByPrefix(instruction, '料理のアピールポイント');
 
     return ChatGPTDividedData(
       dishName: dishName,
@@ -47,6 +48,9 @@ class ChatGPTDividedData {
         : nextIndex;
     if (endIndex == -1)
       return data.substring(startIndex + prefix.length).trim();
-    return data.substring(startIndex + prefix.length, endIndex).trim();
+    return data
+        .substring(startIndex + prefix.length, endIndex)
+        .trim() // この行で前後の空白やインデントを除去
+        .replaceAll(RegExp(r'^\s+', multiLine: true), ''); // この行で各行の先頭の空白を除去
   }
 }
