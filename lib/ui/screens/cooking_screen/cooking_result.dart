@@ -221,93 +221,12 @@ class CookingResultPage extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  FloatingActionButton(
-                    backgroundColor: Colors.orange[200],
-                    onPressed: () {
-                      Material(
-                        color: Colors.transparent, // Materialの背景を透明に
-                        child: InkWell(
-                          onTap: () {
-                            // こちらにボタンがタップされたときの処理を書く
-                          },
-                          splashColor: Colors.transparent, // 水滴エフェクトを透明に
-                          highlightColor: Colors.transparent, // 押下時のハイライトを透明に
-                          child: FloatingActionButton(
-                            backgroundColor: Colors.orange[200],
-                            onPressed: () {}, // onPressedは空の関数として保持
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(28.0),
-                              side: const BorderSide(
-                                  color: Colors.orangeAccent, width: 2.0),
-                            ),
-                            elevation: 0.0, // 通常時の影を削除
-                            focusElevation: 0.0, // フォーカス時の影を削除
-                            hoverElevation: 0.0, // ホバー時の影を削除
-                            highlightElevation: 0.0, // 押下時の影を削除
-                            disabledElevation: 0.0,
-                            child: Image.asset('assets/images/renew.png',
-                                width: 24, height: 24), // 無効時の影を削除
-                          ),
-                        ),
-                      );
-                    },
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(28.0),
-                      side: const BorderSide(
-                          color: Colors.orangeAccent, width: 2.0),
-                    ),
-                    splashColor: Colors.transparent, // 水滴エフェクトを透明に
-                    focusElevation: 0.0, // フォーカス時の影を削除
-                    elevation: 0.0,
-                    hoverElevation: 0.0, // ホバー時の影を削除
-                    highlightElevation: 0.0, // 押下時の影を削除
-                    disabledElevation: 0.0,
-                    child: Image.asset('assets/images/renew.png',
-                        width: 24, height: 24), // 無効時の影を削除
-                  ),
-                  const BookmarkButton(),
+                  const Icon(Icons.favorite_border, size: 40),
+                  const Icon(Icons.favorite_border, size: 40),
                 ],
               ),
             )
           ],
         ));
-  }
-}
-
-class BookmarkButton extends StatefulWidget {
-  const BookmarkButton({super.key});
-
-  @override
-  BookmarkButtonState createState() => BookmarkButtonState();
-}
-
-class BookmarkButtonState extends State<BookmarkButton> {
-  bool isPressed = false;
-
-  @override
-  Widget build(BuildContext context) {
-    return FloatingActionButton(
-      backgroundColor: Colors.orange[200],
-      onPressed: () {
-        setState(() {
-          isPressed = !isPressed;
-        });
-      },
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(28.0),
-        side: const BorderSide(color: Colors.orangeAccent, width: 2.0),
-      ),
-      splashColor: Colors.transparent, // 水滴エフェクトを透明に
-      focusElevation: 0.0, // フォーカス時の影を削除
-      hoverElevation: 0.0, // ホバー時の影を削除
-      highlightElevation: 0.0, // 押下時の影を削除
-      disabledElevation: 0.0,
-      child: Icon(
-        isPressed
-            ? FontAwesomeIcons.solidBookmark
-            : FontAwesomeIcons.bookmark, // ここでアイコンを変更
-        color: Colors.black,
-      ), // 無効時の影を削除
-    );
   }
 }
