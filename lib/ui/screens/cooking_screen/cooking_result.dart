@@ -4,12 +4,19 @@ import 'package:caul/providers/chat_gpt_provider.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class CookingResultPage extends StatelessWidget {
+class CookingResultPage extends StatefulWidget {
   final CookingData data;
   final ChatGPTDividedData dividedData;
 
   CookingResultPage({super.key, required this.data})
       : dividedData = ChatGPTDividedData.parseFromInstruction(data.instruction);
+
+  @override
+  _CookingResultPageState createState() => _CookingResultPageState();
+}
+
+class _CookingResultPageState extends State<CookingResultPage> {
+  bool isBookmarkPressed = false; // 状態を管理する変数
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +60,7 @@ class CookingResultPage extends StatelessWidget {
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 20.0),
                         child: Text(
-                          "【${dividedData.dishName}】", // 料理名を"〜"で囲む
+                          "【${widget.dividedData.dishName}】", // 料理名を"〜"で囲む
                           style: GoogleFonts.zenKakuGothicNew(
                             fontSize: 25,
                             color: Colors.black,
@@ -73,7 +80,7 @@ class CookingResultPage extends StatelessWidget {
                         const Icon(FontAwesomeIcons.stopwatch),
                         const SizedBox(width: 8.0),
                         Text(
-                          "目安時間：${dividedData.estimatedTime}",
+                          "目安時間：${widget.dividedData.estimatedTime}",
                           style: GoogleFonts.zenKakuGothicNew(
                             fontSize: 20,
                             color: Colors.black,
@@ -94,7 +101,7 @@ class CookingResultPage extends StatelessWidget {
                             size: 20), // carrot icon added
                         const SizedBox(width: 8.0), // spacing
                         Text(
-                          "材料(${dividedData.numberOfPeople})",
+                          "材料(${widget.dividedData.numberOfPeople})",
                           style: GoogleFonts.zenKakuGothicNew(
                             fontSize: 20,
                             color: Colors.black,
@@ -112,7 +119,7 @@ class CookingResultPage extends StatelessWidget {
                       child: Align(
                         alignment: Alignment.centerLeft,
                         child: Text(
-                          dividedData.ingredients
+                          widget.dividedData.ingredients
                               .split('\n')
                               .map((line) => '・$line')
                               .join('\n'),
@@ -157,7 +164,7 @@ class CookingResultPage extends StatelessWidget {
                       child: Align(
                         alignment: Alignment.centerLeft,
                         child: Text(
-                          dividedData.recipe,
+                          widget.dividedData.recipe,
                           style: GoogleFonts.zenKakuGothicNew(
                             fontSize: 18,
                             color: Colors.black,
@@ -197,10 +204,11 @@ class CookingResultPage extends StatelessWidget {
                       child: Align(
                         alignment: Alignment.centerLeft,
                         child: Text(
-                          (dividedData.appealPoint.startsWith('：') ||
-                                      dividedData.appealPoint.startsWith(':')
-                                  ? dividedData.appealPoint.substring(1)
-                                  : dividedData.appealPoint)
+                          (widget.dividedData.appealPoint.startsWith('：') ||
+                                      widget.dividedData.appealPoint
+                                          .startsWith(':')
+                                  ? widget.dividedData.appealPoint.substring(1)
+                                  : widget.dividedData.appealPoint)
                               .trim(), // trimの適用を最後に移動
                           style: GoogleFonts.zenKakuGothicNew(
                             fontSize: 18,
@@ -221,11 +229,27 @@ class CookingResultPage extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  const Icon(Icons.favorite_border, size: 40),
-                  const Icon(Icons.favorite_border, size: 40),
+                  const Image(
+                    image: AssetImage('assets/images/renew.png'),
+                    width: 30,
+                    height: 30,
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        isBookmarkPressed = !isBookmarkPressed;
+                      });
+                    },
+                    child: Icon(
+                      isBookmarkPressed
+                          ? Icons.bookmark
+                          : Icons.bookmark_border, // 状態に基づいてアイコンを変更
+                      size: 40,
+                    ),
+                  ),
                 ],
               ),
-            )
+            ),
           ],
         ));
   }
