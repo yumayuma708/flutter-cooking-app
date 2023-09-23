@@ -12,10 +12,10 @@ class CookingResultPage extends StatefulWidget {
       : dividedData = ChatGPTDividedData.parseFromInstruction(data.instruction);
 
   @override
-  _CookingResultPageState createState() => _CookingResultPageState();
+  CookingResultPageState createState() => CookingResultPageState();
 }
 
-class _CookingResultPageState extends State<CookingResultPage> {
+class CookingResultPageState extends State<CookingResultPage> {
   bool isBookmarkPressed = false; // 状態を管理する変数
 
   @override
