@@ -1,4 +1,5 @@
 import 'package:caul/providers/chat_gpt_devider.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:caul/providers/chat_gpt_provider.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -19,7 +20,8 @@ class CookingResultPage extends StatefulWidget {
 
 class CookingResultPageState extends State<CookingResultPage> {
   bool isBookmarkPressed = false;
-  final recipeSaver = RecipeSaver(FirebaseFirestore.instance);
+  final recipeSaver =
+      RecipeSaver(FirebaseFirestore.instance, FirebaseAuth.instance);
 
   @override
   Widget build(BuildContext context) {
@@ -239,15 +241,20 @@ class CookingResultPageState extends State<CookingResultPage> {
                   ),
                   GestureDetector(
                     onTap: () async {
-                      setState(() {
-                        isBookmarkPressed = !isBookmarkPressed;
-                      });
-                      if (isBookmarkPressed) {
-                        await recipeSaver.saveRecipe({
-                          'dishName': widget.dividedData.dishName,
-                          'ingredients': widget.dividedData.ingredients,
-                          // 他のデータ
+                      if (FirebaseAuth.instance.currentUser != null) {
+                        // ユーザーがログインしているか確認
+                        setState(() {
+                          isBookmarkPressed = !isBookmarkPressed;
                         });
+                        if (isBookmarkPressed) {
+                          await recipeSaver.saveRecipe({
+                            'dishName': widget.dividedData.dishName,
+                            'ingredients': widget.dividedData.ingredients,
+                            // 他のデータ
+                          });
+                        }
+                      } else {
+                        // ユーザーがログインしていない場合の処理
                       }
                     },
                     child: Icon(

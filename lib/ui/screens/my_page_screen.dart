@@ -1,57 +1,83 @@
-import 'package:flutter/foundation.dart';
+import 'package:caul/data/services/recipe_saver.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:google_sign_in/google_sign_in.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class MyPageScreen extends StatefulWidget {
-  const MyPageScreen({Key? key}) : super(key: key);
-
   @override
   MyPageScreenState createState() => MyPageScreenState();
 }
 
 class MyPageScreenState extends State<MyPageScreen> {
-  final GoogleSignIn _googleSignIn = GoogleSignIn();
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  late RecipeSaver recipeSaver; // 遅延初期化
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
 
-  Future<void> _handleGoogleSignIn() async {
+  // サインアップ（新規登録）用のメソッド
+  Future<void> _handleSignUpWithEmailAndPassword() async {
     try {
-      await _googleSignIn.signIn();
-      if (!mounted) return;
+      UserCredential userCredential =
+          await _auth.createUserWithEmailAndPassword(
+        email: _emailController.text,
+        password: _passwordController.text,
+      );
+      recipeSaver =
+          RecipeSaver(FirebaseFirestore.instance, _auth); // _auth を渡します。
       Navigator.of(context).pop(); // Close the popup after successful login
-    } catch (error) {
-      if (kDebugMode) {
-        print(error);
-      } // Handle login error if any
+    } catch (e) {
+      print(e);
+    }
+  }
+
+// サインイン（既存ユーザーのログイン）用のメソッド
+  Future<void> _handleSignInWithEmailAndPassword() async {
+    try {
+      UserCredential userCredential = await _auth.signInWithEmailAndPassword(
+        email: _emailController.text,
+        password: _passwordController.text,
+      );
+      recipeSaver = RecipeSaver(FirebaseFirestore.instance, _auth);
+      if (mounted) {
+        // このウィジェットがまだマウントされているかチェック
+        Navigator.of(context).pop(); // Close the popup after successful login
+      }
+    } catch (e) {
+      print(e);
     }
   }
 
   _showLoginPopup() {
     showDialog(
       context: context,
-      barrierDismissible: true,
       builder: (BuildContext context) {
-        return Dialog(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(24.0),
-          ),
-          child: Container(
-            padding: const EdgeInsets.all(20.0),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(24.0),
-            ),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                const Text('Googleにログイン', style: TextStyle(fontSize: 24.0)),
-                const SizedBox(height: 20),
-                ElevatedButton.icon(
-                  icon: const Icon(
-                      Icons.login), // Google logo or any other icon you prefer
-                  label: const Text('Googleでサインイン'),
-                  onPressed: _handleGoogleSignIn,
-                )
-              ],
-            ),
+        return AlertDialog(
+          title: const Text('Sign in or Sign up'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              TextField(
+                controller: _emailController,
+                decoration: const InputDecoration(
+                  labelText: 'Email',
+                ),
+              ),
+              TextField(
+                controller: _passwordController,
+                decoration: const InputDecoration(
+                  labelText: 'Password',
+                ),
+                obscureText: true,
+              ),
+              ElevatedButton(
+                onPressed: _handleSignInWithEmailAndPassword,
+                child: const Text('Sign in'),
+              ),
+              ElevatedButton(
+                onPressed: _handleSignUpWithEmailAndPassword,
+                child: const Text('Sign up'),
+              ),
+            ],
           ),
         );
       },
@@ -59,14 +85,24 @@ class MyPageScreenState extends State<MyPageScreen> {
   }
 
   @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Container(
-      color: Colors.orange[100],
-      child: GestureDetector(
-        onTap: _showLoginPopup, // ← テキストをタップ時に_showLoginPopupを呼び出し
-        child: const Center(child: Text('マイページ')),
+      body: GestureDetector(
+        onTap: _showLoginPopup,
+        child: const Center(
+          child: Text(
+            'Googleにログイン',
+            style: TextStyle(fontSize: 40),
+          ),
+        ),
       ),
-    ));
+    );
   }
 }
