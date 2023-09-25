@@ -42,7 +42,7 @@ class MyHomePageState extends State<MyHomePage> {
                       case 0:
                         return const ChooseIngredients();
                       case 1:
-                        return const SearchScreen();
+                        return SaveScreen();
                       case 2:
                         return const MyPageScreen();
                       default:

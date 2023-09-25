@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:caul/providers/chat_gpt_provider.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:caul/data/services/recipe_saver.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class CookingResultPage extends StatefulWidget {
   final CookingData data;
@@ -16,7 +18,8 @@ class CookingResultPage extends StatefulWidget {
 }
 
 class CookingResultPageState extends State<CookingResultPage> {
-  bool isBookmarkPressed = false; // 状態を管理する変数
+  bool isBookmarkPressed = false;
+  final recipeSaver = RecipeSaver(FirebaseFirestore.instance);
 
   @override
   Widget build(BuildContext context) {
@@ -235,15 +238,22 @@ class CookingResultPageState extends State<CookingResultPage> {
                     height: 30,
                   ),
                   GestureDetector(
-                    onTap: () {
+                    onTap: () async {
                       setState(() {
                         isBookmarkPressed = !isBookmarkPressed;
                       });
+                      if (isBookmarkPressed) {
+                        await recipeSaver.saveRecipe({
+                          'dishName': widget.dividedData.dishName,
+                          'ingredients': widget.dividedData.ingredients,
+                          // 他のデータ
+                        });
+                      }
                     },
                     child: Icon(
                       isBookmarkPressed
                           ? Icons.bookmark
-                          : Icons.bookmark_border, // 状態に基づいてアイコンを変更
+                          : Icons.bookmark_border,
                       size: 40,
                     ),
                   ),
