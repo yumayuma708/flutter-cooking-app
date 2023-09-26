@@ -14,45 +14,55 @@ class MyPageScreenState extends State<MyPageScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
-  // サインアップ（新規登録）用のメソッド
-  Future<void> _handleSignUpWithEmailAndPassword() async {
-    try {
-      UserCredential userCredential =
-          await _auth.createUserWithEmailAndPassword(
-        email: _emailController.text,
-        password: _passwordController.text,
-      );
-      recipeSaver =
-          RecipeSaver(FirebaseFirestore.instance, _auth); // _auth を渡します。
-      Navigator.of(context).pop(); // Close the popup after successful login
-    } catch (e) {
-      print(e);
-    }
-  }
-
-// サインイン（既存ユーザーのログイン）用のメソッド
-  Future<void> _handleSignInWithEmailAndPassword() async {
+  // サインイン（既存ユーザーのログイン）用のメソッド
+  Future<void> _handleSignInWithEmailAndPassword(
+      BuildContext dialogContext) async {
     try {
       UserCredential userCredential = await _auth.signInWithEmailAndPassword(
         email: _emailController.text,
         password: _passwordController.text,
       );
       recipeSaver = RecipeSaver(FirebaseFirestore.instance, _auth);
-      if (mounted) {
-        // このウィジェットがまだマウントされているかチェック
-        Navigator.of(context).pop(); // Close the popup after successful login
-      }
+      Navigator.of(dialogContext).pop(); // Using the dialog's context to pop
     } catch (e) {
       print(e);
     }
   }
 
+// サインアップ（新規登録）用のメソッド
+  Future<void> _handleSignUpWithEmailAndPassword(
+      BuildContext dialogContext) async {
+    try {
+      UserCredential userCredential =
+          await _auth.createUserWithEmailAndPassword(
+        email: _emailController.text,
+        password: _passwordController.text,
+      );
+      recipeSaver = RecipeSaver(FirebaseFirestore.instance, _auth);
+      Navigator.of(dialogContext).pop(); // Using the dialog's context to pop
+    } catch (e) {
+      print(e);
+    }
+  }
+
+// サインアウト用のメソッド
+  Future<void> _handleSignOut(BuildContext dialogContext) async {
+    try {
+      await _auth.signOut();
+      Navigator.of(dialogContext)
+          .pop(); // Use dialogContext to pop the confirmation popup
+    } catch (e) {
+      print(e);
+    }
+  }
+
+// ログイン用のポップアップ
   _showLoginPopup() {
     showDialog(
       context: context,
-      builder: (BuildContext context) {
+      builder: (BuildContext dialogContext) {
         return AlertDialog(
-          title: const Text('Sign in or Sign up'),
+          title: const Text('ログイン'),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -70,12 +80,9 @@ class MyPageScreenState extends State<MyPageScreen> {
                 obscureText: true,
               ),
               ElevatedButton(
-                onPressed: _handleSignInWithEmailAndPassword,
-                child: const Text('Sign in'),
-              ),
-              ElevatedButton(
-                onPressed: _handleSignUpWithEmailAndPassword,
-                child: const Text('Sign up'),
+                onPressed: () =>
+                    _handleSignInWithEmailAndPassword(dialogContext),
+                child: const Text('ログイン'),
               ),
             ],
           ),
@@ -84,23 +91,88 @@ class MyPageScreenState extends State<MyPageScreen> {
     );
   }
 
-  @override
-  void dispose() {
-    _emailController.dispose();
-    _passwordController.dispose();
-    super.dispose();
+// サインアップ用のポップアップ
+  _showSignUpPopup() {
+    showDialog(
+      context: context,
+      builder: (BuildContext dialogContext) {
+        return AlertDialog(
+          title: const Text('アカウントを作成'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              TextField(
+                controller: _emailController,
+                decoration: const InputDecoration(
+                  labelText: 'Email',
+                ),
+              ),
+              TextField(
+                controller: _passwordController,
+                decoration: const InputDecoration(
+                  labelText: 'Password',
+                ),
+                obscureText: true,
+              ),
+              ElevatedButton(
+                onPressed: () =>
+                    _handleSignUpWithEmailAndPassword(dialogContext),
+                child: const Text('アカウントを作成'),
+              ),
+            ],
+          ),
+        );
+      },
+    );
   }
 
+//サインアウト確認用のポップアップ
+  _showSignOutConfirmationPopup() {
+    showDialog(
+      context: context,
+      builder: (BuildContext dialogContext) {
+        return AlertDialog(
+          title: const Text('ログアウトの確認'),
+          content: const Text('本当にログアウトしますか？'),
+          actions: [
+            TextButton(
+              onPressed: () =>
+                  Navigator.of(dialogContext).pop(), // Close the dialog
+              child: const Text('キャンセル'),
+            ),
+            ElevatedButton(
+              onPressed: () => _handleSignOut(dialogContext),
+              child: const Text('ログアウト'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+//UIとして表示される部分
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: GestureDetector(
-        onTap: _showLoginPopup,
-        child: const Center(
-          child: Text(
-            'Googleにログイン',
-            style: TextStyle(fontSize: 40),
-          ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            ElevatedButton(
+              onPressed: _showLoginPopup,
+              child: const Text('ログイン'),
+            ),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: _showSignUpPopup,
+              child: const Text('アカウントを作成'),
+            ),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: _showSignOutConfirmationPopup,
+              child: const Text('ログアウト'),
+            ),
+          ],
         ),
       ),
     );
