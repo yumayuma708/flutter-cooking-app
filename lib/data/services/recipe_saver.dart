@@ -3,20 +3,32 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 class RecipeSaver {
   final FirebaseFirestore firestore;
-  final FirebaseAuth auth; // FirebaseAuth インスタンスを保持するフィールドを追加
+  final FirebaseAuth auth;
 
   RecipeSaver(this.firestore, this.auth);
 
-  Future<void> saveRecipe(Map<String, dynamic> recipeData) async {
-    User? user = auth.currentUser; // ログイン中のユーザーを取得
+  // レシピを追加
+  Future<void> addRecipe(Map<String, dynamic> recipeData) async {
+    final user = auth.currentUser;
     if (user != null) {
       await firestore
-          .collection('recipes')
+          .collection('users')
           .doc(user.uid)
-          .collection('userRecipes')
+          .collection('recipes')
           .add(recipeData);
-    } else {
-      print("No user is signed in.");
     }
+  }
+
+  // ログインしているユーザーのレシピを取得
+  Future<QuerySnapshot> getUserRecipes() async {
+    final user = auth.currentUser;
+    if (user != null) {
+      return await firestore
+          .collection('users')
+          .doc(user.uid)
+          .collection('recipes')
+          .get();
+    }
+    throw Exception('User not logged in');
   }
 }

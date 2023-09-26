@@ -1,10 +1,10 @@
+import 'package:caul/data/services/recipe_saver.dart';
 import 'package:caul/providers/chat_gpt_devider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:caul/providers/chat_gpt_provider.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:caul/data/services/recipe_saver.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class CookingResultPage extends StatefulWidget {
@@ -247,7 +247,12 @@ class CookingResultPageState extends State<CookingResultPage> {
                           isBookmarkPressed = !isBookmarkPressed;
                         });
                         if (isBookmarkPressed) {
-                          await recipeSaver.saveRecipe({
+                          await FirebaseFirestore.instance
+                              .collection('recipes')
+                              .doc('users')
+                              .collection(
+                                  FirebaseAuth.instance.currentUser!.uid)
+                              .add({
                             'dishName': widget.dividedData.dishName,
                             'ingredients': widget.dividedData.ingredients,
                             // 他のデータ
