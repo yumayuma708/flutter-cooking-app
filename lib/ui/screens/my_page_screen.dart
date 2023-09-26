@@ -153,11 +153,21 @@ class MyPageScreenState extends State<MyPageScreen> {
 //UIとして表示される部分
   @override
   Widget build(BuildContext context) {
+    final user = FirebaseAuth.instance.currentUser; // 現在のユーザーを取得
+
     return Scaffold(
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            // ユーザー名の表示
+            Padding(
+              padding: const EdgeInsets.only(bottom: 20.0),
+              child: Text(
+                user != null ? user.email ?? '名前なし' : 'ログインしていません',
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              ),
+            ),
             ElevatedButton(
               onPressed: _showLoginPopup,
               child: const Text('ログイン'),
