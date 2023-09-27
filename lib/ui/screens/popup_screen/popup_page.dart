@@ -48,7 +48,9 @@ class PopupPage extends StatelessWidget {
                     width: 10,
                     height: 10,
                     decoration: BoxDecoration(
-                      color: currentPage == index ? Colors.blue : Colors.grey,
+                      color: currentPage == index
+                          ? Colors.orange[500]
+                          : Colors.orange[100],
                       shape: BoxShape.circle,
                     ),
                   );
@@ -70,7 +72,7 @@ class PopupPage extends StatelessWidget {
                   backgroundColor: MaterialStateProperty.resolveWith<Color>(
                     (Set<MaterialState> states) {
                       if (states.contains(MaterialState.pressed)) {
-                        return Colors.blueGrey.withOpacity(0.1);
+                        return Colors.orange;
                       }
                       return Colors.white;
                     },

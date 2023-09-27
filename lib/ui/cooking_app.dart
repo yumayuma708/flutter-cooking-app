@@ -9,10 +9,8 @@ class CookingApp extends StatelessWidget {
     return MaterialApp(
       title: 'Cooking As You Like',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
-        bottomNavigationBarTheme: const BottomNavigationBarThemeData(
-          backgroundColor: Colors.blue,
-        ),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.orange),
+        useMaterial3: true,
       ),
       home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );

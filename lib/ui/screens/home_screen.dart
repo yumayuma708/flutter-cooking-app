@@ -56,38 +56,40 @@ class MyHomePageState extends State<MyHomePage> {
         }),
       ),
       bottomNavigationBar: Consumer(builder: (context, ref, child) {
-        return BottomNavigationBar(
-          backgroundColor: const Color.fromARGB(255, 4, 7, 47),
-          type: BottomNavigationBarType.fixed,
-          currentIndex: _currentIndex,
-          selectedItemColor: Colors.white,
-          unselectedItemColor: Colors.white70,
-          selectedLabelStyle: GoogleFonts.zenKakuGothicNew(),
-          unselectedLabelStyle: GoogleFonts.zenKakuGothicNew(),
-          items: [
-            BottomNavigationBarItem(
+        return NavigationBar(
+          selectedIndex: _currentIndex,
+          // backgroundColor: const Color.fromARGB(255, 4, 7, 47),
+          destinations: const [
+            // type: BottomNavigationBarType.fixed,
+            // currentIndex: _currentIndex,
+            // selectedItemColor: Colors.white,
+            // unselectedItemColor: Colors.white70,
+            // selectedLabelStyle: GoogleFonts.zenKakuGothicNew(),
+            // unselectedLabelStyle: GoogleFonts.zenKakuGothicNew(),
+            // items: [
+            NavigationDestination(
               icon: Icon(
                 FontAwesomeIcons.utensils,
-                color: _currentIndex == 0 ? Colors.white : Colors.white70,
+                // color: _currentIndex == 0 ? Colors.white : Colors.white70,
               ),
               label: '料理',
             ),
-            BottomNavigationBarItem(
+            NavigationDestination(
               icon: Icon(
                 FontAwesomeIcons.bookmark,
-                color: _currentIndex == 1 ? Colors.white : Colors.white70,
+                // color: _currentIndex == 1 ? Colors.white : Colors.white70,
               ),
               label: '保存',
             ),
-            BottomNavigationBarItem(
+            NavigationDestination(
               icon: Icon(
                 Icons.person,
-                color: _currentIndex == 2 ? Colors.white : Colors.white70,
+                // color: _currentIndex == 2 ? Colors.white : Colors.white70,
               ),
               label: 'マイページ',
             ),
           ],
-          onTap: (index) {
+          onDestinationSelected: (index) {
             setState(() {
               _currentIndex = index;
             });
