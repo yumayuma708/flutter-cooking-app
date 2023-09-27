@@ -13,9 +13,9 @@ class SaveScreen extends StatelessWidget {
       return Scaffold(
         backgroundColor: Colors.orange[100],
         appBar: AppBar(
-          title: const Text(
+          title: Text(
             '保存したレシピ',
-            style: TextStyle(
+            style: GoogleFonts.zenKakuGothicNew(
                 fontSize: 25, fontWeight: FontWeight.bold, color: Colors.black),
           ),
           backgroundColor: Colors.orange[500],
