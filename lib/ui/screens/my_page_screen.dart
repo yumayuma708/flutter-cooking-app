@@ -3,6 +3,7 @@ import 'package:caul/ui/screens/popup_screen/login_signup_logup_popup.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class MyPageScreen extends StatefulWidget {
   @override
@@ -62,6 +63,15 @@ class MyPageScreenState extends State<MyPageScreen> {
     final user = FirebaseAuth.instance.currentUser; // 現在のユーザーを取得
 
     return Scaffold(
+      backgroundColor: Colors.orange[100],
+      appBar: AppBar(
+        backgroundColor: Colors.orange[500],
+        title: Text(
+          'マイページ',
+          style: GoogleFonts.zenKakuGothicNew(
+              fontSize: 25, color: Colors.black, fontWeight: FontWeight.w800),
+        ),
+      ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
