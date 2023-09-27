@@ -1,5 +1,6 @@
 import 'package:caul/data/services/recipe_saver.dart';
 import 'package:caul/providers/chat_gpt_devider.dart';
+import 'package:caul/ui/screens/loading_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:caul/providers/chat_gpt_provider.dart';
@@ -10,18 +11,38 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class CookingResultPage extends StatefulWidget {
   final CookingData data;
   final ChatGPTDividedData dividedData;
+  final Map<String, Set<String>> selectedHeaders;
+  final List<String> selectedVegetables;
 
-  CookingResultPage({super.key, required this.data})
-      : dividedData = ChatGPTDividedData.parseFromInstruction(data.instruction);
+  CookingResultPage({
+    Key? key,
+    required this.data,
+    this.selectedHeaders = const {}, // Provide a default value
+    required this.selectedVegetables,
+  })  : dividedData = ChatGPTDividedData.parseFromInstruction(data.instruction),
+        super(key: key);
 
   @override
-  CookingResultPageState createState() => CookingResultPageState();
+  State<StatefulWidget> createState() {
+    return CookingResultPageState(
+      selectedHeaders: selectedHeaders,
+      selectedVegetables: selectedVegetables,
+    );
+  }
 }
 
 class CookingResultPageState extends State<CookingResultPage> {
   bool isBookmarkPressed = false;
   final recipeSaver =
       RecipeSaver(FirebaseFirestore.instance, FirebaseAuth.instance);
+  final Map<String, Set<String>> selectedHeaders;
+  final List<String> selectedVegetables; // 1. この行を追加
+
+  CookingResultPageState({
+    Key? key, // keyの型をNullableに変更
+    required this.selectedHeaders, // 2. この行を追加
+    required this.selectedVegetables, // 2. この行を追加
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -234,10 +255,45 @@ class CookingResultPageState extends State<CookingResultPage> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  const Image(
-                    image: AssetImage('assets/images/renew.png'),
-                    width: 30,
-                    height: 30,
+                  GestureDetector(
+                    onTap: () {
+                      List<String> timeConditions =
+                          selectedHeaders["調理時間"]!.toList();
+                      List<String> servingConditions =
+                          selectedHeaders["人数"]!.toList();
+                      List<String> cuisineConditions =
+                          selectedHeaders["タイプ"]!.toList();
+                      List<String> selectedSeasonings =
+                          selectedHeaders["タイプ"]!.toList();
+                      List<String> sizeConditions =
+                          selectedHeaders["量"]!.toList();
+                      List<String> preferenceConditions =
+                          selectedHeaders["その他の条件"]!.toList();
+                      List<String> confirmationConditions =
+                          selectedHeaders["選んだ食材以外を材料に含めてもよい"]!.toList();
+
+                      CookingData data = CookingData(
+                        selectedVegetables: widget.selectedVegetables,
+                        timeConditions: timeConditions,
+                        servingConditions: servingConditions,
+                        selectedSeasonings: selectedSeasonings,
+                        cuisineConditions: cuisineConditions,
+                        sizeConditions: sizeConditions,
+                        preferenceConditions: preferenceConditions,
+                        confirmationConditions: confirmationConditions,
+                        selectedHeaders: selectedHeaders,
+                        instruction: "",
+                      );
+
+                      Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => LoadingScreen(data: data),
+                      ));
+                    },
+                    child: const Image(
+                      image: AssetImage('assets/images/renew.png'),
+                      width: 30,
+                      height: 30,
+                    ),
                   ),
                   GestureDetector(
                     onTap: () async {

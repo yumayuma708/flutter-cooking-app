@@ -20,14 +20,14 @@ class CookingSituation extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return _CookingSituationInternal(
+    return CookingSituationInternal(
       selectedVegetables: selectedVegetables,
       selectedSeasonings: selectedSeasonings,
     );
   }
 }
 
-class _CookingSituationInternal extends StatefulWidget {
+class CookingSituationInternal extends StatefulWidget {
   final List<String> selectedVegetables;
   final List<String> selectedSeasonings;
 
@@ -57,17 +57,17 @@ class _CookingSituationInternal extends StatefulWidget {
   ];
   final List<String> confirmation = ['はい', 'いいえ'];
 
-  _CookingSituationInternal({
+  CookingSituationInternal({
     required this.selectedVegetables,
     required this.selectedSeasonings,
   });
 
   @override
-  _CookingSituationInternalState createState() =>
-      _CookingSituationInternalState();
+  CookingSituationInternalState createState() =>
+      CookingSituationInternalState();
 }
 
-class _CookingSituationInternalState extends State<_CookingSituationInternal> {
+class CookingSituationInternalState extends State<CookingSituationInternal> {
   Map<String, Set<String>> selectedHeaders = {
     "調理時間": {},
     "人数": {},
@@ -151,7 +151,7 @@ class _CookingSituationInternalState extends State<_CookingSituationInternal> {
                       padding: const EdgeInsets.fromLTRB(10.0, 10.0, 0.0, 10.0),
                       child: Row(
                         children: [
-                          _getIconOrImageForHeader(headers[index]),
+                          getIconOrImageForHeader(headers[index]),
                           const SizedBox(width: 10.0),
                           Text(
                             headers[index],
@@ -283,6 +283,7 @@ class _CookingSituationInternalState extends State<_CookingSituationInternal> {
                           sizeConditions: sizeConditions,
                           preferenceConditions: preferenceConditions,
                           confirmationConditions: confirmationConditions,
+                          selectedHeaders: selectedHeaders,
                           instruction: "",
                         );
 
@@ -325,7 +326,7 @@ class _CookingSituationInternalState extends State<_CookingSituationInternal> {
   }
 }
 
-Widget _getIconOrImageForHeader(String header) {
+Widget getIconOrImageForHeader(String header) {
   switch (header) {
     case "調理時間":
       return const Icon(FontAwesomeIcons.clock, size: 20.0);

@@ -35,12 +35,17 @@ class LoadingScreenState extends State<LoadingScreen> {
         preferenceConditions: widget.data.preferenceConditions,
         confirmationConditions: widget.data.confirmationConditions,
         instruction: instruction,
+        selectedHeaders: widget.data.selectedHeaders,
       );
 
       if (!mounted) return;
       Navigator.of(context).pushReplacement(MaterialPageRoute(
-        builder: (context) => CookingResultPage(data: finalData),
-      ));
+          builder: (context) => CookingResultPage(
+                data: finalData,
+                selectedHeaders: finalData.selectedHeaders, // Add this line
+                selectedVegetables:
+                    finalData.selectedVegetables, // Add this line),
+              )));
     } catch (e) {
       debugPrint('Error: $e');
     }
