@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 // ログイン用のポップアップ
 showLoginPopup(
@@ -10,7 +11,11 @@ showLoginPopup(
     context: context,
     builder: (BuildContext dialogContext) {
       return AlertDialog(
-        title: const Text('ログイン'),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(15.0),
+        ),
+        backgroundColor: Colors.orange[100],
+        title: const Center(child: Text('ログイン')),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -27,9 +32,29 @@ showLoginPopup(
               ),
               obscureText: true,
             ),
+            const SizedBox(
+              height: 18,
+            ),
             ElevatedButton(
               onPressed: () => handleSignInWithEmailAndPassword(dialogContext),
-              child: const Text('ログイン'),
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(Colors.transparent),
+                elevation: MaterialStateProperty.all<double>(0.0),
+                shape: MaterialStateProperty.all(
+                  RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30.0),
+                    side: const BorderSide(color: Colors.orangeAccent),
+                  ),
+                ),
+              ),
+              child: Text(
+                'ログイン',
+                style: GoogleFonts.zenKakuGothicNew(
+                  fontSize: 20,
+                  fontWeight: FontWeight.w400,
+                  color: Colors.black,
+                ),
+              ),
             ),
           ],
         ),
@@ -48,7 +73,13 @@ showSignUpPopup(
     context: context,
     builder: (BuildContext dialogContext) {
       return AlertDialog(
-        title: const Text('アカウントを作成'),
+        backgroundColor: Colors.orange[100],
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(15.0),
+        ),
+        title: const Center(
+          child: Text('アカウントを作成'),
+        ),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -65,9 +96,29 @@ showSignUpPopup(
               ),
               obscureText: true,
             ),
+            const SizedBox(
+              height: 18,
+            ),
             ElevatedButton(
               onPressed: () => handleSignUpWithEmailAndPassword(dialogContext),
-              child: const Text('アカウントを作成'),
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(Colors.transparent),
+                elevation: MaterialStateProperty.all<double>(0.0),
+                shape: MaterialStateProperty.all(
+                  RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30.0),
+                    side: const BorderSide(color: Colors.orangeAccent),
+                  ),
+                ),
+              ),
+              child: Text(
+                'アカウントを作成',
+                style: GoogleFonts.zenKakuGothicNew(
+                  fontSize: 20,
+                  fontWeight: FontWeight.w400,
+                  color: Colors.black,
+                ),
+              ),
             ),
           ],
         ),
@@ -82,20 +133,79 @@ showSignOutConfirmationPopup(BuildContext context, Function handleSignOut) {
     context: context,
     builder: (BuildContext dialogContext) {
       return AlertDialog(
-        title: const Text('ログアウトの確認'),
-        content: const Text('本当にログアウトしますか？'),
-        actions: [
-          TextButton(
-            onPressed: () =>
-                Navigator.of(dialogContext).pop(), // Close the dialog
-            child: const Text('キャンセル'),
+          backgroundColor: Colors.orange[100],
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15.0),
           ),
-          ElevatedButton(
-            onPressed: () => handleSignOut(dialogContext),
-            child: const Text('ログアウト'),
+          title: const Center(
+            child: Text('ログアウトの確認'),
           ),
-        ],
-      );
+          content: const SizedBox(
+            // この部分でコンテナの高さを指定して調整します。
+            height: 50, // 適切な高さに設定してください
+            width: 300,
+            child: Center(
+              child: Text('本当にログアウトしますか？'),
+            ),
+          ),
+          actions: [
+            Row(
+              children: [
+                const Spacer(
+                  flex: 2,
+                ),
+                ElevatedButton(
+                  style: ButtonStyle(
+                    backgroundColor:
+                        MaterialStateProperty.all(Colors.transparent),
+                    elevation: MaterialStateProperty.all<double>(0.0),
+                    shape: MaterialStateProperty.all(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30.0),
+                        side: const BorderSide(color: Colors.orangeAccent),
+                      ),
+                    ),
+                  ),
+                  onPressed: () =>
+                      Navigator.of(dialogContext).pop(), // Close the dialog
+                  child: Text(
+                    'キャンセル',
+                    style: GoogleFonts.zenKakuGothicNew(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w400,
+                      color: Colors.black,
+                    ),
+                  ),
+                ),
+                const Spacer(),
+                ElevatedButton(
+                  onPressed: () => handleSignOut(dialogContext),
+                  style: ButtonStyle(
+                    backgroundColor:
+                        MaterialStateProperty.all(Colors.transparent),
+                    elevation: MaterialStateProperty.all<double>(0.0),
+                    shape: MaterialStateProperty.all(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30.0),
+                        side: const BorderSide(color: Colors.orangeAccent),
+                      ),
+                    ),
+                  ),
+                  child: Text(
+                    'ログアウト',
+                    style: GoogleFonts.zenKakuGothicNew(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w400,
+                      color: Colors.black,
+                    ),
+                  ),
+                ),
+                const Spacer(
+                  flex: 2,
+                ),
+              ],
+            )
+          ]);
     },
   );
 }
