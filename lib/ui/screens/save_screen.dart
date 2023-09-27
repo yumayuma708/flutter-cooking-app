@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class SaveScreen extends StatelessWidget {
@@ -10,11 +11,42 @@ class SaveScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     if (currentUserId == null) {
       return Scaffold(
+        backgroundColor: Colors.orange[100],
         appBar: AppBar(
-          title: const Text('Saved Recipes'),
+          title: const Text(
+            '保存したレシピ',
+            style: TextStyle(
+                fontSize: 25, fontWeight: FontWeight.bold, color: Colors.black),
+          ),
+          backgroundColor: Colors.orange[500],
+          centerTitle: true,
         ),
-        body: const Center(
-          child: Text('Please log in to see saved recipes'),
+        body: const Column(
+          mainAxisAlignment: MainAxisAlignment.center, // 縦方向に中央に配置
+          crossAxisAlignment: CrossAxisAlignment.center, // 横方向に中央に配置
+          children: [
+            Expanded(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center, // 縦方向に中央に配置
+                crossAxisAlignment: CrossAxisAlignment.center, // 横方向に中央に配置
+                children: [
+                  Icon(
+                    FontAwesomeIcons.faceSadTear,
+                    size: 40,
+                  ),
+                  SizedBox(height: 20),
+                  Align(
+                    alignment: Alignment.center,
+                    child: Text(
+                      '保存したレシピを見るにはログインしてください',
+                      style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
         ),
       );
     }
