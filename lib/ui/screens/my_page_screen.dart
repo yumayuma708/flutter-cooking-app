@@ -88,19 +88,68 @@ class MyPageScreenState extends State<MyPageScreen> {
             ElevatedButton(
               onPressed: () => showLoginPopup(context, emailController,
                   passwordController, handleSignInWithEmailAndPassword),
-              child: const Text('ログイン'),
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(Colors.transparent),
+                elevation: MaterialStateProperty.all<double>(0.0),
+                shape: MaterialStateProperty.all(
+                  RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30.0),
+                    side: const BorderSide(color: Colors.orangeAccent),
+                  ),
+                ),
+              ),
+              child: Text(
+                'ログイン',
+                style: GoogleFonts.zenKakuGothicNew(
+                  fontSize: 20,
+                  fontWeight: FontWeight.w400,
+                  color: Colors.black,
+                ),
+              ),
             ),
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () => showSignUpPopup(context, emailController,
                   passwordController, handleSignUpWithEmailAndPassword),
-              child: const Text('アカウントを作成'),
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(Colors.transparent),
+                elevation: MaterialStateProperty.all<double>(0.0),
+                shape: MaterialStateProperty.all(
+                  RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30.0),
+                    side: const BorderSide(color: Colors.orangeAccent),
+                  ),
+                ),
+              ),
+              child: Text(
+                'アカウントを作成',
+                style: GoogleFonts.zenKakuGothicNew(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w400,
+                    color: Colors.black),
+              ),
             ),
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () =>
                   showSignOutConfirmationPopup(context, handleSignOut),
-              child: const Text('ログアウト'),
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(Colors.transparent),
+                elevation: MaterialStateProperty.all<double>(0.0),
+                shape: MaterialStateProperty.all(
+                  RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30.0),
+                    side: const BorderSide(color: Colors.orangeAccent),
+                  ),
+                ),
+              ),
+              child: Text(
+                'ログアウト',
+                style: GoogleFonts.zenKakuGothicNew(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w400,
+                    color: Colors.black),
+              ),
             ),
           ],
         ),
