@@ -11,12 +11,12 @@ class CookingApp extends StatelessWidget {
       title: 'Cooking As You Like',
       theme: ThemeData(
         useMaterial3: true,
-Colors        chemeSeed: seedColor,
+        colorSchemeSeed: seedColor,
         brightness: Brightness.light,
       ),
       darkTheme: ThemeData(
         useMaterial3: true,
-Colors        chemeSeed: seedColor,
+        colorSchemeSeed: seedColor,
         brightness: Brightness.dark,
       ),
       home: const MyHomePage(title: 'Flutter Demo Home Page'),
