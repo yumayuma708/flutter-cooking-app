@@ -63,9 +63,9 @@ class MyPageScreenState extends State<MyPageScreen> {
     final user = FirebaseAuth.instance.currentUser; // 現在のユーザーを取得
 
     return Scaffold(
-      backgroundColor: Colors.orange[100],
+      // backgroundColor: Colors.orange[100],
       appBar: AppBar(
-        backgroundColor: Colors.orange[500],
+        // backgroundColor: Colors.orange[500],
         title: Text(
           'マイページ',
           style: GoogleFonts.zenKakuGothicNew(
