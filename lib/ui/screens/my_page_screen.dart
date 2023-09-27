@@ -73,18 +73,16 @@ class MyPageScreenState extends State<MyPageScreen> {
         ),
       ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            // ユーザー名の表示
-            Padding(
-              padding: const EdgeInsets.only(bottom: 20.0),
-              child: Text(
-                user != null ? user.email ?? '名前なし' : 'ログインしていません',
-                style:
-                    const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-              ),
+        child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+          // ユーザー名の表示
+          Padding(
+            padding: const EdgeInsets.only(bottom: 20.0),
+            child: Text(
+              user != null ? user.email ?? '名前なし' : 'ログインするか、アカウントを作ります',
+              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
+          ),
+          if (user == null) ...[
             ElevatedButton(
               onPressed: () => showLoginPopup(context, emailController,
                   passwordController, handleSignInWithEmailAndPassword),
@@ -130,6 +128,7 @@ class MyPageScreenState extends State<MyPageScreen> {
               ),
             ),
             const SizedBox(height: 20),
+          ] else ...[
             ElevatedButton(
               onPressed: () =>
                   showSignOutConfirmationPopup(context, handleSignOut),
@@ -152,7 +151,7 @@ class MyPageScreenState extends State<MyPageScreen> {
               ),
             ),
           ],
-        ),
+        ]),
       ),
     );
   }
