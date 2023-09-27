@@ -1,6 +1,6 @@
 import 'package:caul/ui/screens/cooking_screen/choose_ingredients.dart';
 import 'package:caul/ui/screens/my_page_screen.dart';
-import 'package:caul/ui/screens/popup_dialog.dart';
+import 'package:caul/ui/screens/popup_screen/popup_dialog.dart';
 import 'package:caul/ui/screens/save_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

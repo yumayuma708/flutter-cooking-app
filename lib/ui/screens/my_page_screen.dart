@@ -1,4 +1,5 @@
 import 'package:caul/data/services/recipe_saver.dart';
+import 'package:caul/ui/screens/popup_screen/login_signup_logup_popup.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -9,20 +10,20 @@ class MyPageScreen extends StatefulWidget {
 }
 
 class MyPageScreenState extends State<MyPageScreen> {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseAuth auth = FirebaseAuth.instance;
   late RecipeSaver recipeSaver; // 遅延初期化
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
 
   // サインイン（既存ユーザーのログイン）用のメソッド
-  Future<void> _handleSignInWithEmailAndPassword(
+  Future<void> handleSignInWithEmailAndPassword(
       BuildContext dialogContext) async {
     try {
-      UserCredential userCredential = await _auth.signInWithEmailAndPassword(
-        email: _emailController.text,
-        password: _passwordController.text,
+      UserCredential userCredential = await auth.signInWithEmailAndPassword(
+        email: emailController.text,
+        password: passwordController.text,
       );
-      recipeSaver = RecipeSaver(FirebaseFirestore.instance, _auth);
+      recipeSaver = RecipeSaver(FirebaseFirestore.instance, auth);
       Navigator.of(dialogContext).pop(); // Using the dialog's context to pop
     } catch (e) {
       print(e);
@@ -30,15 +31,14 @@ class MyPageScreenState extends State<MyPageScreen> {
   }
 
 // サインアップ（新規登録）用のメソッド
-  Future<void> _handleSignUpWithEmailAndPassword(
+  Future<void> handleSignUpWithEmailAndPassword(
       BuildContext dialogContext) async {
     try {
-      UserCredential userCredential =
-          await _auth.createUserWithEmailAndPassword(
-        email: _emailController.text,
-        password: _passwordController.text,
+      UserCredential userCredential = await auth.createUserWithEmailAndPassword(
+        email: emailController.text,
+        password: passwordController.text,
       );
-      recipeSaver = RecipeSaver(FirebaseFirestore.instance, _auth);
+      recipeSaver = RecipeSaver(FirebaseFirestore.instance, auth);
       Navigator.of(dialogContext).pop(); // Using the dialog's context to pop
     } catch (e) {
       print(e);
@@ -46,108 +46,14 @@ class MyPageScreenState extends State<MyPageScreen> {
   }
 
 // サインアウト用のメソッド
-  Future<void> _handleSignOut(BuildContext dialogContext) async {
+  Future<void> handleSignOut(BuildContext dialogContext) async {
     try {
-      await _auth.signOut();
+      await auth.signOut();
       Navigator.of(dialogContext)
           .pop(); // Use dialogContext to pop the confirmation popup
     } catch (e) {
       print(e);
     }
-  }
-
-// ログイン用のポップアップ
-  _showLoginPopup() {
-    showDialog(
-      context: context,
-      builder: (BuildContext dialogContext) {
-        return AlertDialog(
-          title: const Text('ログイン'),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              TextField(
-                controller: _emailController,
-                decoration: const InputDecoration(
-                  labelText: 'Email',
-                ),
-              ),
-              TextField(
-                controller: _passwordController,
-                decoration: const InputDecoration(
-                  labelText: 'Password',
-                ),
-                obscureText: true,
-              ),
-              ElevatedButton(
-                onPressed: () =>
-                    _handleSignInWithEmailAndPassword(dialogContext),
-                child: const Text('ログイン'),
-              ),
-            ],
-          ),
-        );
-      },
-    );
-  }
-
-// サインアップ用のポップアップ
-  _showSignUpPopup() {
-    showDialog(
-      context: context,
-      builder: (BuildContext dialogContext) {
-        return AlertDialog(
-          title: const Text('アカウントを作成'),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              TextField(
-                controller: _emailController,
-                decoration: const InputDecoration(
-                  labelText: 'Email',
-                ),
-              ),
-              TextField(
-                controller: _passwordController,
-                decoration: const InputDecoration(
-                  labelText: 'Password',
-                ),
-                obscureText: true,
-              ),
-              ElevatedButton(
-                onPressed: () =>
-                    _handleSignUpWithEmailAndPassword(dialogContext),
-                child: const Text('アカウントを作成'),
-              ),
-            ],
-          ),
-        );
-      },
-    );
-  }
-
-//サインアウト確認用のポップアップ
-  _showSignOutConfirmationPopup() {
-    showDialog(
-      context: context,
-      builder: (BuildContext dialogContext) {
-        return AlertDialog(
-          title: const Text('ログアウトの確認'),
-          content: const Text('本当にログアウトしますか？'),
-          actions: [
-            TextButton(
-              onPressed: () =>
-                  Navigator.of(dialogContext).pop(), // Close the dialog
-              child: const Text('キャンセル'),
-            ),
-            ElevatedButton(
-              onPressed: () => _handleSignOut(dialogContext),
-              child: const Text('ログアウト'),
-            ),
-          ],
-        );
-      },
-    );
   }
 
 //UIとして表示される部分
@@ -165,21 +71,25 @@ class MyPageScreenState extends State<MyPageScreen> {
               padding: const EdgeInsets.only(bottom: 20.0),
               child: Text(
                 user != null ? user.email ?? '名前なし' : 'ログインしていません',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                style:
+                    const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
             ),
             ElevatedButton(
-              onPressed: _showLoginPopup,
+              onPressed: () => showLoginPopup(context, emailController,
+                  passwordController, handleSignInWithEmailAndPassword),
               child: const Text('ログイン'),
             ),
             const SizedBox(height: 20),
             ElevatedButton(
-              onPressed: _showSignUpPopup,
+              onPressed: () => showSignUpPopup(context, emailController,
+                  passwordController, handleSignUpWithEmailAndPassword),
               child: const Text('アカウントを作成'),
             ),
             const SizedBox(height: 20),
             ElevatedButton(
-              onPressed: _showSignOutConfirmationPopup,
+              onPressed: () =>
+                  showSignOutConfirmationPopup(context, handleSignOut),
               child: const Text('ログアウト'),
             ),
           ],
