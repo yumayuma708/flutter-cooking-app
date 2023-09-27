@@ -1,6 +1,7 @@
 // ignore_for_file: use_build_context_synchronously, unused_element
 
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class PopupPage extends StatelessWidget {
   final String description;
@@ -145,13 +146,59 @@ void savedPopup(BuildContext context) {
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
-        content: const Text('レシピを保存しました！'),
-        actions: <Widget>[
-          TextButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-            child: const Text('OK'),
+        // ポップアップの角を丸くする
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(15.0),
+        ),
+        backgroundColor: Colors.orange[100],
+        // タイトルをアイコンに変更
+        title: const Icon(
+          Icons.bookmark,
+          color: Colors.black,
+          size: 40,
+        ),
+        content: const Text(
+          'レシピを保存しました！',
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            fontSize: 16,
+          ),
+        ),
+        actions: [
+          // OKボタンを中央揃えにするためのExpandedとColumnを使用
+          Expanded(
+            child: ButtonBar(
+              alignment: MainAxisAlignment.center, // ボタンを中央に配置
+              children: [
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  style: ButtonStyle(
+                    backgroundColor:
+                        MaterialStateProperty.all(Colors.transparent),
+                    elevation: MaterialStateProperty.resolveWith<double>(
+                      (Set<MaterialState> states) {
+                        if (states.contains(MaterialState.pressed)) {
+                          return 0.0;
+                        }
+                        return 0.0;
+                      },
+                    ),
+                    shape: MaterialStateProperty.all(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30.0),
+                        side: const BorderSide(color: Colors.orangeAccent),
+                      ),
+                    ),
+                  ),
+                  child: Text(
+                    'OK',
+                    style: GoogleFonts.zenKakuGothicNew(color: Colors.black),
+                  ),
+                )
+              ],
+            ),
           ),
         ],
       );
