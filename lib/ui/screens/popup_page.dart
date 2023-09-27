@@ -138,3 +138,23 @@ class PopupPage extends StatelessWidget {
     );
   }
 }
+
+//保存しました。のポップアップを作成
+void savedPopup(BuildContext context) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        content: const Text('レシピを保存しました！'),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: const Text('OK'),
+          ),
+        ],
+      );
+    },
+  );
+}

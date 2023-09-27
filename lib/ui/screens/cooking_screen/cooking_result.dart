@@ -7,6 +7,7 @@ import 'package:caul/providers/chat_gpt_provider.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:caul/ui/screens/popup_page.dart';
 
 class CookingResultPage extends StatefulWidget {
   final CookingData data;
@@ -313,6 +314,7 @@ class CookingResultPageState extends State<CookingResultPage> {
                             'ingredients': widget.dividedData.ingredients,
                             // 他のデータ
                           });
+                          savedPopup(context);
                         }
                       } else {
                         // ユーザーがログインしていない場合の処理
