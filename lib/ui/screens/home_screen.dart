@@ -4,7 +4,6 @@ import 'package:caul/ui/screens/popup_screen/popup_dialog.dart';
 import 'package:caul/ui/screens/save_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class MyHomePage extends StatefulWidget {

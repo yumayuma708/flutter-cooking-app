@@ -7,6 +7,8 @@ import 'package:google_fonts/google_fonts.dart';
 class SaveScreen extends StatelessWidget {
   final String? currentUserId = FirebaseAuth.instance.currentUser?.uid;
 
+  SaveScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     if (currentUserId == null) {

@@ -58,6 +58,7 @@ class CookingSituationInternal extends StatefulWidget {
   final List<String> confirmation = ['はい', 'いいえ'];
 
   CookingSituationInternal({
+    super.key,
     required this.selectedVegetables,
     required this.selectedSeasonings,
   });
