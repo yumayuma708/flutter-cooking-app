@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class SaveScreen extends StatelessWidget {
   final String? currentUserId = FirebaseAuth.instance.currentUser?.uid;
@@ -15,9 +14,9 @@ class SaveScreen extends StatelessWidget {
       return Scaffold(
         backgroundColor: Colors.orange[100],
         appBar: AppBar(
-          title: Text(
+          title: const Text(
             '保存したレシピ',
-            style: GoogleFonts.zenKakuGothicNew(
+            style: TextStyle(
                 fontSize: 25, fontWeight: FontWeight.bold, color: Colors.black),
           ),
           backgroundColor: Colors.orange[500],

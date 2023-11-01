@@ -4,7 +4,6 @@ import 'package:caul/ui/screens/loading_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:caul/providers/chat_gpt_provider.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:caul/ui/screens/popup_screen/popup_page.dart';
@@ -52,24 +51,24 @@ class CookingResultPageState extends State<CookingResultPage> {
         appBar: AppBar(
           backgroundColor: Colors.orange[500],
           centerTitle: true,
-          title: Row(
+          title: const Row(
             mainAxisSize: MainAxisSize.min, // この行を追加
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Icon(
+              Icon(
                 Icons.restaurant_menu,
                 color: Colors.black,
               ),
-              const SizedBox(width: 8.0),
+              SizedBox(width: 8.0),
               Text(
                 'AIの考えたレシピ',
-                style: GoogleFonts.zenKakuGothicNew(
+                style: TextStyle(
                     fontSize: 25,
                     color: Colors.black,
                     fontWeight: FontWeight.w800),
               ),
-              const SizedBox(width: 8.0),
-              const Icon(
+              SizedBox(width: 8.0),
+              Icon(
                 Icons.restaurant_menu,
                 color: Colors.black,
               ),
@@ -88,7 +87,7 @@ class CookingResultPageState extends State<CookingResultPage> {
                         padding: const EdgeInsets.symmetric(horizontal: 20.0),
                         child: Text(
                           "【${widget.dividedData.dishName}】", // 料理名を"〜"で囲む
-                          style: GoogleFonts.zenKakuGothicNew(
+                          style: const TextStyle(
                             fontSize: 25,
                             color: Colors.black,
                             fontWeight: FontWeight.w700,
@@ -108,7 +107,7 @@ class CookingResultPageState extends State<CookingResultPage> {
                         const SizedBox(width: 8.0),
                         Text(
                           "目安時間：${widget.dividedData.estimatedTime}",
-                          style: GoogleFonts.zenKakuGothicNew(
+                          style: const TextStyle(
                             fontSize: 20,
                             color: Colors.black,
                             fontWeight: FontWeight.w600,
@@ -129,7 +128,7 @@ class CookingResultPageState extends State<CookingResultPage> {
                         const SizedBox(width: 8.0), // spacing
                         Text(
                           "材料(${widget.dividedData.numberOfPeople})",
-                          style: GoogleFonts.zenKakuGothicNew(
+                          style: const TextStyle(
                             fontSize: 20,
                             color: Colors.black,
                             fontWeight: FontWeight.w700,
@@ -150,7 +149,7 @@ class CookingResultPageState extends State<CookingResultPage> {
                               .split('\n')
                               .map((line) => '・$line')
                               .join('\n'),
-                          style: GoogleFonts.zenKakuGothicNew(
+                          style: const TextStyle(
                             fontSize: 18,
                             color: Colors.black,
                             fontWeight: FontWeight.w500,
@@ -169,9 +168,9 @@ class CookingResultPageState extends State<CookingResultPage> {
                           Image.asset('assets/images/knife.png',
                               width: 20, height: 20), // knife image added
                           const SizedBox(width: 8.0), // spacing
-                          Text(
+                          const Text(
                             '作り方',
-                            style: GoogleFonts.zenKakuGothicNew(
+                            style: TextStyle(
                               fontSize: 20,
                               color: Colors.black,
                               fontWeight:
@@ -192,7 +191,7 @@ class CookingResultPageState extends State<CookingResultPage> {
                         alignment: Alignment.centerLeft,
                         child: Text(
                           widget.dividedData.recipe,
-                          style: GoogleFonts.zenKakuGothicNew(
+                          style: const TextStyle(
                             fontSize: 18,
                             color: Colors.black,
                             fontWeight: FontWeight.w500,
@@ -204,15 +203,15 @@ class CookingResultPageState extends State<CookingResultPage> {
                     const SizedBox(
                       height: 20,
                     ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                    const Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 20.0),
                       child: Row(
                         children: [
-                          const Icon(Icons.star, size: 20), // star icon added
-                          const SizedBox(width: 8.0), // spacing
+                          Icon(Icons.star, size: 20), // star icon added
+                          SizedBox(width: 8.0), // spacing
                           Text(
                             'ポイント',
-                            style: GoogleFonts.zenKakuGothicNew(
+                            style: TextStyle(
                               fontSize: 20,
                               color: Colors.black,
                               fontWeight:
@@ -237,7 +236,7 @@ class CookingResultPageState extends State<CookingResultPage> {
                                   ? widget.dividedData.appealPoint.substring(1)
                                   : widget.dividedData.appealPoint)
                               .trim(), // trimの適用を最後に移動
-                          style: GoogleFonts.zenKakuGothicNew(
+                          style: const TextStyle(
                             fontSize: 18,
                             color: Colors.black,
                             fontWeight: FontWeight.w500,

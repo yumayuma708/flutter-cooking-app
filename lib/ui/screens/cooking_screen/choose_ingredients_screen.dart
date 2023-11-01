@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:caul/status/popup.state.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 final pageControllerProvider = Provider((ref) => PageController());
 
@@ -16,10 +15,10 @@ class ChooseIngredients extends ConsumerWidget {
       backgroundColor: Colors.orange[100],
       appBar: AppBar(
         backgroundColor: Colors.orange[500],
-        title: Text(
+        title: const Text(
           '食材を選びます',
-          style: GoogleFonts.zenKakuGothicNew(
-              color: Colors.black, fontSize: 25, fontWeight: FontWeight.w500),
+          style: TextStyle(
+              color: Colors.black, fontSize: 25, fontWeight: FontWeight.w800),
         ),
       ),
       body: const VegetablesGridView(),
@@ -283,11 +282,10 @@ class VegetablesGridViewState extends State<VegetablesGridView> {
                                                 ),
                                               ),
                                             ),
-                                            child: Text(
+                                            child: const Text(
                                               'OK',
-                                              style:
-                                                  GoogleFonts.zenKakuGothicNew(
-                                                      color: Colors.black),
+                                              style: TextStyle(
+                                                  color: Colors.black),
                                             ),
                                           )
                                         ],
@@ -335,9 +333,9 @@ class VegetablesGridViewState extends State<VegetablesGridView> {
                             ),
                           ),
                         ),
-                        child: Text(
+                        child: const Text(
                           "条件選択へ",
-                          style: GoogleFonts.zenKakuGothicNew(
+                          style: TextStyle(
                             color: Colors.black,
                             fontSize: 20,
                           ),
@@ -368,11 +366,11 @@ class VegetablesGridViewState extends State<VegetablesGridView> {
                       ),
                     ),
                     if (category == '調味料')
-                      Padding(
-                        padding: const EdgeInsets.only(
-                            left: 20.0, top: 5.0, bottom: 10.0),
+                      const Padding(
+                        padding:
+                            EdgeInsets.only(left: 20.0, top: 5.0, bottom: 10.0),
                         child: Text("指定しない場合は'おまかせ'を選べます",
-                            style: GoogleFonts.zenKakuGothicNew(
+                            style: TextStyle(
                               fontSize: 16.0,
                             )),
                       ),
@@ -483,7 +481,7 @@ class VegetablesGridViewState extends State<VegetablesGridView> {
                             child: Center(
                               child: Text(
                                 ingredient,
-                                style: GoogleFonts.zenKakuGothicNew(
+                                style: TextStyle(
                                   color: Colors.black,
                                   fontSize: ingredient == 'モッツァレラチーズ'
                                       ? 13.0

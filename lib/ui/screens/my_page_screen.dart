@@ -3,7 +3,6 @@ import 'package:caul/ui/screens/popup_screen/login_signup_logout_popup.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class MyPageScreen extends StatefulWidget {
   @override
@@ -66,9 +65,9 @@ class MyPageScreenState extends State<MyPageScreen> {
       // backgroundColor: Colors.orange[100],
       appBar: AppBar(
         // backgroundColor: Colors.orange[500],
-        title: Text(
+        title: const Text(
           'マイページ',
-          style: GoogleFonts.zenKakuGothicNew(
+          style: TextStyle(
               fontSize: 25, color: Colors.black, fontWeight: FontWeight.w800),
         ),
       ),
@@ -96,9 +95,9 @@ class MyPageScreenState extends State<MyPageScreen> {
                   ),
                 ),
               ),
-              child: Text(
+              child: const Text(
                 'ログイン',
-                style: GoogleFonts.zenKakuGothicNew(
+                style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.w400,
                   color: Colors.black,
@@ -119,9 +118,9 @@ class MyPageScreenState extends State<MyPageScreen> {
                   ),
                 ),
               ),
-              child: Text(
+              child: const Text(
                 'アカウントを作成',
-                style: GoogleFonts.zenKakuGothicNew(
+                style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.w400,
                     color: Colors.black),
@@ -142,9 +141,9 @@ class MyPageScreenState extends State<MyPageScreen> {
                   ),
                 ),
               ),
-              child: Text(
+              child: const Text(
                 'ログアウト',
-                style: GoogleFonts.zenKakuGothicNew(
+                style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.w400,
                     color: Colors.black),

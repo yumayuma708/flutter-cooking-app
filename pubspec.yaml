@@ -1,17 +1,17 @@
 name: caul
 description: Cook As You Like!
 
-publish_to: 'none' 
+publish_to: "none"
 
 version: 1.0.0+1
 
 environment:
-  sdk: '>=3.1.0 <4.0.0'
+  sdk: ">=3.1.0 <4.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
-
+  flutter_localizations:
   cupertino_icons: ^1.0.2
   flutter_dotenv: ^5.1.0
   flutter_launcher_icons: ^0.13.1
@@ -25,6 +25,8 @@ dependencies:
   firebase_core: ^2.16.0
   cloud_firestore: ^4.9.2
   firebase_auth: ^4.10.0
+  firebase_ui_auth: ^1.8.0
+  firebase_ui_localizations: ^1.6.1
 
 dev_dependencies:
   flutter_test:
@@ -37,9 +39,7 @@ flutter_icons:
   ios: true
   image_path: "assets/images/icon.jpg"
 
-
 flutter:
-
   uses-material-design: true
 
   assets:
@@ -53,3 +53,8 @@ flutter:
     - assets/images/knife.png
     - assets/images/renew.png
 
+  fonts:
+    - family: NotoSansJP
+      fonts:
+        - asset: assets/fonts/ZenKakuGothicNew-Regular.ttf
+        - asset: assets/fonts/ZenKakuGothicNew-Bold.ttf

@@ -194,9 +194,9 @@ void savedPopup(BuildContext context) {
                       ),
                     ),
                   ),
-                  child: Text(
+                  child: const Text(
                     'OK',
-                    style: GoogleFonts.zenKakuGothicNew(color: Colors.black),
+                    style: TextStyle(color: Colors.black),
                   ),
                 )
               ],

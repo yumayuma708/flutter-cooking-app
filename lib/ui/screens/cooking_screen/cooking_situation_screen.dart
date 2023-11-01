@@ -2,8 +2,9 @@ import 'package:caul/providers/chat_gpt_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:caul/ui/screens/loading_screen.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
+import '../../components/caul_button.dart';
 
 class CookingSituation extends ConsumerWidget {
   final List<String> selectedVegetables;
@@ -132,9 +133,9 @@ class CookingSituationInternalState extends State<CookingSituationInternal> {
       backgroundColor: Colors.orange[100],
       appBar: AppBar(
         backgroundColor: Colors.orange[500],
-        title: Text(
+        title: const Text(
           '条件を選びます',
-          style: GoogleFonts.zenKakuGothicNew(
+          style: TextStyle(
               color: Colors.black, fontSize: 25, fontWeight: FontWeight.w500),
         ),
       ),
@@ -159,8 +160,7 @@ class CookingSituationInternalState extends State<CookingSituationInternal> {
                             style: TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
-                              fontFamily:
-                                  GoogleFonts.zenKakuGothicNew().fontFamily,
+                              fontFamily: const TextStyle().fontFamily,
                             ),
                           ),
                         ],
@@ -196,7 +196,7 @@ class CookingSituationInternalState extends State<CookingSituationInternal> {
                                       children: [
                                         Text(
                                           button,
-                                          style: GoogleFonts.zenKakuGothicNew(
+                                          style: const TextStyle(
                                               color: Colors.black),
                                         ),
                                         Icon(
@@ -224,35 +224,11 @@ class CookingSituationInternalState extends State<CookingSituationInternal> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    ElevatedButton(
+                    CaulButton(
                       onPressed: () {
                         Navigator.pop(context, 'choose_ingredients');
                       },
-                      style: ButtonStyle(
-                        backgroundColor:
-                            MaterialStateProperty.all(Colors.transparent),
-                        elevation: MaterialStateProperty.resolveWith<double>(
-                          (Set<MaterialState> states) {
-                            if (states.contains(MaterialState.pressed)) {
-                              return 0.0;
-                            }
-                            return 0.0;
-                          },
-                        ),
-                        shape: MaterialStateProperty.all(
-                          RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(30.0),
-                            side: const BorderSide(color: Colors.orangeAccent),
-                          ),
-                        ),
-                      ),
-                      child: Text(
-                        "戻る",
-                        style: GoogleFonts.zenKakuGothicNew(
-                          color: Colors.black,
-                          fontSize: 20,
-                        ),
-                      ),
+                      label: '戻る',
                     ),
 
                     const SizedBox(width: 20.0),
@@ -310,9 +286,9 @@ class CookingSituationInternalState extends State<CookingSituationInternal> {
                           ),
                         ),
                       ),
-                      child: Text(
+                      child: const Text(
                         "料理を作る！",
-                        style: GoogleFonts.zenKakuGothicNew(
+                        style: TextStyle(
                           color: Colors.black,
                           fontSize: 20,
                         ),

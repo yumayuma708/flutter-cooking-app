@@ -63,8 +63,8 @@ class MyHomePageState extends State<MyHomePage> {
             // currentIndex: _currentIndex,
             // selectedItemColor:Colors.white,
             // unselectedItemColor:Colors.white70,
-            // selectedLabelStyle: GoogleFonts.zenKakuGothicNew(),
-            // unselectedLabelStyle: GoogleFonts.zenKakuGothicNew(),
+            // selectedLabelStyle: TextStyle(),
+            // unselectedLabelStyle: TextStyle(),
             // items: [
             NavigationDestination(
               icon: Icon(
