@@ -18,7 +18,6 @@ class MyHomePage extends StatefulWidget {
 class MyHomePageState extends State<MyHomePage> {
   int _currentIndex = 0;
 
-  // 各ページのルートのキーを格納するためのリスト
   final List<GlobalKey<NavigatorState>> _navigatorKeys = [
     GlobalKey<NavigatorState>(),
     GlobalKey<NavigatorState>(),
@@ -59,31 +58,21 @@ class MyHomePageState extends State<MyHomePage> {
           selectedIndex: _currentIndex,
           // backgroundColor: const Color.fromARGB(255, 4, 7, 47),
           destinations: const [
-            // type: BottomNavigationBarType.fixed,
-            // currentIndex: _currentIndex,
-            // selectedItemColor:Colors.white,
-            // unselectedItemColor:Colors.white70,
-            // selectedLabelStyle: TextStyle(),
-            // unselectedLabelStyle: TextStyle(),
-            // items: [
             NavigationDestination(
               icon: Icon(
                 FontAwesomeIcons.utensils,
-                // color: _currentIndex == 0 ?Colors.white :Colors.white70,
               ),
               label: '料理',
             ),
             NavigationDestination(
               icon: Icon(
                 FontAwesomeIcons.bookmark,
-                // color: _currentIndex == 1 ?Colors.white :Colors.white70,
               ),
               label: '保存',
             ),
             NavigationDestination(
               icon: Icon(
                 Icons.person,
-                // color: _currentIndex == 2 ?Colors.white :Colors.white70,
               ),
               label: 'マイページ',
             ),

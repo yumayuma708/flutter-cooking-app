@@ -266,7 +266,7 @@ packages:
     source: hosted
     version: "1.8.0"
   firebase_ui_localizations:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: firebase_ui_localizations
       sha256: "9c92bc3697a89ce74fb0237cfb9b33580dd0450c080795b605d1a852a44b9f67"
