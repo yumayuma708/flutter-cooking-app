@@ -6,7 +6,7 @@ class CookingApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const seedColor = Color(0xFFEAA4A4);
+    const seedColor = Colors.orange;
     return MaterialApp(
       title: 'Cooking As You Like',
       theme: ThemeData(

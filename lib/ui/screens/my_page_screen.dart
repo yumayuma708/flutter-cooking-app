@@ -1,5 +1,5 @@
 import 'package:caul/data/services/recipe_saver.dart';
-import 'package:caul/ui/screens/popup_screen/login_signup_logup_popup.dart';
+import 'package:caul/ui/screens/popup_screen/login_signup_logout_popup.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';

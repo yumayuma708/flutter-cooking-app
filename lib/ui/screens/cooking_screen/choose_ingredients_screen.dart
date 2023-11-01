@@ -1,4 +1,4 @@
-import 'package:caul/ui/screens/cooking_screen/cooking_situation.dart';
+import 'package:caul/ui/screens/cooking_screen/cooking_situation_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:caul/status/popup.state.dart';
