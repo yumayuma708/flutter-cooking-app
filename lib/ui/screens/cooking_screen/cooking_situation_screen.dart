@@ -3,8 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:caul/ui/screens/loading_screen.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-
-import '../../components/caul_button.dart';
+import 'package:caul/ui/components/caul_button.dart';
 
 class CookingSituation extends ConsumerWidget {
   final List<String> selectedVegetables;
