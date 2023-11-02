@@ -323,19 +323,15 @@ class VegetablesGridViewState extends State<VegetablesGridView> {
                           splashColor: Colors.transparent,
                           highlightColor: Colors.transparent,
                           child: Card(
-                            color: category == '調味料'
-                                ? selectedSeasonings.contains(ingredient)
-                                    ? Theme.of(context)
-                                        .colorScheme
-                                        .primary
-                                        .withOpacity(0.6)
-                                    : Colors.transparent
-                                : selectedIngredients.contains(ingredient)
-                                    ? Theme.of(context)
-                                        .colorScheme
-                                        .primary
-                                        .withOpacity(0.6)
-                                    : Colors.transparent,
+                            color: (category == '調味料' &&
+                                        selectedSeasonings
+                                            .contains(ingredient)) ||
+                                    selectedIngredients.contains(ingredient)
+                                ? Theme.of(context)
+                                    .colorScheme
+                                    .primary
+                                    .withOpacity(0.6)
+                                : Colors.transparent,
                             elevation: 0.0,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(30.0),
