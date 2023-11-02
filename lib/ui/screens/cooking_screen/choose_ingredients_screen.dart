@@ -15,11 +15,11 @@ class ChooseIngredients extends ConsumerWidget {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.onBackground,
+        backgroundColor: Theme.of(context).colorScheme.background,
         title: Text(
           '食材を選びます',
           style: TextStyle(
-              color: Theme.of(context).colorScheme.onPrimary,
+              color: Theme.of(context).colorScheme.onBackground,
               fontSize: 25,
               fontWeight: FontWeight.w800),
         ),
@@ -65,21 +65,15 @@ class VegetablesGridViewState extends State<VegetablesGridView> {
 
   void toggleSeasoning(String seasoning) {
     setState(() {
-      // 「おまかせ」が押された場合の処理
       if (seasoning == 'おまかせ') {
         if (selectedSeasonings.contains(seasoning)) {
-          // 「おまかせ」が既に選択されていれば、選択を解除
           selectedSeasonings.remove(seasoning);
         } else {
-          // 他の調味料の選択を全て解除し、おまかせだけを選択状態にする
           selectedSeasonings.clear();
           selectedSeasonings.add(seasoning);
         }
       } else {
-        // 「おまかせ」が選択されていれば解除
         selectedSeasonings.remove('おまかせ');
-
-        // 押された調味料がすでに選択されていれば、選択を解除。そうでなければ、選択を追加
         if (selectedSeasonings.contains(seasoning)) {
           selectedSeasonings.remove(seasoning);
         } else {
@@ -92,12 +86,11 @@ class VegetablesGridViewState extends State<VegetablesGridView> {
   @override
   Widget build(BuildContext context) {
     return Column(children: [
-      const SizedBox(height: 20.0), // 追加: AppBarとVegetablesGridViewの間の隙間
+      const SizedBox(height: 20.0),
       Expanded(
           child: ListView.builder(
               itemCount: categories.length + 1,
               itemBuilder: (context, index) {
-                // 最後のアイテムの場合、ボタンを返す
                 if (index == categories.length) {
                   return Padding(
                     padding: const EdgeInsets.fromLTRB(1.0, 10.0, 0.0, 10.0),
@@ -111,7 +104,6 @@ class VegetablesGridViewState extends State<VegetablesGridView> {
                               context: context,
                               builder: (BuildContext context) {
                                 return AlertDialog(
-                                  // ポップアップの角を丸くする
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(15.0),
                                   ),
@@ -121,11 +113,9 @@ class VegetablesGridViewState extends State<VegetablesGridView> {
                                   ),
                                   content: const Text('食材を最低１つは追加してください'),
                                   actions: [
-                                    // OKボタンを中央揃えにするためのExpandedとColumnを使用
                                     Expanded(
                                       child: ButtonBar(
-                                        alignment: MainAxisAlignment
-                                            .center, // ボタンを中央に配置
+                                        alignment: MainAxisAlignment.center,
                                         children: [
                                           ElevatedButton(
                                             onPressed: () {
@@ -205,15 +195,17 @@ class VegetablesGridViewState extends State<VegetablesGridView> {
                           shape: MaterialStateProperty.all(
                             RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(30.0),
-                              side:
-                                  const BorderSide(color: Colors.orangeAccent),
+                              side: BorderSide(
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .onBackground),
                             ),
                           ),
                         ),
                         child: Text(
                           "条件選択へ",
                           style: TextStyle(
-                            color: Theme.of(context).colorScheme.onSecondary,
+                            color: Theme.of(context).colorScheme.onBackground,
                             fontSize: 20,
                           ),
                         ),
@@ -221,8 +213,6 @@ class VegetablesGridViewState extends State<VegetablesGridView> {
                     ),
                   );
                 }
-
-                // それ以外の場合、カテゴリーの食材を表示
                 String category = categories[index];
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -231,9 +221,8 @@ class VegetablesGridViewState extends State<VegetablesGridView> {
                       padding: const EdgeInsets.only(left: 20.0),
                       child: Row(
                         children: [
-                          _getIconOrImageForCategory(
-                              category), // この関数でカテゴリーに応じたアイコンまたは画像を取得します
-                          const SizedBox(width: 8.0), // アイコンとheaderの間の隙間
+                          _getIconOrImageForCategory(category),
+                          const SizedBox(width: 8.0),
                           Text(
                             category,
                             style: const TextStyle(
@@ -336,10 +325,16 @@ class VegetablesGridViewState extends State<VegetablesGridView> {
                           child: Card(
                             color: category == '調味料'
                                 ? selectedSeasonings.contains(ingredient)
-                                    ? Theme.of(context).colorScheme.onSecondary
+                                    ? Theme.of(context)
+                                        .colorScheme
+                                        .primary
+                                        .withOpacity(0.6)
                                     : Colors.transparent
                                 : selectedIngredients.contains(ingredient)
-                                    ? Colors.orange[200]
+                                    ? Theme.of(context)
+                                        .colorScheme
+                                        .primary
+                                        .withOpacity(0.6)
                                     : Colors.transparent,
                             elevation: 0.0,
                             shape: RoundedRectangleBorder(
@@ -407,7 +402,6 @@ Widget _getIconOrImageForCategory(String category) {
     case 'その他':
       return const Icon(FontAwesomeIcons.comment, size: 20.0);
     default:
-      return const Icon(FontAwesomeIcons.circleQuestion,
-          size: 20.0); // 予期しないカテゴリーの場合のデフォルトのアイコン
+      return const Icon(FontAwesomeIcons.circleQuestion, size: 20.0);
   }
 }
