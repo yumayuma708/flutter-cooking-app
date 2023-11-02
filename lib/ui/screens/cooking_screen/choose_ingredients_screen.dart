@@ -22,7 +22,7 @@ class ChooseIngredients extends ConsumerWidget {
           style: TextStyle(
               color: Theme.of(context).colorScheme.onBackground,
               fontSize: 25,
-              fontWeight: FontWeight.w700),
+              fontWeight: FontWeight.w600),
         ),
       ),
       body: const VegetablesGridView(),

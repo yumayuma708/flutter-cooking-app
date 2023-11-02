@@ -1,4 +1,5 @@
 import 'package:caul/providers/chat_gpt_provider.dart';
+import 'package:caul/ui/components/caul_situations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:caul/ui/screens/loading_screen.dart';
@@ -13,9 +14,7 @@ class CookingSituation extends ConsumerWidget {
   const CookingSituation(
       {Key? key,
       required this.selectedVegetables,
-      required this.selectedSeasonings
-      // 他の必要なパラメータをここに追加
-      })
+      required this.selectedSeasonings})
       : super(key: key);
 
   @override
@@ -31,33 +30,7 @@ class CookingSituationInternal extends StatefulWidget {
   final List<String> selectedVegetables;
   final List<String> selectedSeasonings;
 
-  final List<String> timeOptions = ['30分以内', '1時間以内', '1.5時間以内', '指定しない'];
-  final List<String> servingSize = [
-    '1人分',
-    '2人分',
-    '3人分',
-    '4人分',
-  ];
-  final List<String> cuisineType = [
-    '和食',
-    '洋食',
-    '中華',
-    'イタリアン',
-    '指定しない',
-  ];
-  final List<String> mealSize = ['軽め', 'がっつり', '指定しない'];
-  final List<String> preferences = [
-    '短い時間で',
-    '洗い物少なく',
-    'お弁当用',
-    'ヘルシー',
-    '筋トレ食',
-    '完全食',
-    '指定しない'
-  ];
-  final List<String> confirmation = ['はい', 'いいえ'];
-
-  CookingSituationInternal({
+  const CookingSituationInternal({
     super.key,
     required this.selectedVegetables,
     required this.selectedSeasonings,
@@ -117,25 +90,27 @@ class CookingSituationInternalState extends State<CookingSituationInternal> {
   void initState() {
     super.initState();
     buttonGroups = [
-      widget.timeOptions,
-      widget.servingSize,
-      widget.cuisineType,
-      widget.mealSize,
-      widget.preferences,
-      widget.confirmation
+      timeOptions,
+      servingSize,
+      cuisineType,
+      mealSize,
+      preferences,
+      confirmation
     ];
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.orange[100],
+      backgroundColor: Theme.of(context).colorScheme.background,
       appBar: AppBar(
-        backgroundColor: Colors.orange[500],
-        title: const Text(
+        backgroundColor: Theme.of(context).colorScheme.background,
+        title: Text(
           '条件を選びます',
           style: TextStyle(
-              color: Colors.black, fontSize: 25, fontWeight: FontWeight.w500),
+              color: Theme.of(context).colorScheme.onBackground,
+              fontSize: 25,
+              fontWeight: FontWeight.w600),
         ),
       ),
       body: Column(
@@ -152,7 +127,7 @@ class CookingSituationInternalState extends State<CookingSituationInternal> {
                       padding: const EdgeInsets.fromLTRB(10.0, 10.0, 0.0, 10.0),
                       child: Row(
                         children: [
-                          getIconOrImageForHeader(headers[index]),
+                          getIconOrImageForHeader(context, headers[index]),
                           const SizedBox(width: 10.0),
                           Text(
                             headers[index],
@@ -183,8 +158,11 @@ class CookingSituationInternalState extends State<CookingSituationInternal> {
                                 elevation: 0.0,
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(30.0),
-                                  side: const BorderSide(
-                                      color: Colors.orangeAccent),
+                                  side: BorderSide(
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .onBackground
+                                          .withOpacity(0.3)),
                                 ),
                                 child: Padding(
                                   padding: const EdgeInsets.symmetric(
@@ -195,13 +173,18 @@ class CookingSituationInternalState extends State<CookingSituationInternal> {
                                       children: [
                                         Text(
                                           button,
-                                          style: const TextStyle(
-                                              color: Colors.black),
+                                          style: TextStyle(
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .onBackground,
+                                          ),
                                         ),
                                         Icon(
                                           FontAwesomeIcons.circleCheck,
                                           color: isSelected
-                                              ? Colors.black
+                                              ? Theme.of(context)
+                                                  .colorScheme
+                                                  .tertiary
                                               : Colors.transparent,
                                         ),
                                       ]),
@@ -229,10 +212,7 @@ class CookingSituationInternalState extends State<CookingSituationInternal> {
                       },
                       label: '戻る',
                     ),
-
                     const SizedBox(width: 20.0),
-
-                    // 料理を作る！ボタン
                     ElevatedButton(
                       onPressed: () {
                         List<String> timeConditions =
@@ -280,15 +260,16 @@ class CookingSituationInternalState extends State<CookingSituationInternal> {
                         ),
                         shape: MaterialStateProperty.all(
                           RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(30.0),
-                            side: const BorderSide(color: Colors.orangeAccent),
-                          ),
+                              borderRadius: BorderRadius.circular(30.0),
+                              side: BorderSide(
+                                color: Theme.of(context).colorScheme.primary,
+                              )),
                         ),
                       ),
-                      child: const Text(
+                      child: Text(
                         "料理を作る！",
                         style: TextStyle(
-                          color: Colors.black,
+                          color: Theme.of(context).colorScheme.primary,
                           fontSize: 20,
                         ),
                       ),
@@ -302,14 +283,19 @@ class CookingSituationInternalState extends State<CookingSituationInternal> {
   }
 }
 
-Widget getIconOrImageForHeader(String header) {
+Widget getIconOrImageForHeader(BuildContext context, String header) {
   switch (header) {
     case "調理時間":
       return const Icon(FontAwesomeIcons.clock, size: 20.0);
     case "人数":
       return const Icon(FontAwesomeIcons.user, size: 20.0);
     case "タイプ":
-      return Image.asset('assets/images/curry.png', width: 28.0, height: 28.0);
+      return Image.asset(
+        'assets/images/curry.png',
+        width: 28.0,
+        height: 28.0,
+        color: Theme.of(context).colorScheme.onBackground,
+      );
     case "量":
       return const Icon(FontAwesomeIcons.bowlRice, size: 20.0);
     case "その他の条件":
@@ -317,6 +303,6 @@ Widget getIconOrImageForHeader(String header) {
     case "選んだ食材以外を材料に含めてもよい":
       return const Icon(FontAwesomeIcons.commentDots, size: 20.0);
     default:
-      return const SizedBox.shrink(); // 不明なヘッダーの場合は、何も表示しない
+      return const SizedBox.shrink();
   }
 }

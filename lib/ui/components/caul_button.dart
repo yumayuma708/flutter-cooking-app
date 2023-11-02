@@ -29,14 +29,18 @@ class CaulButton extends StatelessWidget {
         shape: MaterialStateProperty.all(
           RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(30.0),
-            side: const BorderSide(color: seedColor),
+            side: BorderSide(
+                color: Theme.of(context)
+                    .colorScheme
+                    .onBackground
+                    .withOpacity(0.3)),
           ),
         ),
       ),
       child: Text(
         label,
-        style: const TextStyle(
-          color: Colors.black,
+        style: TextStyle(
+          color: Theme.of(context).colorScheme.onBackground,
           fontSize: 20,
         ),
       ),
