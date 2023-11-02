@@ -22,7 +22,7 @@ class ChooseIngredients extends ConsumerWidget {
           style: TextStyle(
               color: Theme.of(context).colorScheme.onBackground,
               fontSize: 25,
-              fontWeight: FontWeight.w800),
+              fontWeight: FontWeight.w700),
         ),
       ),
       body: const VegetablesGridView(),
@@ -144,7 +144,8 @@ class VegetablesGridViewState extends State<VegetablesGridView> {
                               side: BorderSide(
                                   color: Theme.of(context)
                                       .colorScheme
-                                      .onBackground),
+                                      .onBackground
+                                      .withOpacity(0.3)),
                             ),
                           ),
                         ),
@@ -167,7 +168,7 @@ class VegetablesGridViewState extends State<VegetablesGridView> {
                       padding: const EdgeInsets.only(left: 20.0),
                       child: Row(
                         children: [
-                          _getIconOrImageForCategory(category),
+                          _getIconOrImageForCategory(context, category),
                           const SizedBox(width: 8.0),
                           Text(
                             category,
@@ -195,14 +196,34 @@ class VegetablesGridViewState extends State<VegetablesGridView> {
                             Expanded(
                               child: TextField(
                                 controller: _otherController,
-                                decoration: const InputDecoration(
+                                decoration: InputDecoration(
                                   labelText: '食材を追加',
-                                  border: OutlineInputBorder(),
+                                  border: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .onBackground
+                                          .withOpacity(0.3),
+                                      width: 1.0,
+                                    ),
+                                  ),
                                   focusedBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(width: 2.0),
+                                    borderSide: BorderSide(
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .onBackground
+                                          .withOpacity(0.3),
+                                      width: 2.0,
+                                    ),
                                   ),
                                   enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(width: 1.0),
+                                    borderSide: BorderSide(
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .onBackground
+                                          .withOpacity(0.3),
+                                      width: 1.0,
+                                    ),
                                   ),
                                 ),
                               ),
@@ -243,59 +264,83 @@ class VegetablesGridViewState extends State<VegetablesGridView> {
                         String ingredient =
                             categorizedIngredients[category]![idx];
                         return InkWell(
-                          onTap: () {
-                            setState(() {
-                              if (category == '調味料') {
-                                if (ingredient == 'おまかせ') {
-                                  selectedSeasonings.clear();
-                                  selectedSeasonings.add('おまかせ');
-                                } else {
-                                  selectedSeasonings.remove('おまかせ');
-                                  if (selectedSeasonings.contains(ingredient)) {
-                                    selectedSeasonings.remove(ingredient);
+                            onTap: () {
+                              setState(() {
+                                if (category == '調味料') {
+                                  if (ingredient == 'おまかせ') {
+                                    selectedSeasonings.clear();
+                                    selectedSeasonings.add('おまかせ');
                                   } else {
-                                    selectedSeasonings.add(ingredient);
+                                    selectedSeasonings.remove('おまかせ');
+                                    if (selectedSeasonings
+                                        .contains(ingredient)) {
+                                      selectedSeasonings.remove(ingredient);
+                                    } else {
+                                      selectedSeasonings.add(ingredient);
+                                    }
+                                  }
+                                } else {
+                                  if (selectedIngredients
+                                      .contains(ingredient)) {
+                                    selectedIngredients.remove(ingredient);
+                                  } else {
+                                    selectedIngredients.add(ingredient);
                                   }
                                 }
-                              } else {
-                                if (selectedIngredients.contains(ingredient)) {
-                                  selectedIngredients.remove(ingredient);
-                                } else {
-                                  selectedIngredients.add(ingredient);
-                                }
-                              }
-                            });
-                          },
-                          splashColor: Colors.transparent,
-                          highlightColor: Colors.transparent,
-                          child: Card(
-                            color: (category == '調味料' &&
-                                        selectedSeasonings
-                                            .contains(ingredient)) ||
-                                    selectedIngredients.contains(ingredient)
-                                ? Theme.of(context)
-                                    .colorScheme
-                                    .primary
-                                    .withOpacity(0.6)
-                                : Colors.transparent,
-                            elevation: 0.0,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(30.0),
-                            ),
-                            child: Center(
-                              child: Text(
-                                ingredient,
-                                style: TextStyle(
-                                  fontSize: ingredient == 'モッツァレラチーズ'
-                                      ? 13.0
-                                      : ingredient == 'ハヤシライスのルー'
+                              });
+                            },
+                            splashColor: Colors.transparent,
+                            highlightColor: Colors.transparent,
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: (category == '調味料' &&
+                                            selectedSeasonings
+                                                .contains(ingredient)) ||
+                                        selectedIngredients.contains(ingredient)
+                                    ? Theme.of(context)
+                                        .colorScheme
+                                        .tertiary
+                                        .withOpacity(0.8)
+                                    : Colors.transparent,
+                                border: Border.all(
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .onBackground
+                                      .withOpacity(0.3), // 枠線の色
+                                ),
+                                borderRadius: BorderRadius.circular(30.0),
+                              ),
+                              child: Card(
+                                color: Colors
+                                    .transparent, // Containerが背景色を持っているのでCardの色は透明にする
+                                elevation: 0.0,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(30.0),
+                                ),
+                                child: Center(
+                                  child: Text(
+                                    ingredient,
+                                    style: TextStyle(
+                                      color: selectedIngredients
+                                                  .contains(ingredient) ||
+                                              selectedSeasonings
+                                                  .contains(ingredient)
+                                          ? Theme.of(context)
+                                              .colorScheme
+                                              .onTertiary // ボタンが押されている時
+                                          : Theme.of(context)
+                                              .colorScheme
+                                              .onBackground, // ボタンが押されていない時
+                                      fontSize: ingredient == 'モッツァレラチーズ'
                                           ? 13.0
-                                          : 14.0,
+                                          : ingredient == 'ハヤシライスのルー'
+                                              ? 13.0
+                                              : 14.0,
+                                    ),
+                                  ),
                                 ),
                               ),
-                            ),
-                          ),
-                        );
+                            ));
                       },
                     ),
                   ],
@@ -321,26 +366,38 @@ class PopupNotifier extends StateNotifier<PopupState> {
   }
 }
 
-Widget _getIconOrImageForCategory(String category) {
+Widget _getIconOrImageForCategory(BuildContext context, String category) {
   switch (category) {
     case '野菜':
       return const Icon(FontAwesomeIcons.carrot, size: 20.0);
     case '肉類':
-      return Image.asset('assets/images/meat.png', width: 20.0, height: 20.0);
+      return Image.asset('assets/images/meat.png',
+          width: 20.0,
+          height: 20.0,
+          color: Theme.of(context).colorScheme.onBackground);
     case '魚類':
       return const Icon(FontAwesomeIcons.fish, size: 20.0);
     case 'フルーツ':
-      return Image.asset('assets/images/fruit.png', width: 20.0, height: 20.0);
+      return Image.asset('assets/images/fruit.png',
+          width: 20.0,
+          height: 20.0,
+          color: Theme.of(context).colorScheme.onBackground);
     case 'スパイス':
       return const Icon(FontAwesomeIcons.pepperHot, size: 20.0);
     case '乳製品':
       return const Icon(FontAwesomeIcons.cheese, size: 20.0);
     case '穀物':
-      return Image.asset('assets/images/rice.png', width: 20.0, height: 20.0);
+      return Image.asset('assets/images/rice.png',
+          width: 20.0,
+          height: 20.0,
+          color: Theme.of(context).colorScheme.onBackground);
     case 'アルコール':
       return const Icon(FontAwesomeIcons.martiniGlass, size: 20.0);
     case '調味料':
-      return Image.asset('assets/images/salt.png', width: 20.0, height: 20.0);
+      return Image.asset('assets/images/salt.png',
+          width: 20.0,
+          height: 20.0,
+          color: Theme.of(context).colorScheme.onBackground);
     case 'その他':
       return const Icon(FontAwesomeIcons.comment, size: 20.0);
     default:
