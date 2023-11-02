@@ -42,7 +42,7 @@ class MyHomePageState extends State<MyHomePage> {
                       case 1:
                         return SaveScreen();
                       case 2:
-                        return MyPageScreen();
+                        return const MyPageScreen();
                       default:
                         throw Exception("Invalid index");
                     }
@@ -56,7 +56,7 @@ class MyHomePageState extends State<MyHomePage> {
       bottomNavigationBar: Consumer(builder: (context, ref, child) {
         return NavigationBar(
           selectedIndex: _currentIndex,
-          // backgroundColor: const Color.fromARGB(255, 4, 7, 47),
+          backgroundColor: Theme.of(context).colorScheme.surface,
           destinations: const [
             NavigationDestination(
               icon: Icon(
