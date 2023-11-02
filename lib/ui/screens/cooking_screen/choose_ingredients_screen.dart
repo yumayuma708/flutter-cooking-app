@@ -1,3 +1,4 @@
+import 'package:caul/ui/components/caul_ingredients.dart';
 import 'package:caul/ui/screens/cooking_screen/cooking_situation_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -12,13 +13,15 @@ class ChooseIngredients extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
-      backgroundColor: Colors.orange[100],
+      backgroundColor: Theme.of(context).colorScheme.background,
       appBar: AppBar(
-        backgroundColor: Colors.orange[500],
-        title: const Text(
+        backgroundColor: Theme.of(context).colorScheme.onBackground,
+        title: Text(
           '食材を選びます',
           style: TextStyle(
-              color: Colors.black, fontSize: 25, fontWeight: FontWeight.w800),
+              color: Theme.of(context).colorScheme.onPrimary,
+              fontSize: 25,
+              fontWeight: FontWeight.w800),
         ),
       ),
       body: const VegetablesGridView(),
@@ -55,132 +58,6 @@ class VegetablesGridViewState extends State<VegetablesGridView> {
     };
   }
 
-  final List<String> vegetables = [
-    'トマト',
-    'にんにく',
-    '玉ねぎ',
-    'にんじん',
-    'ピーマン',
-    'じゃがいも',
-    'しめじ',
-    'ほうれん草',
-    'マイタケ',
-    'れんこん',
-    'エリンギ',
-    'ブロッコリー',
-    '小松菜',
-    'キャベツ',
-    'さつまいも',
-    'きゅうり',
-    'パプリカ',
-    'なす',
-    'ズッキーニ',
-    'えのき',
-    'マッシュルーム',
-    'コーン',
-    '枝豆',
-    'カリフラワー',
-    'アスパラガス',
-    'カボチャ',
-    '大根',
-    'ネギ',
-    'みょうが'
-  ];
-  final List<String> meats = [
-    '豚肉',
-    '鶏むね肉',
-    '鶏もも肉',
-    '牛肉',
-    'ウィンナー',
-    'ベーコン',
-    'ハム',
-    '卵',
-  ];
-  final List<String> fish = [
-    '魚',
-    'エビ',
-    'イカ',
-    'タコ',
-    'カニ',
-    '牡蠣',
-  ];
-  final List<String> fruits = [
-    'レモン',
-    'ライム',
-    'ブルーベリー',
-    'ストロベリー',
-    'バナナ',
-    'メロン',
-    'キウイ',
-    'もも',
-    'プラム',
-    'マンゴー',
-    'ぶどう',
-    'リンゴ',
-    'オレンジ',
-    '柿',
-    'ゆず',
-    '梅',
-  ];
-  final List<String> spices = [
-    'バジル',
-    'パセリ',
-    'ローズマリー',
-    'タイム',
-    'ハーブ',
-    'オレガノ',
-    'クミン',
-    'カレー粉',
-    '生姜',
-    '山椒',
-    'わさび',
-    'しょうが',
-    '塩',
-    'こしょう',
-    '乾燥わかめ',
-    'ゴマ',
-    'チリペッパー',
-    'カレーのルー',
-    'ハヤシライスのルー',
-    'シチューのルー',
-  ];
-  final List<String> dairys = [
-    'ヨーグルト',
-    'クリームチーズ',
-    'モッツァレラチーズ',
-    'チェダーチーズ',
-    '牛乳',
-  ];
-  final List<String> seasonings = [
-    'おまかせ',
-    'オリーブオイル',
-    '砂糖',
-    'みそ',
-    '酢',
-    'しょうゆ',
-    'みりん',
-    'だし',
-    'ごま油',
-    'マヨネーズ',
-    'サラダ油',
-    'バター',
-    'チリソース',
-    'ケチャップ',
-  ];
-  final List<String> beans = [
-    '納豆',
-    '豆腐',
-    'おから',
-    'レンズ豆',
-    '栗',
-    'くるみ',
-  ];
-  final List<String> alcohols = [
-    'ワイン',
-    '白ワイン',
-    '赤ワイン',
-    'ビール',
-  ];
   final TextEditingController _otherController = TextEditingController();
 
   List<String> selectedIngredients = [];
@@ -238,11 +115,8 @@ class VegetablesGridViewState extends State<VegetablesGridView> {
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(15.0),
                                   ),
-                                  backgroundColor: Colors.orange[200],
-                                  // タイトルをアイコンに変更
                                   title: const Icon(
                                     FontAwesomeIcons.circleExclamation,
-                                    color: Colors.black,
                                     size: 32,
                                   ),
                                   content: const Text('食材を最低１つは追加してください'),
@@ -276,16 +150,19 @@ class VegetablesGridViewState extends State<VegetablesGridView> {
                                                   borderRadius:
                                                       BorderRadius.circular(
                                                           30.0),
-                                                  side: const BorderSide(
-                                                      color:
-                                                          Colors.orangeAccent),
+                                                  side: BorderSide(
+                                                      color: Theme.of(context)
+                                                          .colorScheme
+                                                          .tertiary),
                                                 ),
                                               ),
                                             ),
-                                            child: const Text(
+                                            child: Text(
                                               'OK',
                                               style: TextStyle(
-                                                  color: Colors.black),
+                                                  color: Theme.of(context)
+                                                      .colorScheme
+                                                      .onSecondary),
                                             ),
                                           )
                                         ],
@@ -333,10 +210,10 @@ class VegetablesGridViewState extends State<VegetablesGridView> {
                             ),
                           ),
                         ),
-                        child: const Text(
+                        child: Text(
                           "条件選択へ",
                           style: TextStyle(
-                            color: Colors.black,
+                            color: Theme.of(context).colorScheme.onSecondary,
                             fontSize: 20,
                           ),
                         ),
@@ -383,22 +260,14 @@ class VegetablesGridViewState extends State<VegetablesGridView> {
                             Expanded(
                               child: TextField(
                                 controller: _otherController,
-                                cursorColor: Colors.black, // カーソルの色をオレンジに変更
                                 decoration: const InputDecoration(
                                   labelText: '食材を追加',
-                                  labelStyle: TextStyle(
-                                      color: Colors.black), // ラベルの色をオレンジに変更
-                                  border: OutlineInputBorder(
-                                    borderSide:
-                                        BorderSide(color: Colors.orange),
-                                  ),
+                                  border: OutlineInputBorder(),
                                   focusedBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                        color: Colors.orange, width: 2.0),
+                                    borderSide: BorderSide(width: 2.0),
                                   ),
                                   enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                        color: Colors.orange, width: 1.0),
+                                    borderSide: BorderSide(width: 1.0),
                                   ),
                                 ),
                               ),
@@ -467,7 +336,7 @@ class VegetablesGridViewState extends State<VegetablesGridView> {
                           child: Card(
                             color: category == '調味料'
                                 ? selectedSeasonings.contains(ingredient)
-                                    ? Colors.orange[200]
+                                    ? Theme.of(context).colorScheme.onSecondary
                                     : Colors.transparent
                                 : selectedIngredients.contains(ingredient)
                                     ? Colors.orange[200]
@@ -475,14 +344,11 @@ class VegetablesGridViewState extends State<VegetablesGridView> {
                             elevation: 0.0,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(30.0),
-                              side:
-                                  const BorderSide(color: Colors.orangeAccent),
                             ),
                             child: Center(
                               child: Text(
                                 ingredient,
                                 style: TextStyle(
-                                  color: Colors.black,
                                   fontSize: ingredient == 'モッツァレラチーズ'
                                       ? 13.0
                                       : ingredient == 'ハヤシライスのルー'
