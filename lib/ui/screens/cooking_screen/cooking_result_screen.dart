@@ -17,7 +17,7 @@ class CookingResultPage extends StatefulWidget {
   CookingResultPage({
     Key? key,
     required this.data,
-    this.selectedHeaders = const {}, // Provide a default value
+    this.selectedHeaders = const {},
     required this.selectedVegetables,
   })  : dividedData = ChatGPTDividedData.parseFromInstruction(data.instruction),
         super(key: key);
@@ -36,41 +36,41 @@ class CookingResultPageState extends State<CookingResultPage> {
   final recipeSaver =
       RecipeSaver(FirebaseFirestore.instance, FirebaseAuth.instance);
   final Map<String, Set<String>> selectedHeaders;
-  final List<String> selectedVegetables; // 1. この行を追加
+  final List<String> selectedVegetables;
 
   CookingResultPageState({
-    Key? key, // keyの型をNullableに変更
-    required this.selectedHeaders, // 2. この行を追加
-    required this.selectedVegetables, // 2. この行を追加
+    Key? key,
+    required this.selectedHeaders,
+    required this.selectedVegetables,
   });
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.orange[100],
+        backgroundColor: Theme.of(context).colorScheme.background,
         appBar: AppBar(
-          backgroundColor: Colors.orange[500],
+          backgroundColor: Theme.of(context).colorScheme.background,
           centerTitle: true,
-          title: const Row(
-            mainAxisSize: MainAxisSize.min, // この行を追加
+          title: Row(
+            mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Icon(
                 Icons.restaurant_menu,
-                color: Colors.black,
+                color: Theme.of(context).colorScheme.onBackground,
               ),
-              SizedBox(width: 8.0),
+              const SizedBox(width: 8.0),
               Text(
                 'AIの考えたレシピ',
                 style: TextStyle(
                     fontSize: 25,
-                    color: Colors.black,
+                    color: Theme.of(context).colorScheme.onBackground,
                     fontWeight: FontWeight.w800),
               ),
-              SizedBox(width: 8.0),
+              const SizedBox(width: 8.0),
               Icon(
                 Icons.restaurant_menu,
-                color: Colors.black,
+                color: Theme.of(context).colorScheme.onBackground,
               ),
             ],
           ),
@@ -81,15 +81,15 @@ class CookingResultPageState extends State<CookingResultPage> {
               child: SingleChildScrollView(
                 child: Column(
                   children: [
-                    const SizedBox(height: 20.0), // AppBarとの間にスペースを追加
+                    const SizedBox(height: 20.0),
                     Center(
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 20.0),
                         child: Text(
-                          "【${widget.dividedData.dishName}】", // 料理名を"〜"で囲む
-                          style: const TextStyle(
+                          "【${widget.dividedData.dishName}】",
+                          style: TextStyle(
                             fontSize: 25,
-                            color: Colors.black,
+                            color: Theme.of(context).colorScheme.onBackground,
                             fontWeight: FontWeight.w700,
                           ),
                           textAlign: TextAlign.center,
@@ -107,9 +107,9 @@ class CookingResultPageState extends State<CookingResultPage> {
                         const SizedBox(width: 8.0),
                         Text(
                           "目安時間：${widget.dividedData.estimatedTime}",
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontSize: 20,
-                            color: Colors.black,
+                            color: Theme.of(context).colorScheme.onBackground,
                             fontWeight: FontWeight.w600,
                           ),
                         ),
@@ -128,9 +128,9 @@ class CookingResultPageState extends State<CookingResultPage> {
                         const SizedBox(width: 8.0), // spacing
                         Text(
                           "材料(${widget.dividedData.numberOfPeople})",
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontSize: 20,
-                            color: Colors.black,
+                            color: Theme.of(context).colorScheme.onBackground,
                             fontWeight: FontWeight.w700,
                           ),
                         ),
@@ -149,9 +149,9 @@ class CookingResultPageState extends State<CookingResultPage> {
                               .split('\n')
                               .map((line) => '・$line')
                               .join('\n'),
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontSize: 18,
-                            color: Colors.black,
+                            color: Theme.of(context).colorScheme.onBackground,
                             fontWeight: FontWeight.w500,
                           ),
                           textAlign: TextAlign.left, // この行を追加
@@ -168,11 +168,11 @@ class CookingResultPageState extends State<CookingResultPage> {
                           Image.asset('assets/images/knife.png',
                               width: 20, height: 20), // knife image added
                           const SizedBox(width: 8.0), // spacing
-                          const Text(
+                          Text(
                             '作り方',
                             style: TextStyle(
                               fontSize: 20,
-                              color: Colors.black,
+                              color: Theme.of(context).colorScheme.onBackground,
                               fontWeight:
                                   FontWeight.bold, // この行でフォントの太さを変更して「作り方」を強調
                             ),
@@ -191,9 +191,9 @@ class CookingResultPageState extends State<CookingResultPage> {
                         alignment: Alignment.centerLeft,
                         child: Text(
                           widget.dividedData.recipe,
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontSize: 18,
-                            color: Colors.black,
+                            color: Theme.of(context).colorScheme.onBackground,
                             fontWeight: FontWeight.w500,
                           ),
                           textAlign: TextAlign.left,
@@ -203,17 +203,17 @@ class CookingResultPageState extends State<CookingResultPage> {
                     const SizedBox(
                       height: 20,
                     ),
-                    const Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 20.0),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20.0),
                       child: Row(
                         children: [
-                          Icon(Icons.star, size: 20), // star icon added
-                          SizedBox(width: 8.0), // spacing
+                          const Icon(Icons.star, size: 20), // star icon added
+                          const SizedBox(width: 8.0), // spacing
                           Text(
                             'ポイント',
                             style: TextStyle(
                               fontSize: 20,
-                              color: Colors.black,
+                              color: Theme.of(context).colorScheme.onBackground,
                               fontWeight:
                                   FontWeight.bold, // この行でフォントの太さを変更して「作り方」を強調
                             ),
@@ -236,9 +236,9 @@ class CookingResultPageState extends State<CookingResultPage> {
                                   ? widget.dividedData.appealPoint.substring(1)
                                   : widget.dividedData.appealPoint)
                               .trim(), // trimの適用を最後に移動
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontSize: 18,
-                            color: Colors.black,
+                            color: Theme.of(context).colorScheme.onBackground,
                             fontWeight: FontWeight.w500,
                           ),
                           textAlign: TextAlign.left,
