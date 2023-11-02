@@ -1,3 +1,4 @@
+import 'package:caul/ui/components/alert_popup.dart';
 import 'package:caul/ui/components/caul_ingredients.dart';
 import 'package:caul/ui/screens/cooking_screen/cooking_situation_screen.dart';
 import 'package:flutter/material.dart';
@@ -103,63 +104,8 @@ class VegetablesGridViewState extends State<VegetablesGridView> {
                             showDialog(
                               context: context,
                               builder: (BuildContext context) {
-                                return AlertDialog(
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(15.0),
-                                  ),
-                                  title: const Icon(
-                                    FontAwesomeIcons.circleExclamation,
-                                    size: 32,
-                                  ),
-                                  content: const Text('食材を最低１つは追加してください'),
-                                  actions: [
-                                    Expanded(
-                                      child: ButtonBar(
-                                        alignment: MainAxisAlignment.center,
-                                        children: [
-                                          ElevatedButton(
-                                            onPressed: () {
-                                              Navigator.of(context).pop();
-                                            },
-                                            style: ButtonStyle(
-                                              backgroundColor:
-                                                  MaterialStateProperty.all(
-                                                      Colors.transparent),
-                                              elevation: MaterialStateProperty
-                                                  .resolveWith<double>(
-                                                (Set<MaterialState> states) {
-                                                  if (states.contains(
-                                                      MaterialState.pressed)) {
-                                                    return 0.0;
-                                                  }
-                                                  return 0.0;
-                                                },
-                                              ),
-                                              shape: MaterialStateProperty.all(
-                                                RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          30.0),
-                                                  side: BorderSide(
-                                                      color: Theme.of(context)
-                                                          .colorScheme
-                                                          .tertiary),
-                                                ),
-                                              ),
-                                            ),
-                                            child: Text(
-                                              'OK',
-                                              style: TextStyle(
-                                                  color: Theme.of(context)
-                                                      .colorScheme
-                                                      .onSecondary),
-                                            ),
-                                          )
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                );
+                                return const AlertPopup(
+                                    contentText: '食材を最低１つは追加してください');
                               },
                             );
                           } else {
