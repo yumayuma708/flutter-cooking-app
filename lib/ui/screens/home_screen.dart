@@ -1,10 +1,9 @@
-import 'package:caul/ui/screens/cooking_screen/choose_ingredients.dart';
+import 'package:caul/ui/screens/cooking_screen/choose_ingredients_screen.dart';
 import 'package:caul/ui/screens/my_page_screen.dart';
 import 'package:caul/ui/screens/popup_screen/popup_dialog.dart';
 import 'package:caul/ui/screens/save_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -19,7 +18,6 @@ class MyHomePage extends StatefulWidget {
 class MyHomePageState extends State<MyHomePage> {
   int _currentIndex = 0;
 
-  // 各ページのルートのキーを格納するためのリスト
   final List<GlobalKey<NavigatorState>> _navigatorKeys = [
     GlobalKey<NavigatorState>(),
     GlobalKey<NavigatorState>(),
@@ -44,7 +42,7 @@ class MyHomePageState extends State<MyHomePage> {
                       case 1:
                         return SaveScreen();
                       case 2:
-                        return MyPageScreen();
+                        return const MyPageScreen();
                       default:
                         throw Exception("Invalid index");
                     }
@@ -56,38 +54,30 @@ class MyHomePageState extends State<MyHomePage> {
         }),
       ),
       bottomNavigationBar: Consumer(builder: (context, ref, child) {
-        return BottomNavigationBar(
-          backgroundColor: const Color.fromARGB(255, 4, 7, 47),
-          type: BottomNavigationBarType.fixed,
-          currentIndex: _currentIndex,
-          selectedItemColor: Colors.white,
-          unselectedItemColor: Colors.white70,
-          selectedLabelStyle: GoogleFonts.zenKakuGothicNew(),
-          unselectedLabelStyle: GoogleFonts.zenKakuGothicNew(),
-          items: [
-            BottomNavigationBarItem(
+        return NavigationBar(
+          selectedIndex: _currentIndex,
+          backgroundColor: Theme.of(context).colorScheme.surface,
+          destinations: const [
+            NavigationDestination(
               icon: Icon(
                 FontAwesomeIcons.utensils,
-                color: _currentIndex == 0 ? Colors.white : Colors.white70,
               ),
               label: '料理',
             ),
-            BottomNavigationBarItem(
+            NavigationDestination(
               icon: Icon(
                 FontAwesomeIcons.bookmark,
-                color: _currentIndex == 1 ? Colors.white : Colors.white70,
               ),
               label: '保存',
             ),
-            BottomNavigationBarItem(
+            NavigationDestination(
               icon: Icon(
                 Icons.person,
-                color: _currentIndex == 2 ? Colors.white : Colors.white70,
               ),
               label: 'マイページ',
             ),
           ],
-          onTap: (index) {
+          onDestinationSelected: (index) {
             setState(() {
               _currentIndex = index;
             });

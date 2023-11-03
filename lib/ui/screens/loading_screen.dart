@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:caul/providers/chat_gpt_provider.dart';
-import 'package:caul/ui/screens/cooking_screen/cooking_result.dart';
+import 'package:caul/ui/screens/cooking_screen/cooking_result_screen.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class LoadingScreen extends StatefulWidget {
   final CookingData data;
@@ -54,13 +53,14 @@ class LoadingScreenState extends State<LoadingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.orange[100],
+      backgroundColor: Theme.of(context).colorScheme.background,
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
             "レシピを作っています...",
-            style: GoogleFonts.zenKakuGothicNew(
+            style: TextStyle(
+              color: Theme.of(context).colorScheme.onBackground,
               fontSize: 20.0,
               fontWeight: FontWeight.w500,
             ),
@@ -90,7 +90,7 @@ class HourglassAnimationState extends State<HourglassAnimation>
     super.initState();
 
     _controller = AnimationController(
-      duration: const Duration(seconds: 4), // アニメーションの長さ
+      duration: const Duration(seconds: 4),
       vsync: this,
     )..repeat();
 
@@ -114,6 +114,10 @@ class HourglassAnimationState extends State<HourglassAnimation>
       FontAwesomeIcons.hourglassEnd,
       FontAwesomeIcons.hourglass,
     ];
-    return Center(child: FaIcon(icons[_animation.value], size: 50.0));
+
+    Color iconColor = Theme.of(context).colorScheme.onBackground;
+
+    return Center(
+        child: FaIcon(icons[_animation.value], size: 50.0, color: iconColor));
   }
 }

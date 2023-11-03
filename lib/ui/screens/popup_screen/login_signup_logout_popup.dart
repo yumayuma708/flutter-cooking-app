@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 // ログイン用のポップアップ
 showLoginPopup(
@@ -47,9 +46,9 @@ showLoginPopup(
                   ),
                 ),
               ),
-              child: Text(
+              child: const Text(
                 'ログイン',
-                style: GoogleFonts.zenKakuGothicNew(
+                style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.w400,
                   color: Colors.black,
@@ -111,9 +110,9 @@ showSignUpPopup(
                   ),
                 ),
               ),
-              child: Text(
+              child: const Text(
                 'アカウントを作成',
-                style: GoogleFonts.zenKakuGothicNew(
+                style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.w400,
                   color: Colors.black,
@@ -168,9 +167,9 @@ showSignOutConfirmationPopup(BuildContext context, Function handleSignOut) {
                   ),
                   onPressed: () =>
                       Navigator.of(dialogContext).pop(), // Close the dialog
-                  child: Text(
+                  child: const Text(
                     'キャンセル',
-                    style: GoogleFonts.zenKakuGothicNew(
+                    style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.w400,
                       color: Colors.black,
@@ -191,9 +190,9 @@ showSignOutConfirmationPopup(BuildContext context, Function handleSignOut) {
                       ),
                     ),
                   ),
-                  child: Text(
+                  child: const Text(
                     'ログアウト',
-                    style: GoogleFonts.zenKakuGothicNew(
+                    style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.w400,
                       color: Colors.black,

@@ -1,7 +1,4 @@
-// ignore_for_file: use_build_context_synchronously, unused_element
-
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class PopupPage extends StatelessWidget {
   final String description;
@@ -27,16 +24,15 @@ class PopupPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const Spacer(
-          flex: 2,
-        ),
+        const Spacer(flex: 2),
         Padding(
           padding: const EdgeInsets.all(16.0),
-          child: Text(description, style: const TextStyle(fontSize: 16.0)),
+          child: Text(description,
+              style: TextStyle(
+                  color: Theme.of(context).colorScheme.onPrimaryContainer,
+                  fontSize: 16.0)),
         ),
-        const Spacer(
-          flex: 5,
-        ),
+        const Spacer(flex: 5),
         Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: List.generate(3, (index) {
@@ -48,7 +44,12 @@ class PopupPage extends StatelessWidget {
                     width: 10,
                     height: 10,
                     decoration: BoxDecoration(
-                      color: currentPage == index ? Colors.blue : Colors.grey,
+                      color: currentPage == index
+                          ? Theme.of(context).colorScheme.tertiary
+                          : Theme.of(context)
+                              .colorScheme
+                              .tertiary
+                              .withOpacity(0.3),
                       shape: BoxShape.circle,
                     ),
                   );
@@ -66,35 +67,10 @@ class PopupPage extends StatelessWidget {
                       duration: const Duration(milliseconds: 300),
                       curve: Curves.easeInOut);
                 },
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.resolveWith<Color>(
-                    (Set<MaterialState> states) {
-                      if (states.contains(MaterialState.pressed)) {
-                        return Colors.blueGrey.withOpacity(0.1);
-                      }
-                      return Colors.white;
-                    },
-                  ),
-                  foregroundColor:
-                      MaterialStateProperty.all<Color>(Colors.black),
-                  elevation: MaterialStateProperty.resolveWith<double>(
-                    (Set<MaterialState> states) {
-                      if (states.contains(MaterialState.pressed)) {
-                        return 2;
-                      }
-                      return 5;
-                    },
-                  ),
-                  shadowColor: MaterialStateProperty.all(Colors.black45),
-                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(5),
-                    ),
-                  ),
-                ),
-                child: const Text(
+                child: Text(
                   '戻る',
-                  style: TextStyle(color: Colors.black),
+                  style: TextStyle(
+                      color: Theme.of(context).colorScheme.onPrimaryContainer),
                 ),
               ),
             const Spacer(flex: 7),
@@ -192,9 +168,9 @@ void savedPopup(BuildContext context) {
                       ),
                     ),
                   ),
-                  child: Text(
+                  child: const Text(
                     'OK',
-                    style: GoogleFonts.zenKakuGothicNew(color: Colors.black),
+                    style: TextStyle(color: Colors.black),
                   ),
                 )
               ],

@@ -96,6 +96,7 @@ class ChatGPTProvider {
         {"role": "user", "content": prompts}
       ],
       'model': "gpt-3.5-turbo",
+      'temperature': 0.7,
     });
 
     final response = await http.post(
