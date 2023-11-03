@@ -12,8 +12,6 @@ class CaulButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const seedColor = Colors.orange;
-
     return ElevatedButton(
       onPressed: onPressed,
       style: ButtonStyle(

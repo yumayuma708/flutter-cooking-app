@@ -1,5 +1,3 @@
-// popup_state.dart
-
 class PopupState {
   final int currentPage;
 

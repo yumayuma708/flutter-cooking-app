@@ -27,7 +27,10 @@ class PopupPage extends StatelessWidget {
         const Spacer(flex: 2),
         Padding(
           padding: const EdgeInsets.all(16.0),
-          child: Text(description, style: const TextStyle(fontSize: 16.0)),
+          child: Text(description,
+              style: TextStyle(
+                  color: Theme.of(context).colorScheme.onPrimaryContainer,
+                  fontSize: 16.0)),
         ),
         const Spacer(flex: 5),
         Row(
@@ -42,8 +45,11 @@ class PopupPage extends StatelessWidget {
                     height: 10,
                     decoration: BoxDecoration(
                       color: currentPage == index
-                          ? Colors.orange[500]
-                          : Colors.orange[100],
+                          ? Theme.of(context).colorScheme.tertiary
+                          : Theme.of(context)
+                              .colorScheme
+                              .tertiary
+                              .withOpacity(0.3),
                       shape: BoxShape.circle,
                     ),
                   );
@@ -61,35 +67,10 @@ class PopupPage extends StatelessWidget {
                       duration: const Duration(milliseconds: 300),
                       curve: Curves.easeInOut);
                 },
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.resolveWith<Color>(
-                    (Set<MaterialState> states) {
-                      if (states.contains(MaterialState.pressed)) {
-                        return Colors.orange;
-                      }
-                      return Colors.white;
-                    },
-                  ),
-                  foregroundColor:
-                      MaterialStateProperty.all<Color>(Colors.black),
-                  elevation: MaterialStateProperty.resolveWith<double>(
-                    (Set<MaterialState> states) {
-                      if (states.contains(MaterialState.pressed)) {
-                        return 2;
-                      }
-                      return 5;
-                    },
-                  ),
-                  shadowColor: MaterialStateProperty.all(Colors.black45),
-                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(5),
-                    ),
-                  ),
-                ),
-                child: const Text(
+                child: Text(
                   '戻る',
-                  style: TextStyle(color: Colors.black),
+                  style: TextStyle(
+                      color: Theme.of(context).colorScheme.onPrimaryContainer),
                 ),
               ),
             const Spacer(flex: 7),

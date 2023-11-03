@@ -1,5 +1,3 @@
-// ignore_for_file: use_build_context_synchronously, unused_element
-
 import 'package:caul/ui/screens/popup_screen/popup_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -43,12 +41,13 @@ class PopupDialog {
     final hasShownPopup = prefs.getBool(key) ?? false;
 
     if (!hasShownPopup) {
+      // ignore: use_build_context_synchronously
       await showDialog(
         context: context,
         barrierDismissible: true,
         builder: (BuildContext context) {
           return Dialog(
-            backgroundColor: Colors.blueGrey[100],
+            backgroundColor: Theme.of(context).colorScheme.primaryContainer,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(24.0),
             ),
