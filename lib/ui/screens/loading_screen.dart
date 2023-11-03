@@ -115,7 +115,7 @@ class HourglassAnimationState extends State<HourglassAnimation>
       FontAwesomeIcons.hourglass,
     ];
 
-    Color iconColor = Theme.of(context).colorScheme.onBackground;
+    Color iconColor = Theme.of(context).colorScheme.primary.withOpacity(0.7);
 
     return Center(
         child: FaIcon(icons[_animation.value], size: 50.0, color: iconColor));

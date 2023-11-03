@@ -11,7 +11,7 @@ class CookingApp extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(themeProvider);
 
-    const seedColor = Colors.orange;
+    const seedColor = Colors.pink;
     return MaterialApp(
       title: 'Cooking As You Like',
       theme: ThemeData(

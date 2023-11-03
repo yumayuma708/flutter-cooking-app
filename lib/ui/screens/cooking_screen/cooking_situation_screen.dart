@@ -184,7 +184,8 @@ class CookingSituationInternalState extends State<CookingSituationInternal> {
                                           color: isSelected
                                               ? Theme.of(context)
                                                   .colorScheme
-                                                  .tertiary
+                                                  .primary
+                                                  .withOpacity(0.5)
                                               : Colors.transparent,
                                         ),
                                       ]),

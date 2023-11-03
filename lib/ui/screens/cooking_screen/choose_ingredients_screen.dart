@@ -299,8 +299,8 @@ class VegetablesGridViewState extends State<VegetablesGridView> {
                                         selectedIngredients.contains(ingredient)
                                     ? Theme.of(context)
                                         .colorScheme
-                                        .tertiary
-                                        .withOpacity(0.8)
+                                        .primary
+                                        .withOpacity(0.5)
                                     : Colors.transparent,
                                 border: Border.all(
                                   color: Theme.of(context)
@@ -327,10 +327,10 @@ class VegetablesGridViewState extends State<VegetablesGridView> {
                                                   .contains(ingredient)
                                           ? Theme.of(context)
                                               .colorScheme
-                                              .onTertiary // ボタンが押されている時
+                                              .onPrimary
                                           : Theme.of(context)
                                               .colorScheme
-                                              .onBackground, // ボタンが押されていない時
+                                              .onBackground,
                                       fontSize: ingredient == 'モッツァレラチーズ'
                                           ? 13.0
                                           : ingredient == 'ハヤシライスのルー'

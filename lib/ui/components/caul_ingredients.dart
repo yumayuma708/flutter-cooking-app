@@ -40,12 +40,15 @@ final List<String> meats = [
   '卵',
 ];
 final List<String> fish = [
-  '魚',
   'エビ',
   'イカ',
   'タコ',
   'カニ',
   '牡蠣',
+  'ホタテ',
+  '鮭',
+  'ブリ',
+  'サバ',
 ];
 final List<String> fruits = [
   'レモン',
