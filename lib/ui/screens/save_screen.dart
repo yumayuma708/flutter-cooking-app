@@ -12,36 +12,39 @@ class SaveScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     if (currentUserId == null) {
       return Scaffold(
-        backgroundColor: Colors.orange[100],
+        backgroundColor: Theme.of(context).colorScheme.background,
         appBar: AppBar(
-          title: const Text(
+          title: Text(
             '保存したレシピ',
             style: TextStyle(
-                fontSize: 25, fontWeight: FontWeight.bold, color: Colors.black),
+                fontSize: 25,
+                fontWeight: FontWeight.bold,
+                color: Theme.of(context).colorScheme.onBackground),
           ),
-          backgroundColor: Colors.orange[500],
+          backgroundColor: Theme.of(context).colorScheme.background,
           centerTitle: true,
         ),
-        body: const Column(
-          mainAxisAlignment: MainAxisAlignment.center, // 縦方向に中央に配置
-          crossAxisAlignment: CrossAxisAlignment.center, // 横方向に中央に配置
+        body: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Expanded(
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.center, // 縦方向に中央に配置
-                crossAxisAlignment: CrossAxisAlignment.center, // 横方向に中央に配置
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Icon(
-                    FontAwesomeIcons.faceSadTear,
-                    size: 40,
-                  ),
-                  SizedBox(height: 20),
+                  Icon(FontAwesomeIcons.faceSadTear,
+                      size: 40,
+                      color: Theme.of(context).colorScheme.onBackground),
+                  const SizedBox(height: 20),
                   Align(
                     alignment: Alignment.center,
                     child: Text(
                       '保存したレシピを見るにはログインしてください',
-                      style:
-                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                          color: Theme.of(context).colorScheme.onBackground,
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold),
                     ),
                   ),
                 ],
@@ -53,17 +56,18 @@ class SaveScreen extends StatelessWidget {
     }
 
     return Scaffold(
-      backgroundColor: Colors.orange[100],
+      backgroundColor: Theme.of(context).colorScheme.background,
       appBar: AppBar(
-        backgroundColor: Colors.orange[500],
-        title: const Text(
+        backgroundColor: Theme.of(context).colorScheme.background,
+        title: Text(
           '保存したレシピ',
           style: TextStyle(
-              fontWeight: FontWeight.bold, fontSize: 25, color: Colors.black),
+              fontWeight: FontWeight.bold,
+              fontSize: 25,
+              color: Theme.of(context).colorScheme.onBackground),
         ),
       ),
       body: StreamBuilder(
-        // Fetch recipes saved by the current user from the users sub-collection
         stream: FirebaseFirestore.instance
             .collection('recipes')
             .doc('users')

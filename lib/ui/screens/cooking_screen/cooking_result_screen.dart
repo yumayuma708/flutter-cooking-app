@@ -166,7 +166,9 @@ class CookingResultPageState extends State<CookingResultPage> {
                       child: Row(
                         children: [
                           Image.asset('assets/images/knife.png',
-                              width: 20, height: 20), // knife image added
+                              color: Theme.of(context).colorScheme.onBackground,
+                              width: 20,
+                              height: 20), // knife image added
                           const SizedBox(width: 8.0), // spacing
                           Text(
                             '作り方',
@@ -289,10 +291,11 @@ class CookingResultPageState extends State<CookingResultPage> {
                         builder: (context) => LoadingScreen(data: data),
                       ));
                     },
-                    child: const Image(
-                      image: AssetImage('assets/images/renew.png'),
+                    child: Image(
+                      image: const AssetImage('assets/images/renew.png'),
                       width: 30,
                       height: 30,
+                      color: Theme.of(context).colorScheme.onBackground,
                     ),
                   ),
                   GestureDetector(
