@@ -300,7 +300,7 @@ class VegetablesGridViewState extends State<VegetablesGridView> {
                                     ? Theme.of(context)
                                         .colorScheme
                                         .primary
-                                        .withOpacity(0.5)
+                                        .withOpacity(0.75)
                                     : Colors.transparent,
                                 border: Border.all(
                                   color: Theme.of(context)

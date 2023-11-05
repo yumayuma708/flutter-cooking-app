@@ -8,7 +8,9 @@ class AlertPopup extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      backgroundColor: Theme.of(context).colorScheme.errorContainer,
+      backgroundColor: Color.alphaBlend(
+          Theme.of(context).colorScheme.error.withOpacity(0.25),
+          Theme.of(context).colorScheme.background),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(15.0),
       ),
