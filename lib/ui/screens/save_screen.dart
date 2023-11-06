@@ -5,6 +5,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class SaveScreen extends StatelessWidget {
   final String? currentUserId = FirebaseAuth.instance.currentUser?.uid;
+  static const routeName = '/save';
 
   SaveScreen({super.key});
 

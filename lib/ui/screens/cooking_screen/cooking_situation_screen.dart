@@ -27,6 +27,7 @@ class CookingSituation extends ConsumerWidget {
 }
 
 class CookingSituationInternal extends StatefulWidget {
+  static const routeName = '/cooking-situation';
   final List<String> selectedVegetables;
   final List<String> selectedSeasonings;
 
@@ -236,7 +237,7 @@ class CookingSituationInternalState extends State<CookingSituationInternal> {
                           timeConditions: timeConditions,
                           servingConditions: servingConditions,
                           selectedSeasonings: selectedSeasonings,
-                          cuisineConditions: cuisineConditions,
+                          cuisineType: cuisineConditions,
                           sizeConditions: sizeConditions,
                           preferenceConditions: preferenceConditions,
                           confirmationConditions: confirmationConditions,

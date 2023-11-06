@@ -29,7 +29,7 @@ class LoadingScreenState extends State<LoadingScreen> {
         selectedSeasonings: widget.data.selectedSeasonings,
         timeConditions: widget.data.timeConditions,
         servingConditions: widget.data.servingConditions,
-        cuisineConditions: widget.data.cuisineConditions,
+        cuisineType: widget.data.cuisineType,
         sizeConditions: widget.data.sizeConditions,
         preferenceConditions: widget.data.preferenceConditions,
         confirmationConditions: widget.data.confirmationConditions,
@@ -42,8 +42,7 @@ class LoadingScreenState extends State<LoadingScreen> {
           builder: (context) => CookingResultPage(
                 data: finalData,
                 selectedHeaders: finalData.selectedHeaders, // Add this line
-                selectedVegetables:
-                    finalData.selectedVegetables, // Add this line),
+                selectedVegetables: finalData.selectedVegetables,
               )));
     } catch (e) {
       debugPrint('Error: $e');

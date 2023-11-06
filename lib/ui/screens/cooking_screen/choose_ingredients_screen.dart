@@ -10,21 +10,22 @@ final pageControllerProvider = Provider((ref) => PageController());
 
 class ChooseIngredients extends ConsumerWidget {
   const ChooseIngredients({Key? key}) : super(key: key);
+  static const routeName = '/choose-ingredients';
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.background,
-        title: Text(
-          '食材を選びます',
-          style: TextStyle(
-              color: Theme.of(context).colorScheme.onBackground,
-              fontSize: 25,
-              fontWeight: FontWeight.w600),
-        ),
-      ),
+      // appBar: AppBar(
+      //   backgroundColor: Theme.of(context).colorScheme.background,
+      //   title: Text(
+      //     '食材を選びます',
+      //     style: TextStyle(
+      //         color: Theme.of(context).colorScheme.onBackground,
+      //         fontSize: 25,
+      //         fontWeight: FontWeight.w600),
+      //   ),
+      // ),
       body: const VegetablesGridView(),
     );
   }
