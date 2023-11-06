@@ -1,7 +1,4 @@
-import 'package:caul/providers/chat_gpt_provider.dart';
 import 'package:caul/ui/screens/cooking_screen/choose_ingredients_screen.dart';
-import 'package:caul/ui/screens/cooking_screen/cooking_result_screen.dart';
-import 'package:caul/ui/screens/cooking_screen/cooking_situation_screen.dart';
 import 'package:caul/ui/screens/home_screen.dart';
 import 'package:caul/ui/screens/my_page_screen.dart';
 import 'package:caul/ui/screens/save_screen.dart';
@@ -26,39 +23,15 @@ class CookingApp extends ConsumerWidget {
               builder: (context) => const ChooseIngredients(),
             );
 
-          case '/situation':
-            final args = settings.arguments as Map<String, dynamic>;
-            return MaterialPageRoute(
-              builder: (context) => CookingSituationInternal(
-                selectedVegetables: args['selectedVegetables'],
-                selectedSeasonings: args['selectedSeasonings'],
-              ),
-            );
-
-          case '/recipe':
-            final args = settings.arguments as Map<String, dynamic>;
-            return MaterialPageRoute(
-              builder: (context) => CookingResultPage(
-                selectedVegetables: args['selectedVegetables'],
-                data: args['data'],
-              ),
-            );
-
-          case '/save_screen':
+          case '/save':
             return MaterialPageRoute(
               builder: (context) => SaveScreen(),
             );
 
-          case '/my_page':
+          case '/myPage':
             return MaterialPageRoute(
               builder: (context) => const MyPageScreen(),
             );
-
-          // その他のルートが必要な場合は、以下のように追加
-          case '/another_page':
-          // 別のページに関するルート
-          // 必要な引数をここで処理
-          // ...
         }
       },
       title: 'Cooking As You Like',

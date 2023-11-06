@@ -16,16 +16,6 @@ class ChooseIngredients extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
-      // appBar: AppBar(
-      //   backgroundColor: Theme.of(context).colorScheme.background,
-      //   title: Text(
-      //     '食材を選びます',
-      //     style: TextStyle(
-      //         color: Theme.of(context).colorScheme.onBackground,
-      //         fontSize: 25,
-      //         fontWeight: FontWeight.w600),
-      //   ),
-      // ),
       body: const VegetablesGridView(),
     );
   }
@@ -87,10 +77,19 @@ class VegetablesGridViewState extends State<VegetablesGridView> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(children: [
-      const SizedBox(height: 20.0),
-      Expanded(
-          child: ListView.builder(
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          Text(
+            '食材を選びます',
+            style: TextStyle(
+                color: Theme.of(context).colorScheme.onBackground,
+                fontSize: 25,
+                fontWeight: FontWeight.w600),
+          ),
+          ListView.builder(
+              physics: const NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
               itemCount: categories.length + 1,
               itemBuilder: (context, index) {
                 if (index == categories.length) {
@@ -188,7 +187,7 @@ class VegetablesGridViewState extends State<VegetablesGridView> {
                               fontSize: 16.0,
                             )),
                       ),
-                    if (category == 'その他') // 新しい部分の追加
+                    if (category == 'その他')
                       Padding(
                         padding: const EdgeInsets.only(
                             left: 20.0, right: 20.0, top: 10.0),
@@ -346,8 +345,10 @@ class VegetablesGridViewState extends State<VegetablesGridView> {
                     ),
                   ],
                 );
-              }))
-    ]);
+              }),
+        ],
+      ),
+    );
   }
 }
 
