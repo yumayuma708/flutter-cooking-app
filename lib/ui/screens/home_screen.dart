@@ -1,8 +1,5 @@
 import 'package:caul/ui/screens/cooking_screen/choose_ingredients_screen.dart';
-import 'package:caul/ui/screens/my_page_screen.dart';
-import 'package:caul/ui/screens/save_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key, required this.title}) : super(key: key);
@@ -14,14 +11,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class MyHomePageState extends State<MyHomePage> {
-  final _currentIndex = 0;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-
-  final List<GlobalKey<NavigatorState>> _navigatorKeys = [
-    GlobalKey<NavigatorState>(),
-    GlobalKey<NavigatorState>(),
-    GlobalKey<NavigatorState>(),
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +19,7 @@ class MyHomePageState extends State<MyHomePage> {
       key: _scaffoldKey,
       appBar: AppBar(
         leading: IconButton(
-          icon: const Icon(Icons.menu),
+          icon: const Icon(Icons.menu_rounded),
           onPressed: () {
             _scaffoldKey.currentState?.openDrawer();
           },
@@ -41,52 +31,105 @@ class MyHomePageState extends State<MyHomePage> {
       ),
       body: const ChooseIngredients(),
       drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: [
-            const DrawerHeader(
-              decoration: BoxDecoration(
-                color: Colors.blue,
-              ),
-              child: Text(
-                'おたすけCook！',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 24,
-                ),
+        child: Column(
+          children: <Widget>[
+            Expanded(
+              child: ListView(
+                padding: EdgeInsets.zero,
+                children: <Widget>[
+                  SizedBox(
+                    height: 70,
+                    child: DrawerHeader(
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).colorScheme.primaryContainer,
+                      ),
+                      child: Text(
+                        'おたすけCook！',
+                        style: TextStyle(
+                          color:
+                              Theme.of(context).colorScheme.onPrimaryContainer,
+                          fontSize: 24,
+                        ),
+                      ),
+                    ),
+                  ),
+                  ListTile(
+                    leading: const Icon(Icons.restaurant_menu_rounded),
+                    title: const Text('料理を作る'),
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                  ),
+                  ListTile(
+                    leading: const Icon(Icons.bookmark_rounded),
+                    title: const Text('保存したレシピ'),
+                    onTap: () {
+                      Navigator.pop(context);
+                      Navigator.pushNamed(
+                        context,
+                        '/save',
+                      );
+                    },
+                  ),
+                  ListTile(
+                    leading: const Icon(Icons.person_rounded),
+                    title: const Text('マイページ'),
+                    onTap: () {
+                      Navigator.pop(context);
+                      Navigator.pushNamed(
+                        context,
+                        '/myPage',
+                      );
+                    },
+                  ),
+                  ListTile(
+                    leading: const Icon(Icons.settings_rounded),
+                    title: const Text('設定'),
+                    onTap: () {
+                      Navigator.pop(context);
+                      Navigator.pushNamed(
+                        context,
+                        '/setting',
+                      );
+                    },
+                  ),
+                ],
               ),
             ),
+            const Divider(),
             ListTile(
-              leading: const Icon(FontAwesomeIcons.utensils),
-              title: const Text('料理'),
+              leading: const Icon(Icons.description_rounded),
+              title: const Text('おたすけCook！について'),
               onTap: () {
                 Navigator.pop(context);
+                Navigator.pushNamed(context, '/appInfo');
               },
             ),
             ListTile(
-              leading: const Icon(FontAwesomeIcons.bookmark),
-              title: const Text('保存'),
+              leading: const Icon(Icons.share_rounded),
+              title: const Text('アプリを共有'),
               onTap: () {
-                Navigator.pop(context); // ドロワーを閉じる
-                // SaveScreenに遷移
-                Navigator.pushNamed(
-                  context,
-                  '/save',
-                );
+                Navigator.pop(context);
+                Navigator.pushNamed(context, '/shareApp');
               },
             ),
             ListTile(
-              leading: const Icon(Icons.person),
-              title: const Text('マイページ'),
+              leading: const Icon(Icons.gavel_rounded),
+              title: const Text('利用規約'),
               onTap: () {
-                Navigator.pop(context); // ドロワーを閉じる
-                // MyPageScreenに遷移
-                Navigator.pushNamed(
-                  context,
-                  '/myPage',
-                );
+                Navigator.pop(context);
+                Navigator.pushNamed(context, '/termsOfService');
               },
             ),
+            ListTile(
+              leading: const Icon(Icons.privacy_tip_rounded),
+              title: const Text('プライバシーポリシー'),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.pushNamed(context, '/privacyPolicy');
+              },
+            ),
+            const SizedBox(height: 10),
           ],
         ),
       ),

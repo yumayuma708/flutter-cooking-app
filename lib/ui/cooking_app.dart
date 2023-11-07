@@ -1,4 +1,8 @@
 import 'package:caul/ui/screens/cooking_screen/choose_ingredients_screen.dart';
+import 'package:caul/ui/screens/document_screen/about_app_screen.dart';
+import 'package:caul/ui/screens/document_screen/privacy_policy_screen.dart';
+import 'package:caul/ui/screens/document_screen/share_app_screen.dart';
+import 'package:caul/ui/screens/document_screen/terms_of_service_screen.dart';
 import 'package:caul/ui/screens/home_screen.dart';
 import 'package:caul/ui/screens/my_page_screen.dart';
 import 'package:caul/ui/screens/save_screen.dart';
@@ -31,6 +35,26 @@ class CookingApp extends ConsumerWidget {
           case '/myPage':
             return MaterialPageRoute(
               builder: (context) => const MyPageScreen(),
+            );
+
+          case '/appInfo':
+            return MaterialPageRoute(
+              builder: (context) => const AboutAppScreen(),
+            );
+
+          case '/shareApp':
+            return MaterialPageRoute(
+              builder: (context) => const ShareAppScreen(),
+            );
+
+          case '/termsOfService':
+            return MaterialPageRoute(
+              builder: (context) => const TermsOfServiceScreen(),
+            );
+
+          case '/privacyPolicy':
+            return MaterialPageRoute(
+              builder: (context) => const PrivacyPolicyScreen(),
             );
         }
       },
