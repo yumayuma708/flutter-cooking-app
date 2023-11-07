@@ -1,54 +1,32 @@
+import 'package:caul/providers/auth_state_provider.dart';
 import 'package:caul/ui/screens/cooking_screen/choose_ingredients_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart' hide EmailAuthProvider;
 import 'package:firebase_ui_auth/firebase_ui_auth.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class MyHomePage extends StatefulWidget {
+class MyHomePage extends ConsumerWidget {
   const MyHomePage({Key? key, required this.title}) : super(key: key);
-
   final String title;
 
   @override
-  MyHomePageState createState() => MyHomePageState();
-}
+  Widget build(BuildContext context, WidgetRef ref) {
+    final AsyncValue<User?> user = ref.watch(authStateProvider);
+    final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
-class MyHomePageState extends State<MyHomePage> {
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  bool isUserLoggedIn = false;
+    bool isUserLoggedIn = user.when(
+      data: (User? user) => user != null,
+      loading: () => false,
+      error: (_, __) => false,
+    );
 
-  @override
-  void initState() {
-    super.initState();
-    // Firebase Authの現在のユーザーをチェックし、状態を設定します。
-    checkCurrentUser();
-
-    // ユーザーのログイン状態が変化した際に状態を更新します。
-    FirebaseAuth.instance.authStateChanges().listen((User? user) {
-      if (mounted) {
-        setState(() {
-          // userがnullでなければログインしていると見なします。
-          isUserLoggedIn = (user != null);
-        });
-      }
-    });
-  }
-
-  void checkCurrentUser() {
-    User? currentUser = FirebaseAuth.instance.currentUser;
-    setState(() {
-      isUserLoggedIn = (currentUser != null);
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
     return Scaffold(
-      key: _scaffoldKey,
+      key: scaffoldKey,
       appBar: AppBar(
         leading: IconButton(
           icon: const Icon(Icons.menu_rounded),
           onPressed: () {
-            _scaffoldKey.currentState?.openDrawer();
+            scaffoldKey.currentState?.openDrawer();
           },
         ),
         title: const Text(
@@ -122,6 +100,7 @@ class MyHomePageState extends State<MyHomePage> {
                   ),
                   if (!isUserLoggedIn)
                     ListTile(
+                      leading: const Icon(Icons.login_rounded),
                       title: const Text('ログイン/登録'),
                       onTap: () async {
                         Navigator.pop(context);
@@ -173,6 +152,7 @@ class MyHomePageState extends State<MyHomePage> {
                     ),
                   if (isUserLoggedIn)
                     ListTile(
+                      leading: const Icon(Icons.logout_rounded),
                       title: const Text('ログアウト'),
                       onTap: () async {
                         await showDialog(
