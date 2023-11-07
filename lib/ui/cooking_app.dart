@@ -6,6 +6,7 @@ import 'package:caul/ui/screens/document_screen/terms_of_service_screen.dart';
 import 'package:caul/ui/screens/home_screen.dart';
 import 'package:caul/ui/screens/my_page_screen.dart';
 import 'package:caul/ui/screens/save_screen.dart';
+import 'package:caul/ui/screens/setting_screen.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -37,6 +38,11 @@ class CookingApp extends ConsumerWidget {
               builder: (context) => const MyPageScreen(),
             );
 
+          case '/setting':
+            return MaterialPageRoute(
+              builder: (context) => const SettingScreen(),
+            );
+
           case '/appInfo':
             return MaterialPageRoute(
               builder: (context) => const AboutAppScreen(),
@@ -58,7 +64,7 @@ class CookingApp extends ConsumerWidget {
             );
         }
       },
-      title: 'Cooking As You Like',
+      title: 'おたすけCook！',
       theme: ThemeData(
         useMaterial3: true,
         colorSchemeSeed: seedColor,
