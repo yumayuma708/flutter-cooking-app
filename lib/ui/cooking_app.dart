@@ -7,8 +7,10 @@ import 'package:caul/ui/screens/home_screen.dart';
 import 'package:caul/ui/screens/my_page_screen.dart';
 import 'package:caul/ui/screens/save_screen.dart';
 import 'package:caul/ui/screens/setting_screen.dart';
+import 'package:firebase_ui_localizations/firebase_ui_localizations.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:caul/providers/theme_provider.dart';
 
@@ -21,6 +23,15 @@ class CookingApp extends ConsumerWidget {
 
     const seedColor = Colors.pink;
     return MaterialApp(
+      localizationsDelegates: [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+        FirebaseUILocalizations.delegate,
+      ],
+      supportedLocales: const [
+        Locale('ja', 'JP'),
+      ],
       onGenerateRoute: (RouteSettings settings) {
         switch (settings.name) {
           case '/ingredients':
