@@ -53,6 +53,8 @@ flutter:
     - assets/images/fruit.png
     - assets/images/knife.png
     - assets/images/renew.png
+    - assets/privacy_policy.txt
+    - assets/terms_and_conditions.txt
 
   fonts:
     - family: NotoSansJP
