@@ -7,6 +7,7 @@ import 'package:caul/ui/screens/home_screen.dart';
 import 'package:caul/ui/screens/my_page_screen.dart';
 import 'package:caul/ui/screens/save_screen.dart';
 import 'package:caul/ui/screens/setting_screen.dart';
+import 'package:caul/ui/screens/start_screen.dart';
 import 'package:firebase_ui_localizations/firebase_ui_localizations.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -34,6 +35,11 @@ class CookingApp extends ConsumerWidget {
       ],
       onGenerateRoute: (RouteSettings settings) {
         switch (settings.name) {
+          case '/start':
+            return MaterialPageRoute(
+              builder: (context) => const StartScreen(),
+            );
+
           case '/ingredients':
             return MaterialPageRoute(
               builder: (context) => const ChooseIngredients(),
