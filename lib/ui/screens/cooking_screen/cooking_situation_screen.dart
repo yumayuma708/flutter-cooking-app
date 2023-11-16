@@ -1,5 +1,6 @@
 import 'package:caul/providers/chat_gpt_provider.dart';
 import 'package:caul/ui/components/caul_situations.dart';
+import 'package:caul/ui/screens/cooking_screen/choose_ingredients_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:caul/ui/screens/loading_screen.dart';
@@ -27,6 +28,7 @@ class CookingSituation extends ConsumerWidget {
 }
 
 class CookingSituationInternal extends StatefulWidget {
+  static const routeName = '/cooking-situation';
   final List<String> selectedVegetables;
   final List<String> selectedSeasonings;
 
@@ -223,7 +225,7 @@ class CookingSituationInternalState extends State<CookingSituationInternal> {
                         List<String> cuisineConditions =
                             selectedHeaders["タイプ"]!.toList();
                         List<String> selectedSeasonings =
-                            selectedHeaders["タイプ"]!.toList();
+                            widget.selectedSeasonings;
                         List<String> sizeConditions =
                             selectedHeaders["量"]!.toList();
                         List<String> preferenceConditions =
@@ -236,7 +238,7 @@ class CookingSituationInternalState extends State<CookingSituationInternal> {
                           timeConditions: timeConditions,
                           servingConditions: servingConditions,
                           selectedSeasonings: selectedSeasonings,
-                          cuisineConditions: cuisineConditions,
+                          cuisineType: cuisineConditions,
                           sizeConditions: sizeConditions,
                           preferenceConditions: preferenceConditions,
                           confirmationConditions: confirmationConditions,

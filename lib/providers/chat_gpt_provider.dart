@@ -9,7 +9,7 @@ class CookingData {
   final List<String> selectedSeasonings;
   final List<String> timeConditions;
   final List<String> servingConditions;
-  final List<String> cuisineConditions;
+  final List<String> cuisineType;
   final List<String> sizeConditions;
   final List<String> preferenceConditions;
   final List<String> confirmationConditions;
@@ -22,7 +22,7 @@ class CookingData {
     required this.selectedSeasonings,
     required this.timeConditions,
     required this.servingConditions,
-    required this.cuisineConditions,
+    required this.cuisineType,
     required this.sizeConditions,
     required this.preferenceConditions,
     required this.confirmationConditions,
@@ -35,7 +35,7 @@ class CookingData {
         'seasonings': selectedSeasonings,
         'time_conditions': timeConditions,
         'serving_conditions': servingConditions,
-        'cuisine_conditions': cuisineConditions,
+        'cuisine_conditions': cuisineType,
         'size_conditions': sizeConditions,
         'preference_conditions': preferenceConditions,
         'confirmation_conditions': confirmationConditions,
@@ -67,7 +67,7 @@ class ChatGPTProvider {
         '$seasoningMessage\n'
         '調理時間：${data.timeConditions.isNotEmpty ? data.timeConditions.join('、') : '指定しない'}\n'
         '人数：${data.servingConditions.isNotEmpty ? data.servingConditions.join('、') : '1人分'}\n'
-        '料理タイプ：${data.cuisineConditions.isNotEmpty ? data.cuisineConditions.join('、') : '指定しない'}\n'
+        '料理タイプ：${data.cuisineType.isNotEmpty ? data.cuisineType.join('、') : '指定しない'}\n'
         '食事量：${data.sizeConditions.isNotEmpty ? data.sizeConditions.join('、') : '指定しない'}\n'
         'その他の条件：${data.preferenceConditions.isNotEmpty ? data.preferenceConditions.join('、') : '指定しない'}\n'
         '$confirmationMessage\n\n'
@@ -119,7 +119,6 @@ class ChatGPTProvider {
       String instruction =
           responseData['choices'][0]['message']['content'].trim();
 
-      // ここに追加
       final dividedData = ChatGPTDividedData.parseFromInstruction(instruction);
       debugPrint('料理名: ${dividedData.dishName}');
       debugPrint('目安時間: ${dividedData.estimatedTime}');

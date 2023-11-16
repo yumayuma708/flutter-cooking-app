@@ -9,6 +9,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:caul/ui/screens/popup_screen/popup_page.dart';
 
 class CookingResultPage extends StatefulWidget {
+  static const routeName = '/cooking-result';
   final CookingData data;
   final ChatGPTDividedData dividedData;
   final Map<String, Set<String>> selectedHeaders;
@@ -279,7 +280,7 @@ class CookingResultPageState extends State<CookingResultPage> {
                         timeConditions: timeConditions,
                         servingConditions: servingConditions,
                         selectedSeasonings: selectedSeasonings,
-                        cuisineConditions: cuisineConditions,
+                        cuisineType: cuisineConditions,
                         sizeConditions: sizeConditions,
                         preferenceConditions: preferenceConditions,
                         confirmationConditions: confirmationConditions,

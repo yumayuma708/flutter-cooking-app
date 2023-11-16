@@ -8,6 +8,7 @@ class MyPageNotifier extends ChangeNotifier {}
 
 class MyPageScreen extends ConsumerWidget {
   const MyPageScreen({super.key});
+  static const routeName = '/my-page';
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
