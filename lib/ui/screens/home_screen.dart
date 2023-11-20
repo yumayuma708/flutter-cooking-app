@@ -58,14 +58,14 @@ class MyHomePage extends ConsumerWidget {
                       ),
                     ),
                   ),
-                  ListTile(
-                    leading: const Icon(Icons.description_rounded),
-                    title: const Text('スタート画面'),
-                    onTap: () {
-                      Navigator.pop(context);
-                      Navigator.pushNamed(context, '/start');
-                    },
-                  ),
+                  // ListTile(
+                  //   leading: const Icon(Icons.description_rounded),
+                  //   title: const Text('スタート画面'),
+                  //   onTap: () {
+                  //     Navigator.pop(context);
+                  //     Navigator.pushNamed(context, '/start');
+                  //   },
+                  // ),
                   ListTile(
                     leading: const Icon(Icons.restaurant_menu_rounded),
                     title: const Text('料理を作る'),

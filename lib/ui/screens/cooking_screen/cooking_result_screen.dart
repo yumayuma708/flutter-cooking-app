@@ -15,12 +15,14 @@ class CookingResultPage extends StatefulWidget {
   final ChatGPTDividedData dividedData;
   final Map<String, Set<String>> selectedHeaders;
   final List<String> selectedVegetables;
+  final bool fromLoadingScreen;
 
   CookingResultPage({
     Key? key,
     required this.data,
     this.selectedHeaders = const {},
     required this.selectedVegetables,
+    this.fromLoadingScreen = false,
   })  : dividedData = ChatGPTDividedData.parseFromInstruction(data.instruction),
         super(key: key);
 
@@ -29,6 +31,7 @@ class CookingResultPage extends StatefulWidget {
     return CookingResultPageState(
       selectedHeaders: selectedHeaders,
       selectedVegetables: selectedVegetables,
+      fromLoadingScreen: fromLoadingScreen,
     );
   }
 }
@@ -39,11 +42,13 @@ class CookingResultPageState extends State<CookingResultPage> {
       RecipeSaver(FirebaseFirestore.instance, FirebaseAuth.instance);
   final Map<String, Set<String>> selectedHeaders;
   final List<String> selectedVegetables;
+  final bool fromLoadingScreen;
 
   CookingResultPageState({
     Key? key,
     required this.selectedHeaders,
     required this.selectedVegetables,
+    required this.fromLoadingScreen,
   });
 
   @override
@@ -246,120 +251,122 @@ class CookingResultPageState extends State<CookingResultPage> {
                 ),
               ),
             ),
-            Container(
-              height: 80.0,
-              color: Colors.transparent,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      List<String> timeConditions =
-                          selectedHeaders["調理時間"]!.toList();
-                      List<String> servingConditions =
-                          selectedHeaders["人数"]!.toList();
-                      List<String> cuisineConditions =
-                          selectedHeaders["タイプ"]!.toList();
-                      List<String> selectedSeasonings =
-                          selectedHeaders["タイプ"]!.toList();
-                      List<String> sizeConditions =
-                          selectedHeaders["量"]!.toList();
-                      List<String> preferenceConditions =
-                          selectedHeaders["その他の条件"]!.toList();
-                      List<String> confirmationConditions =
-                          selectedHeaders["選んだ食材以外を材料に含めてもよい"]!.toList();
+            if (fromLoadingScreen)
+              Container(
+                height: 80.0,
+                color: Colors.transparent,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        List<String> timeConditions =
+                            selectedHeaders["調理時間"]!.toList();
+                        List<String> servingConditions =
+                            selectedHeaders["人数"]!.toList();
+                        List<String> cuisineConditions =
+                            selectedHeaders["タイプ"]!.toList();
+                        List<String> selectedSeasonings =
+                            selectedHeaders["タイプ"]!.toList();
+                        List<String> sizeConditions =
+                            selectedHeaders["量"]!.toList();
+                        List<String> preferenceConditions =
+                            selectedHeaders["その他の条件"]!.toList();
+                        List<String> confirmationConditions =
+                            selectedHeaders["選んだ食材以外を材料に含めてもよい"]!.toList();
 
-                      CookingData data = CookingData(
-                        selectedVegetables: widget.selectedVegetables,
-                        timeConditions: timeConditions,
-                        servingConditions: servingConditions,
-                        selectedSeasonings: selectedSeasonings,
-                        cuisineType: cuisineConditions,
-                        sizeConditions: sizeConditions,
-                        preferenceConditions: preferenceConditions,
-                        confirmationConditions: confirmationConditions,
-                        selectedHeaders: selectedHeaders,
-                        instruction: "",
-                      );
-
-                      Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => LoadingScreen(data: data),
-                      ));
-                    },
-                    child: Row(
-                      children: [
-                        Text(
-                          'もう一度',
-                          style: TextStyle(
-                            fontSize: 20,
-                            color: Theme.of(context).colorScheme.onBackground,
-                          ),
-                        ),
-                        const SizedBox(width: 8.0),
-                        Image(
-                          image: const AssetImage('assets/images/renew.png'),
-                          width: 30,
-                          height: 30,
-                          color: Theme.of(context).colorScheme.onBackground,
-                        ),
-                      ],
-                    ),
-                  ),
-                  GestureDetector(
-                    onTap: () async {
-                      if (FirebaseAuth.instance.currentUser != null) {
-                        setState(() {
-                          isBookmarkPressed = !isBookmarkPressed;
-                        });
-                        if (isBookmarkPressed) {
-                          await FirebaseFirestore.instance
-                              .collection('recipes')
-                              .doc('users')
-                              .collection(
-                                  FirebaseAuth.instance.currentUser!.uid)
-                              .add({
-                            'dishName': widget.dividedData.dishName,
-                            'ingredients': widget.dividedData.ingredients,
-                            'recipe': widget.dividedData.recipe,
-                            'estimatedTime': widget.dividedData.estimatedTime,
-                            'appealPoint': widget.dividedData.appealPoint,
-                            'numberOfPeople': widget.dividedData.numberOfPeople,
-                          });
-                          if (!mounted) return;
-                          savedPopup(context);
-                        }
-                      } else {
-                        showDialog(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return const AlertPopup(
-                                contentText: '保存するにはログインしてください');
-                          },
+                        CookingData data = CookingData(
+                          selectedVegetables: widget.selectedVegetables,
+                          timeConditions: timeConditions,
+                          servingConditions: servingConditions,
+                          selectedSeasonings: selectedSeasonings,
+                          cuisineType: cuisineConditions,
+                          sizeConditions: sizeConditions,
+                          preferenceConditions: preferenceConditions,
+                          confirmationConditions: confirmationConditions,
+                          selectedHeaders: selectedHeaders,
+                          instruction: "",
                         );
-                      }
-                    },
-                    child: Row(
-                      children: [
-                        Text(
-                          'レシピを保存',
-                          style: TextStyle(
-                            fontSize: 20,
+
+                        Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => LoadingScreen(data: data),
+                        ));
+                      },
+                      child: Row(
+                        children: [
+                          Text(
+                            'もう一度',
+                            style: TextStyle(
+                              fontSize: 20,
+                              color: Theme.of(context).colorScheme.onBackground,
+                            ),
+                          ),
+                          const SizedBox(width: 8.0),
+                          Image(
+                            image: const AssetImage('assets/images/renew.png'),
+                            width: 30,
+                            height: 30,
                             color: Theme.of(context).colorScheme.onBackground,
                           ),
-                        ),
-                        const SizedBox(width: 8.0),
-                        Icon(
-                          isBookmarkPressed
-                              ? Icons.bookmark
-                              : Icons.bookmark_border,
-                          size: 40,
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
-                ],
+                    GestureDetector(
+                      onTap: () async {
+                        if (FirebaseAuth.instance.currentUser != null) {
+                          setState(() {
+                            isBookmarkPressed = !isBookmarkPressed;
+                          });
+                          if (isBookmarkPressed) {
+                            await FirebaseFirestore.instance
+                                .collection('recipes')
+                                .doc('users')
+                                .collection(
+                                    FirebaseAuth.instance.currentUser!.uid)
+                                .add({
+                              'dishName': widget.dividedData.dishName,
+                              'ingredients': widget.dividedData.ingredients,
+                              'recipe': widget.dividedData.recipe,
+                              'estimatedTime': widget.dividedData.estimatedTime,
+                              'appealPoint': widget.dividedData.appealPoint,
+                              'numberOfPeople':
+                                  widget.dividedData.numberOfPeople,
+                            });
+                            if (!mounted) return;
+                            savedPopup(context);
+                          }
+                        } else {
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return const AlertPopup(
+                                  contentText: '保存するにはログインしてください');
+                            },
+                          );
+                        }
+                      },
+                      child: Row(
+                        children: [
+                          Text(
+                            'レシピを保存',
+                            style: TextStyle(
+                              fontSize: 20,
+                              color: Theme.of(context).colorScheme.onBackground,
+                            ),
+                          ),
+                          const SizedBox(width: 8.0),
+                          Icon(
+                            isBookmarkPressed
+                                ? Icons.bookmark
+                                : Icons.bookmark_border,
+                            size: 40,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            ),
           ],
         ));
   }
