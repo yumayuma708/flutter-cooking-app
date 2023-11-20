@@ -93,16 +93,16 @@ class SaveScreen extends StatelessWidget {
                 return ListTile(
                   title: Text(data['dishName']),
                   onTap: () {
-                    debugPrint(data['selectedVegetables'].toString());
-                    debugPrint(data['selectedSeasonings'].toString());
-                    debugPrint(data['timeConditions'].toString());
-                    debugPrint(data['servingConditions'].toString());
-                    debugPrint(data['cuisineType'].toString());
-                    debugPrint(data['sizeConditions'].toString());
-                    debugPrint(data['preferenceConditions'].toString());
-                    debugPrint(data['confirmationConditions'].toString());
-                    debugPrint(data['instruction'].toString());
-                    debugPrint(data['selectedHeaders'].toString());
+                    // debugPrint(data['selectedVegetables'].toString());
+                    // debugPrint(data['selectedSeasonings'].toString());
+                    // debugPrint(data['timeConditions'].toString());
+                    // debugPrint(data['servingConditions'].toString());
+                    // debugPrint(data['cuisineType'].toString());
+                    // debugPrint(data['sizeConditions'].toString());
+                    // debugPrint(data['preferenceConditions'].toString());
+                    // debugPrint(data['confirmationConditions'].toString());
+                    // debugPrint(data['instruction'].toString());
+                    // debugPrint(data['selectedHeaders'].toString());
                     CookingData finalData = CookingData(
                       selectedVegetables:
                           (data['selectedVegetables'] as List? ?? [])
