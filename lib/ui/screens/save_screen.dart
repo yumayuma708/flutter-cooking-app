@@ -1,3 +1,5 @@
+import 'package:caul/providers/chat_gpt_provider.dart';
+import 'package:caul/ui/screens/cooking_screen/cooking_result_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -84,14 +86,63 @@ class SaveScreen extends StatelessWidget {
           }
 
           return ListView(
-            children: snapshot.data!.docs.map((DocumentSnapshot document) {
-              Map<String, dynamic> data =
-                  document.data() as Map<String, dynamic>;
-              return ListTile(
-                title: Text(data['dishName']),
-                subtitle: Text(data['ingredients']),
-              );
-            }).toList(),
+            children: snapshot.data!.docs.map(
+              (DocumentSnapshot document) {
+                Map<String, dynamic> data =
+                    document.data() as Map<String, dynamic>;
+                return ListTile(
+                  title: Text(data['dishName']),
+                  onTap: () {
+                    debugPrint(data['selectedVegetables'].toString());
+                    debugPrint(data['selectedSeasonings'].toString());
+                    debugPrint(data['timeConditions'].toString());
+                    debugPrint(data['servingConditions'].toString());
+                    debugPrint(data['cuisineType'].toString());
+                    debugPrint(data['sizeConditions'].toString());
+                    debugPrint(data['preferenceConditions'].toString());
+                    debugPrint(data['confirmationConditions'].toString());
+                    debugPrint(data['instruction'].toString());
+                    debugPrint(data['selectedHeaders'].toString());
+                    CookingData finalData = CookingData(
+                      selectedVegetables:
+                          (data['selectedVegetables'] as List? ?? [])
+                              .cast<String>(),
+                      selectedSeasonings:
+                          (data['selectedSeasonings'] as List? ?? [])
+                              .cast<String>(),
+                      timeConditions: (data['timeConditions'] as List? ?? [])
+                          .cast<String>(),
+                      servingConditions:
+                          (data['servingConditions'] as List? ?? [])
+                              .cast<String>(),
+                      cuisineType:
+                          (data['cuisineType'] as List? ?? []).cast<String>(),
+                      sizeConditions: (data['sizeConditions'] as List? ?? [])
+                          .cast<String>(),
+                      preferenceConditions:
+                          (data['preferenceConditions'] as List? ?? [])
+                              .cast<String>(),
+                      confirmationConditions:
+                          (data['confirmationConditions'] as List? ?? [])
+                              .cast<String>(),
+                      instruction: (data['instruction'] ?? ''),
+                      // selectedHeaders: (data['selectedHeaders'] ?? '{}'),
+                      selectedHeaders: <String, Set<String>>{},
+                    );
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => CookingResultPage(
+                          data: finalData,
+                          selectedHeaders:
+                              finalData.selectedHeaders, // Add this line
+                          selectedVegetables: finalData.selectedVegetables,
+                        ),
+                      ),
+                    );
+                  },
+                );
+              },
+            ).toList(),
           );
         },
       ),

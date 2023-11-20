@@ -1,6 +1,5 @@
 import 'package:caul/providers/chat_gpt_provider.dart';
 import 'package:caul/ui/components/caul_situations.dart';
-import 'package:caul/ui/screens/cooking_screen/choose_ingredients_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:caul/ui/screens/loading_screen.dart';

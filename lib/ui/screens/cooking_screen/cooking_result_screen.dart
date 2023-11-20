@@ -320,6 +320,10 @@ class CookingResultPageState extends State<CookingResultPage> {
                               .add({
                             'dishName': widget.dividedData.dishName,
                             'ingredients': widget.dividedData.ingredients,
+                            'recipe': widget.dividedData.recipe,
+                            'estimatedTime': widget.dividedData.estimatedTime,
+                            'appealPoint': widget.dividedData.appealPoint,
+                            'numberOfPeople': widget.dividedData.numberOfPeople,
                           });
                           if (!mounted) return;
                           savedPopup(context);

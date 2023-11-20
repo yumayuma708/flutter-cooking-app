@@ -125,18 +125,19 @@ void savedPopup(BuildContext context) {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(15.0),
         ),
-        backgroundColor: Colors.orange[100],
-        title: const Icon(
+        backgroundColor:
+            Theme.of(context).colorScheme.primaryContainer.withOpacity(0.5),
+        title: Icon(
           Icons.bookmark,
-          color: Colors.black,
+          color: Theme.of(context).colorScheme.onPrimaryContainer,
           size: 40,
         ),
-        content: const Text(
+        content: Text(
           'レシピを保存しました！',
           textAlign: TextAlign.center,
           style: TextStyle(
-            fontSize: 16,
-          ),
+              fontSize: 16,
+              color: Theme.of(context).colorScheme.onPrimaryContainer),
         ),
         actions: [
           Expanded(
@@ -161,13 +162,18 @@ void savedPopup(BuildContext context) {
                     shape: MaterialStateProperty.all(
                       RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(30.0),
-                        side: const BorderSide(color: Colors.orangeAccent),
+                        side: BorderSide(
+                            color: Theme.of(context)
+                                .colorScheme
+                                .onPrimaryContainer),
                       ),
                     ),
                   ),
-                  child: const Text(
+                  child: Text(
                     'OK',
-                    style: TextStyle(color: Colors.black),
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.onPrimaryContainer,
+                    ),
                   ),
                 )
               ],
