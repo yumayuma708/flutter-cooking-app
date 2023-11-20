@@ -221,14 +221,14 @@ class MyHomePage extends ConsumerWidget {
                 Navigator.pushNamed(context, '/appInfo');
               },
             ),
-            ListTile(
-              leading: const Icon(Icons.share_rounded),
-              title: const Text('アプリを共有'),
-              onTap: () {
-                Navigator.pop(context);
-                Navigator.pushNamed(context, '/shareApp');
-              },
-            ),
+            // ListTile(
+            //   leading: const Icon(Icons.share_rounded),
+            //   title: const Text('アプリを共有'),
+            //   onTap: () {
+            //     Navigator.pop(context);
+            //     Navigator.pushNamed(context, '/shareApp');
+            //   },
+            // ),
             ListTile(
               leading: const Icon(Icons.gavel_rounded),
               title: const Text('利用規約'),
