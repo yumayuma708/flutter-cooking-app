@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
+import 'package:flutter_markdown/flutter_markdown.dart';
 
 class TermsOfServiceScreen extends StatelessWidget {
   const TermsOfServiceScreen({Key? key}) : super(key: key);
 
   Future<String> loadPrivacyPolicy() async {
-    return await rootBundle.loadString('assets/terms_and_conditions.txt');
+    return await rootBundle.loadString('assets/terms_and_conditions.md');
   }
 
   @override
@@ -22,11 +23,9 @@ class TermsOfServiceScreen extends StatelessWidget {
               return const Center(child: Text('エラーが発生しました。'));
             }
 
-            return SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Text(snapshot.data ?? '利用規約ーを読み込めませんでした。'),
-              ),
+            return Markdown(
+              data: snapshot.data!,
+              padding: const EdgeInsets.all(32),
             );
           } else {
             return const Center(child: CircularProgressIndicator());

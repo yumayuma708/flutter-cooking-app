@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
+import 'package:flutter_markdown/flutter_markdown.dart';
 
 class PrivacyPolicyScreen extends StatelessWidget {
   const PrivacyPolicyScreen({Key? key}) : super(key: key);
 
   Future<String> loadPrivacyPolicy() async {
-    return await rootBundle.loadString('assets/privacy_policy.txt');
+    return await rootBundle.loadString('assets/privacy_policy.md');
   }
 
   @override
@@ -22,11 +23,9 @@ class PrivacyPolicyScreen extends StatelessWidget {
               return const Center(child: Text('エラーが発生しました。'));
             }
 
-            return SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Text(snapshot.data ?? 'プライバシーポリシーを読み込めませんでした。'),
-              ),
+            return Markdown(
+              data: snapshot.data!,
+              padding: const EdgeInsets.all(32),
             );
           } else {
             return const Center(child: CircularProgressIndicator());

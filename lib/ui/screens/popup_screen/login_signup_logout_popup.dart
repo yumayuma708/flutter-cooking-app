@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-// ログイン用のポップアップ
 showLoginPopup(
     BuildContext context,
     TextEditingController emailController,

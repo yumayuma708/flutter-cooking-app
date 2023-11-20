@@ -14,7 +14,7 @@ class CookingData {
   final List<String> preferenceConditions;
   final List<String> confirmationConditions;
   final String instruction;
-  // selectedHeadersを追加します。
+
   final Map<String, Set<String>> selectedHeaders;
 
   CookingData({
@@ -27,7 +27,7 @@ class CookingData {
     required this.preferenceConditions,
     required this.confirmationConditions,
     required this.instruction,
-    required this.selectedHeaders, // selectedHeadersも受け取り
+    required this.selectedHeaders,
   });
 
   Map<String, dynamic> toJson() => {
@@ -58,9 +58,13 @@ class ChatGPTProvider {
       confirmationMessage = '食材として挙げたもののみで作ってください。';
     }
 
-    String seasoningMessage = data.selectedSeasonings.isNotEmpty
-        ? '調味料として、${data.selectedSeasonings.join('、')}を使ってください。'
-        : '調味料は自由に使ってかまいません。';
+    String seasoningMessage;
+    if (data.selectedSeasonings.contains('おまかせ') ||
+        data.selectedSeasonings.isEmpty) {
+      seasoningMessage = '調味料は自由に使ってかまいません。';
+    } else {
+      seasoningMessage = '調味料として、${data.selectedSeasonings.join('、')}を使ってください。';
+    }
 
     final prompts = '次に挙げる食材や各条件に従って、料理を作ってください。\n\n'
         '食材：${data.selectedVegetables.join('、')}\n'
