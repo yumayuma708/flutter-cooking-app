@@ -1,5 +1,6 @@
 import 'package:caul/data/services/recipe_saver.dart';
 import 'package:caul/providers/chat_gpt_devider.dart';
+import 'package:caul/ui/components/alert_popup.dart';
 import 'package:caul/ui/screens/loading_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -99,8 +100,7 @@ class CookingResultPageState extends State<CookingResultPage> {
                         ),
                       ),
                     ),
-
-                    const SizedBox(height: 15.0), // タイトルとの間にスペースを追加
+                    const SizedBox(height: 15.0),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
@@ -119,14 +119,13 @@ class CookingResultPageState extends State<CookingResultPage> {
                         )
                       ],
                     ),
-                    const SizedBox(height: 15.0), // 目安時間と材料の間にスペースを追加
+                    const SizedBox(height: 15.0),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         const SizedBox(width: 20.0),
-                        const Icon(FontAwesomeIcons.carrot,
-                            size: 20), // carrot icon added
-                        const SizedBox(width: 8.0), // spacing
+                        const Icon(FontAwesomeIcons.carrot, size: 20),
+                        const SizedBox(width: 8.0),
                         Text(
                           "材料(${widget.dividedData.numberOfPeople})",
                           style: TextStyle(
@@ -137,7 +136,6 @@ class CookingResultPageState extends State<CookingResultPage> {
                         ),
                       ],
                     ),
-
                     const SizedBox(
                       height: 8,
                     ),
@@ -155,7 +153,7 @@ class CookingResultPageState extends State<CookingResultPage> {
                             color: Theme.of(context).colorScheme.onBackground,
                             fontWeight: FontWeight.w500,
                           ),
-                          textAlign: TextAlign.left, // この行を追加
+                          textAlign: TextAlign.left,
                         ),
                       ),
                     ),
@@ -169,22 +167,20 @@ class CookingResultPageState extends State<CookingResultPage> {
                           Image.asset('assets/images/knife.png',
                               color: Theme.of(context).colorScheme.onBackground,
                               width: 20,
-                              height: 20), // knife image added
-                          const SizedBox(width: 8.0), // spacing
+                              height: 20),
+                          const SizedBox(width: 8.0),
                           Text(
                             '作り方',
                             style: TextStyle(
                               fontSize: 20,
                               color: Theme.of(context).colorScheme.onBackground,
-                              fontWeight:
-                                  FontWeight.bold, // この行でフォントの太さを変更して「作り方」を強調
+                              fontWeight: FontWeight.bold,
                             ),
                             textAlign: TextAlign.left,
                           ),
                         ],
                       ),
                     ),
-
                     const SizedBox(
                       height: 8,
                     ),
@@ -210,21 +206,19 @@ class CookingResultPageState extends State<CookingResultPage> {
                       padding: const EdgeInsets.symmetric(horizontal: 20.0),
                       child: Row(
                         children: [
-                          const Icon(Icons.star, size: 20), // star icon added
-                          const SizedBox(width: 8.0), // spacing
+                          const Icon(Icons.star, size: 20),
+                          const SizedBox(width: 8.0),
                           Text(
                             'ポイント',
                             style: TextStyle(
                               fontSize: 20,
                               color: Theme.of(context).colorScheme.onBackground,
-                              fontWeight:
-                                  FontWeight.bold, // この行でフォントの太さを変更して「作り方」を強調
+                              fontWeight: FontWeight.bold,
                             ),
                           )
                         ],
                       ),
                     ),
-
                     const SizedBox(
                       height: 8,
                     ),
@@ -238,7 +232,7 @@ class CookingResultPageState extends State<CookingResultPage> {
                                           .startsWith(':')
                                   ? widget.dividedData.appealPoint.substring(1)
                                   : widget.dividedData.appealPoint)
-                              .trim(), // trimの適用を最後に移動
+                              .trim(),
                           style: TextStyle(
                             fontSize: 18,
                             color: Theme.of(context).colorScheme.onBackground,
@@ -292,17 +286,28 @@ class CookingResultPageState extends State<CookingResultPage> {
                         builder: (context) => LoadingScreen(data: data),
                       ));
                     },
-                    child: Image(
-                      image: const AssetImage('assets/images/renew.png'),
-                      width: 30,
-                      height: 30,
-                      color: Theme.of(context).colorScheme.onBackground,
+                    child: Row(
+                      children: [
+                        Text(
+                          'もう一度',
+                          style: TextStyle(
+                            fontSize: 20,
+                            color: Theme.of(context).colorScheme.onBackground,
+                          ),
+                        ),
+                        const SizedBox(width: 8.0),
+                        Image(
+                          image: const AssetImage('assets/images/renew.png'),
+                          width: 30,
+                          height: 30,
+                          color: Theme.of(context).colorScheme.onBackground,
+                        ),
+                      ],
                     ),
                   ),
                   GestureDetector(
                     onTap: () async {
                       if (FirebaseAuth.instance.currentUser != null) {
-                        // ユーザーがログインしているか確認
                         setState(() {
                           isBookmarkPressed = !isBookmarkPressed;
                         });
@@ -315,19 +320,37 @@ class CookingResultPageState extends State<CookingResultPage> {
                               .add({
                             'dishName': widget.dividedData.dishName,
                             'ingredients': widget.dividedData.ingredients,
-                            // 他のデータ
                           });
+                          if (!mounted) return;
                           savedPopup(context);
                         }
                       } else {
-                        // ユーザーがログインしていない場合の処理
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return const AlertPopup(
+                                contentText: '保存するにはログインしてください');
+                          },
+                        );
                       }
                     },
-                    child: Icon(
-                      isBookmarkPressed
-                          ? Icons.bookmark
-                          : Icons.bookmark_border,
-                      size: 40,
+                    child: Row(
+                      children: [
+                        Text(
+                          'レシピを保存',
+                          style: TextStyle(
+                            fontSize: 20,
+                            color: Theme.of(context).colorScheme.onBackground,
+                          ),
+                        ),
+                        const SizedBox(width: 8.0),
+                        Icon(
+                          isBookmarkPressed
+                              ? Icons.bookmark
+                              : Icons.bookmark_border,
+                          size: 40,
+                        ),
+                      ],
                     ),
                   ),
                 ],

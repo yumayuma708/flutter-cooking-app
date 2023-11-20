@@ -7,7 +7,6 @@ class RecipeSaver {
 
   RecipeSaver(this.firestore, this.auth);
 
-  // レシピを追加
   Future<void> addRecipe(Map<String, dynamic> recipeData) async {
     final user = auth.currentUser;
     if (user != null) {
@@ -19,7 +18,6 @@ class RecipeSaver {
     }
   }
 
-  // ログインしているユーザーのレシピを取得
   Future<QuerySnapshot> getUserRecipes() async {
     final user = auth.currentUser;
     if (user != null) {

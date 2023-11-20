@@ -14,7 +14,7 @@ class CookingData {
   final List<String> preferenceConditions;
   final List<String> confirmationConditions;
   final String instruction;
-  // selectedHeadersを追加します。
+
   final Map<String, Set<String>> selectedHeaders;
 
   CookingData({
@@ -27,7 +27,7 @@ class CookingData {
     required this.preferenceConditions,
     required this.confirmationConditions,
     required this.instruction,
-    required this.selectedHeaders, // selectedHeadersも受け取り
+    required this.selectedHeaders,
   });
 
   Map<String, dynamic> toJson() => {

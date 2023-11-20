@@ -122,12 +122,10 @@ void savedPopup(BuildContext context) {
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
-        // ポップアップの角を丸くする
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(15.0),
         ),
         backgroundColor: Colors.orange[100],
-        // タイトルをアイコンに変更
         title: const Icon(
           Icons.bookmark,
           color: Colors.black,
@@ -141,10 +139,9 @@ void savedPopup(BuildContext context) {
           ),
         ),
         actions: [
-          // OKボタンを中央揃えにするためのExpandedとColumnを使用
           Expanded(
             child: ButtonBar(
-              alignment: MainAxisAlignment.center, // ボタンを中央に配置
+              alignment: MainAxisAlignment.center,
               children: [
                 ElevatedButton(
                   onPressed: () {

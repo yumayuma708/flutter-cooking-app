@@ -16,7 +16,6 @@ class ChatGPTDividedData {
   });
 
   static ChatGPTDividedData parseFromInstruction(String instruction) {
-    // テンプレートに基づいて文字列を分割します。
     final dishName = _parseByPrefix(instruction, '料理名：', nextPrefix: '目安時間');
     final estimatedTime =
         _parseByPrefix(instruction, '目安時間：', nextPrefix: '人数');

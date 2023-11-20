@@ -1,6 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-// selectedHeadersの状態を管理するプロバイダを定義します
 final selectedHeadersProvider = StateProvider<Map<String, Set<String>>>((ref) {
   return {
     "調理時間": {},
@@ -12,7 +11,6 @@ final selectedHeadersProvider = StateProvider<Map<String, Set<String>>>((ref) {
   };
 });
 
-// selectedVegetablesの状態を管理するプロバイダを定義します
 final selectedVegetablesProvider = StateProvider<List<String>>((ref) {
   return [];
 });

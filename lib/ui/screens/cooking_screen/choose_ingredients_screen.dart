@@ -238,10 +238,9 @@ class VegetablesGridViewState extends State<VegetablesGridView> {
                                           .contains(newIngredient)) {
                                     categorizedIngredients['その他']!
                                         .add(newIngredient);
-                                    selectedIngredients
-                                        .add(newIngredient); // この部分を変更
+                                    selectedIngredients.add(newIngredient);
                                   }
-                                  _otherController.clear(); // テキストフィールドの内容をクリア
+                                  _otherController.clear();
                                 });
                               },
                             ),
@@ -306,13 +305,12 @@ class VegetablesGridViewState extends State<VegetablesGridView> {
                                   color: Theme.of(context)
                                       .colorScheme
                                       .onBackground
-                                      .withOpacity(0.3), // 枠線の色
+                                      .withOpacity(0.3),
                                 ),
                                 borderRadius: BorderRadius.circular(30.0),
                               ),
                               child: Card(
-                                color: Colors
-                                    .transparent, // Containerが背景色を持っているのでCardの色は透明にする
+                                color: Colors.transparent,
                                 elevation: 0.0,
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(30.0),
