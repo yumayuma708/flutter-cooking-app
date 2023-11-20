@@ -84,17 +84,17 @@ class MyHomePage extends ConsumerWidget {
                       );
                     },
                   ),
-                  ListTile(
-                    leading: const Icon(Icons.person_rounded),
-                    title: const Text('マイページ'),
-                    onTap: () {
-                      Navigator.pop(context);
-                      Navigator.pushNamed(
-                        context,
-                        '/myPage',
-                      );
-                    },
-                  ),
+                  // ListTile(
+                  //   leading: const Icon(Icons.person_rounded),
+                  //   title: const Text('マイページ'),
+                  //   onTap: () {
+                  //     Navigator.pop(context);
+                  //     Navigator.pushNamed(
+                  //       context,
+                  //       '/myPage',
+                  //     );
+                  //   },
+                  // ),
                   ListTile(
                     leading: const Icon(Icons.settings_rounded),
                     title: const Text('設定'),
