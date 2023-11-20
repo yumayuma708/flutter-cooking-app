@@ -35,6 +35,13 @@ class CookingApp extends ConsumerWidget {
       ],
       onGenerateRoute: (RouteSettings settings) {
         switch (settings.name) {
+          case '/home':
+            return MaterialPageRoute(
+              builder: (context) => const MyHomePage(
+                title: 'おたすけCook！',
+              ),
+            );
+
           case '/start':
             return MaterialPageRoute(
               builder: (context) => const StartScreen(),
@@ -95,7 +102,7 @@ class CookingApp extends ConsumerWidget {
         fontFamily: kIsWeb ? 'ZenKakuGothicNew' : null,
       ),
       themeMode: theme.isDarkMode ? ThemeMode.dark : ThemeMode.light,
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const StartScreen(),
       debugShowCheckedModeBanner: false,
     );
   }
