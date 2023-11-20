@@ -28,6 +28,7 @@ dependencies:
   firebase_auth: ^4.10.0
   firebase_ui_auth: ^1.8.0
   firebase_ui_localizations: ^1.6.1
+  flutter_markdown: ^0.6.18+2
 
 dev_dependencies:
   flutter_test:
@@ -53,8 +54,8 @@ flutter:
     - assets/images/fruit.png
     - assets/images/knife.png
     - assets/images/renew.png
-    - assets/privacy_policy.txt
-    - assets/terms_and_conditions.txt
+    - assets/privacy_policy.md
+    - assets/terms_and_conditions.md
 
   fonts:
     - family: NotoSansJP
