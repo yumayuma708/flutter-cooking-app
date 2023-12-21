@@ -22,12 +22,19 @@ class CookingResultPage extends StatefulWidget {
     required this.data,
     this.selectedHeaders = const {},
     required this.selectedVegetables,
-    this.fromLoadingScreen = false,
+    this.fromLoadingScreen = true,
   })  : dividedData = ChatGPTDividedData.parseFromInstruction(data.instruction),
         super(key: key);
 
   @override
   State<StatefulWidget> createState() {
+    if (FirebaseAuth.instance.currentUser != null) {
+      return CookingResultPageState(
+        selectedHeaders: selectedHeaders,
+        selectedVegetables: selectedVegetables,
+        fromLoadingScreen: fromLoadingScreen,
+      );
+    }
     return CookingResultPageState(
       selectedHeaders: selectedHeaders,
       selectedVegetables: selectedVegetables,

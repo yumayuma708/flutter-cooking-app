@@ -125,8 +125,7 @@ void savedPopup(BuildContext context) {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(15.0),
         ),
-        backgroundColor:
-            Theme.of(context).colorScheme.primaryContainer.withOpacity(0.5),
+        backgroundColor: Theme.of(context).colorScheme.primaryContainer,
         title: Icon(
           Icons.bookmark,
           color: Theme.of(context).colorScheme.onPrimaryContainer,
