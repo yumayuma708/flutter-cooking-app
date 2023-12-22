@@ -41,7 +41,7 @@ class LoadingScreenState extends State<LoadingScreen> {
       Navigator.of(context).pushReplacement(MaterialPageRoute(
           builder: (context) => CookingResultPage(
                 data: finalData,
-                selectedHeaders: finalData.selectedHeaders, // Add this line
+                selectedHeaders: finalData.selectedHeaders,
                 selectedVegetables: finalData.selectedVegetables,
               )));
     } catch (e) {
