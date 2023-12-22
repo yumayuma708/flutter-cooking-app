@@ -1,6 +1,7 @@
 import 'package:caul/providers/chat_gpt_devider.dart';
 import 'package:caul/providers/chat_gpt_provider.dart';
 import 'package:caul/ui/screens/cooking_screen/cooking_result_screen.dart';
+import 'package:caul/ui/screens/cooking_screen/saved_cooking_result.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -118,13 +119,9 @@ class SaveScreen extends StatelessWidget {
               return ListTile(
                 title: Text(dividedData.dishName),
                 onTap: () {
-                  // CookingResultPageにCookingDataオブジェクトとChatGPTDividedDataオブジェクトを渡す
                   Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => CookingResultPage(
-                      data: cookingData,
-                      selectedHeaders: cookingData.selectedHeaders, // 例
-                      selectedVegetables: cookingData.selectedVegetables, // 例
-                    ),
+                    builder: (context) =>
+                        SavedCookingResult(dividedData: dividedData),
                   ));
                 },
               );
