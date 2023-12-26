@@ -11,7 +11,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  await dotenv.load(fileName: 'env');
+  await dotenv.load(fileName: '.env');
   OpenAI.apiKey = dotenv.get('API_KEY');
   runApp(
     const ProviderScope(
