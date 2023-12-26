@@ -1,6 +1,4 @@
 import 'package:caul/providers/chat_gpt_devider.dart';
-import 'package:caul/providers/chat_gpt_provider.dart';
-import 'package:caul/ui/screens/cooking_screen/cooking_result_screen.dart';
 import 'package:caul/ui/screens/cooking_screen/saved_cooking_result.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -100,20 +98,6 @@ class SaveScreen extends StatelessWidget {
                 ingredients: data['ingredients'] ?? '',
                 recipe: data['recipe'] ?? '',
                 appealPoint: data['appealPoint'] ?? '',
-              );
-
-              // Firestoreから取得したデータを使用してCookingDataオブジェクトを作成
-              CookingData cookingData = CookingData(
-                selectedVegetables: [], // Firestoreにないため空のリスト
-                selectedSeasonings: [], // Firestoreにないため空のリスト
-                timeConditions: [], // Firestoreにないため空のリスト
-                servingConditions: [], // Firestoreにないため空のリスト
-                cuisineType: [], // Firestoreにないため空のリスト
-                sizeConditions: [], // Firestoreにないため空のリスト
-                preferenceConditions: [], // Firestoreにないため空のリスト
-                confirmationConditions: [], // Firestoreにないため空のリスト
-                instruction: data['recipe'] ?? '', // Firestoreからのレシピ
-                selectedHeaders: <String, Set<String>>{}, // Firestoreにないため空のマップ
               );
 
               return ListTile(

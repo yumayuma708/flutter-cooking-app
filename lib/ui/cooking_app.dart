@@ -87,6 +87,7 @@ class CookingApp extends ConsumerWidget {
               builder: (context) => const PrivacyPolicyScreen(),
             );
         }
+        return null;
       },
       title: 'おたすけCook！',
       theme: ThemeData(

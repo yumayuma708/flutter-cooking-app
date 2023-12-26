@@ -27,6 +27,7 @@ class CookingResultPage extends StatefulWidget {
         super(key: key);
 
   @override
+  // ignore: no_logic_in_create_state
   State<StatefulWidget> createState() {
     if (FirebaseAuth.instance.currentUser != null) {
       return CookingResultPageState(

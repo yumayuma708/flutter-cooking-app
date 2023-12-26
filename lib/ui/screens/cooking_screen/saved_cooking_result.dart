@@ -5,7 +5,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 class SavedCookingResult extends StatelessWidget {
   final ChatGPTDividedData dividedData;
 
-  SavedCookingResult({Key? key, required this.dividedData}) : super(key: key);
+  const SavedCookingResult({Key? key, required this.dividedData})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
