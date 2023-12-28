@@ -1,3 +1,4 @@
+import 'package:caul/ui/components/constants.dart';
 import 'package:caul/ui/screens/home_screen.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -41,8 +42,6 @@ class StartScreenState extends State<StartScreen> {
       });
       return Container();
     }
-
-    const double maxScreenWidth = 450;
 
     return Scaffold(
       body: Center(
