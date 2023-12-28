@@ -1,5 +1,6 @@
 import 'package:caul/providers/chat_gpt_provider.dart';
 import 'package:caul/ui/components/caul_situations.dart';
+import 'package:caul/ui/components/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:caul/ui/screens/loading_screen.dart';
@@ -102,184 +103,194 @@ class CookingSituationInternalState extends State<CookingSituationInternal> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.background,
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.background,
-        title: Text(
-          '条件を選びます',
-          style: TextStyle(
-              color: Theme.of(context).colorScheme.onBackground,
-              fontSize: 25,
-              fontWeight: FontWeight.w600),
-        ),
-      ),
-      body: Column(
-        children: [
-          Expanded(
-            child: ListView.builder(
-              padding: const EdgeInsets.all(8.0),
-              itemCount: headers.length,
-              itemBuilder: (context, index) {
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(10.0, 10.0, 0.0, 10.0),
-                      child: Row(
-                        children: [
-                          getIconOrImageForHeader(context, headers[index]),
-                          const SizedBox(width: 10.0),
-                          Text(
-                            headers[index],
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                              fontFamily: const TextStyle().fontFamily,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: buttonGroups[index].map((button) {
-                        bool isSelected =
-                            selectedHeaders[headers[index]]!.contains(button);
-                        return Align(
-                            alignment: Alignment.centerLeft,
-                            child: GestureDetector(
-                              onTap: () {
-                                setState(() {
-                                  _toggleSelection(headers[index], button);
-                                });
-                              },
-                              child: Card(
-                                color: Colors.transparent,
-                                elevation: 0.0,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(30.0),
-                                  side: BorderSide(
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .onBackground
-                                          .withOpacity(0.3)),
-                                ),
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 10.0, vertical: 5.0),
-                                  child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text(
-                                          button,
-                                          style: TextStyle(
-                                            color: Theme.of(context)
-                                                .colorScheme
-                                                .onBackground,
-                                          ),
-                                        ),
-                                        Icon(
-                                          FontAwesomeIcons.circleCheck,
-                                          color: isSelected
-                                              ? Theme.of(context)
-                                                  .colorScheme
-                                                  .primary
-                                                  .withOpacity(0.5)
-                                              : Colors.transparent,
-                                        ),
-                                      ]),
-                                ),
-                              ),
-                            ));
-                      }).toList(),
-                    ),
-                  ],
-                );
-              },
+    return Center(
+      child: SizedBox(
+        width: MediaQuery.of(context).size.width > maxScreenWidth
+            ? maxScreenWidth
+            : MediaQuery.of(context).size.width,
+        child: Scaffold(
+          backgroundColor: Theme.of(context).colorScheme.background,
+          appBar: AppBar(
+            backgroundColor: Theme.of(context).colorScheme.background,
+            title: Text(
+              '条件を選びます',
+              style: TextStyle(
+                  color: Theme.of(context).colorScheme.onBackground,
+                  fontSize: 25,
+                  fontWeight: FontWeight.w600),
             ),
           ),
-          Padding(
-              padding: const EdgeInsets.only(top: 5.0),
-              child: SizedBox(
-                width: MediaQuery.of(context).size.width * 0.9,
-                height: (MediaQuery.of(context).size.height / 10) * 0.7,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    CaulButton(
-                      onPressed: () {
-                        Navigator.pop(context, 'choose_ingredients');
-                      },
-                      label: '戻る',
-                    ),
-                    const SizedBox(width: 20.0),
-                    ElevatedButton(
-                      onPressed: () {
-                        List<String> timeConditions =
-                            selectedHeaders["調理時間"]!.toList();
-                        List<String> servingConditions =
-                            selectedHeaders["人数"]!.toList();
-                        List<String> cuisineConditions =
-                            selectedHeaders["タイプ"]!.toList();
-                        List<String> selectedSeasonings =
-                            widget.selectedSeasonings;
-                        List<String> sizeConditions =
-                            selectedHeaders["量"]!.toList();
-                        List<String> preferenceConditions =
-                            selectedHeaders["その他の条件"]!.toList();
-                        List<String> confirmationConditions =
-                            selectedHeaders["選んだ食材以外を材料に含めてもよい"]!.toList();
-
-                        CookingData data = CookingData(
-                          selectedVegetables: widget.selectedVegetables,
-                          timeConditions: timeConditions,
-                          servingConditions: servingConditions,
-                          selectedSeasonings: selectedSeasonings,
-                          cuisineType: cuisineConditions,
-                          sizeConditions: sizeConditions,
-                          preferenceConditions: preferenceConditions,
-                          confirmationConditions: confirmationConditions,
-                          selectedHeaders: selectedHeaders,
-                          instruction: "",
-                        );
-
-                        Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => LoadingScreen(data: data),
-                        ));
-                      },
-                      style: ButtonStyle(
-                        backgroundColor:
-                            MaterialStateProperty.all(Colors.transparent),
-                        elevation: MaterialStateProperty.resolveWith<double>(
-                          (Set<MaterialState> states) {
-                            if (states.contains(MaterialState.pressed)) {
-                              return 0.0;
-                            }
-                            return 0.0;
-                          },
+          body: Column(
+            children: [
+              Expanded(
+                child: ListView.builder(
+                  padding: const EdgeInsets.all(8.0),
+                  itemCount: headers.length,
+                  itemBuilder: (context, index) {
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding:
+                              const EdgeInsets.fromLTRB(10.0, 10.0, 0.0, 10.0),
+                          child: Row(
+                            children: [
+                              getIconOrImageForHeader(context, headers[index]),
+                              const SizedBox(width: 10.0),
+                              Text(
+                                headers[index],
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                  fontFamily: const TextStyle().fontFamily,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
-                        shape: MaterialStateProperty.all(
-                          RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(30.0),
-                              side: BorderSide(
-                                color: Theme.of(context).colorScheme.primary,
-                              )),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: buttonGroups[index].map((button) {
+                            bool isSelected = selectedHeaders[headers[index]]!
+                                .contains(button);
+                            return Align(
+                                alignment: Alignment.centerLeft,
+                                child: GestureDetector(
+                                  onTap: () {
+                                    setState(() {
+                                      _toggleSelection(headers[index], button);
+                                    });
+                                  },
+                                  child: Card(
+                                    color: Colors.transparent,
+                                    elevation: 0.0,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(30.0),
+                                      side: BorderSide(
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .onBackground
+                                              .withOpacity(0.3)),
+                                    ),
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 10.0, vertical: 5.0),
+                                      child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(
+                                              button,
+                                              style: TextStyle(
+                                                color: Theme.of(context)
+                                                    .colorScheme
+                                                    .onBackground,
+                                              ),
+                                            ),
+                                            Icon(
+                                              FontAwesomeIcons.circleCheck,
+                                              color: isSelected
+                                                  ? Theme.of(context)
+                                                      .colorScheme
+                                                      .primary
+                                                      .withOpacity(0.5)
+                                                  : Colors.transparent,
+                                            ),
+                                          ]),
+                                    ),
+                                  ),
+                                ));
+                          }).toList(),
                         ),
-                      ),
-                      child: Text(
-                        "料理を作る！",
-                        style: TextStyle(
-                          color: Theme.of(context).colorScheme.primary,
-                          fontSize: 20,
-                        ),
-                      ),
-                    )
-                  ],
+                      ],
+                    );
+                  },
                 ),
-              )),
-        ],
+              ),
+              Padding(
+                  padding: const EdgeInsets.only(top: 5.0),
+                  child: SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.9,
+                    height: (MediaQuery.of(context).size.height / 10) * 0.7,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        CaulButton(
+                          onPressed: () {
+                            Navigator.pop(context, 'choose_ingredients');
+                          },
+                          label: '戻る',
+                        ),
+                        const SizedBox(width: 20.0),
+                        ElevatedButton(
+                          onPressed: () {
+                            List<String> timeConditions =
+                                selectedHeaders["調理時間"]!.toList();
+                            List<String> servingConditions =
+                                selectedHeaders["人数"]!.toList();
+                            List<String> cuisineConditions =
+                                selectedHeaders["タイプ"]!.toList();
+                            List<String> selectedSeasonings =
+                                widget.selectedSeasonings;
+                            List<String> sizeConditions =
+                                selectedHeaders["量"]!.toList();
+                            List<String> preferenceConditions =
+                                selectedHeaders["その他の条件"]!.toList();
+                            List<String> confirmationConditions =
+                                selectedHeaders["選んだ食材以外を材料に含めてもよい"]!.toList();
+
+                            CookingData data = CookingData(
+                              selectedVegetables: widget.selectedVegetables,
+                              timeConditions: timeConditions,
+                              servingConditions: servingConditions,
+                              selectedSeasonings: selectedSeasonings,
+                              cuisineType: cuisineConditions,
+                              sizeConditions: sizeConditions,
+                              preferenceConditions: preferenceConditions,
+                              confirmationConditions: confirmationConditions,
+                              selectedHeaders: selectedHeaders,
+                              instruction: "",
+                            );
+
+                            Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => LoadingScreen(data: data),
+                            ));
+                          },
+                          style: ButtonStyle(
+                            backgroundColor:
+                                MaterialStateProperty.all(Colors.transparent),
+                            elevation:
+                                MaterialStateProperty.resolveWith<double>(
+                              (Set<MaterialState> states) {
+                                if (states.contains(MaterialState.pressed)) {
+                                  return 0.0;
+                                }
+                                return 0.0;
+                              },
+                            ),
+                            shape: MaterialStateProperty.all(
+                              RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(30.0),
+                                  side: BorderSide(
+                                    color:
+                                        Theme.of(context).colorScheme.primary,
+                                  )),
+                            ),
+                          ),
+                          child: Text(
+                            "料理を作る！",
+                            style: TextStyle(
+                              color: Theme.of(context).colorScheme.primary,
+                              fontSize: 20,
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  )),
+            ],
+          ),
+        ),
       ),
     );
   }
