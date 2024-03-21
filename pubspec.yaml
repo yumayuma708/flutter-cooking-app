@@ -25,8 +25,8 @@ dependencies:
   http: ^1.1.0
   firebase_core: ^2.16.0
   cloud_firestore: ^4.9.2
-  firebase_auth: ^4.10.0
-  firebase_ui_auth: ^1.8.0
+  firebase_auth: ^4.17.9
+  firebase_ui_auth: ^1.13.1
   firebase_ui_localizations: ^1.6.1
   flutter_markdown: ^0.6.18+2
 
