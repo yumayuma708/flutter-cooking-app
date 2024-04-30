@@ -10,7 +10,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 final pageControllerProvider = Provider((ref) => PageController());
 
 class ChooseIngredients extends ConsumerWidget {
-  const ChooseIngredients({Key? key}) : super(key: key);
+  const ChooseIngredients({super.key});
   static const routeName = '/choose-ingredients';
 
   @override
