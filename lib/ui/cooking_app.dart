@@ -16,7 +16,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:caul/providers/theme_provider.dart';
 
 class CookingApp extends ConsumerWidget {
-  const CookingApp({Key? key}) : super(key: key);
+  const CookingApp({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

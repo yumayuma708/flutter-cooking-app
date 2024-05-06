@@ -13,10 +13,9 @@ class CookingSituation extends ConsumerWidget {
   final List<String> selectedSeasonings;
 
   const CookingSituation(
-      {Key? key,
+      {super.key,
       required this.selectedVegetables,
-      required this.selectedSeasonings})
-      : super(key: key);
+      required this.selectedSeasonings});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

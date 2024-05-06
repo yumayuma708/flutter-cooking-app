@@ -41,7 +41,6 @@ class PopupDialog {
     final hasShownPopup = prefs.getBool(key) ?? false;
 
     if (!hasShownPopup) {
-      // ignore: use_build_context_synchronously
       await showDialog(
         context: context,
         barrierDismissible: true,

@@ -19,13 +19,12 @@ class CookingResultPage extends StatefulWidget {
   final bool fromLoadingScreen;
 
   CookingResultPage({
-    Key? key,
+    super.key,
     required this.data,
     this.selectedHeaders = const {},
     required this.selectedVegetables,
     this.fromLoadingScreen = true,
-  })  : dividedData = ChatGPTDividedData.parseFromInstruction(data.instruction),
-        super(key: key);
+  }) : dividedData = ChatGPTDividedData.parseFromInstruction(data.instruction);
 
   @override
   // ignore: no_logic_in_create_state

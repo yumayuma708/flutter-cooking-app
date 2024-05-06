@@ -4,7 +4,7 @@ import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter_markdown/flutter_markdown.dart';
 
 class TermsOfServiceScreen extends StatelessWidget {
-  const TermsOfServiceScreen({Key? key}) : super(key: key);
+  const TermsOfServiceScreen({super.key});
 
   Future<String> loadPrivacyPolicy() async {
     return await rootBundle.loadString('assets/terms_and_conditions.md');
